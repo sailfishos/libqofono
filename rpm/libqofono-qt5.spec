@@ -7,15 +7,12 @@ Group:      System/Libraries
 License:    LGPLv2.1
 URL:        https://git.sailfishos.org/mer-core/libqofono
 Source0:    %{name}-%{version}.tar.bz2
-Requires:   qt5-qtcore
-Requires:   mobile-broadband-provider-info
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(Qt5Test)
-BuildRequires:  pkgconfig(Qt5XmlPatterns)
 
 %description
 This package contains Qt bindings for ofono cellular service

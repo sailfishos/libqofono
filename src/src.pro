@@ -4,9 +4,12 @@
 #
 #-------------------------------------------------
 
-QT += dbus xmlpatterns
-QT -= gui
-QMAKE_CXXFLAGS += -Wno-unused-parameter -Wno-psabi
+QT += dbus
+
+# QT += xmlpatterns
+# DEFINES += QOFONO_PROVISIONING
+
+QMAKE_CXXFLAGS += -Wno-unused-parameter
 
 include(version.pri)
 

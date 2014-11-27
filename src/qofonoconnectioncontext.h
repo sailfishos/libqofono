@@ -89,10 +89,10 @@ public:
     bool isValid() const;
     QString modemPath() const;
 
-    bool validateProvisioning(); //check provision against mbpi
-    bool validateProvisioning(const QString &provider, const QString &mcc, const QString &mnc); //check provision against mbpi
-    void provision(const QString &provider, const QString &mcc, const QString &mnc, const QString &type=QStringLiteral("internet")); // provision context against mbpi
-    void provisionForCurrentNetwork(const QString &type);
+    QT_DEPRECATED bool validateProvisioning(); //check provision against mbpi
+    QT_DEPRECATED bool validateProvisioning(const QString &provider, const QString &mcc, const QString &mnc); //check provision against mbpi
+    QT_DEPRECATED void provision(const QString &provider, const QString &mcc, const QString &mnc, const QString &type=QStringLiteral("internet")); // provision context against mbpi
+    QT_DEPRECATED void provisionForCurrentNetwork(const QString &type);
 
     Q_INVOKABLE void disconnect();
     Q_INVOKABLE bool provision();
