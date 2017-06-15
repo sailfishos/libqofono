@@ -35,6 +35,7 @@ Q_GLOBAL_STATIC(ModemMap, modemMap)
     p(Revision) \
     p(Serial) \
     p(Type) \
+    p(SoftwareVersionNumber) \
     p(Features) \
     p(Interfaces) \
 
@@ -143,6 +144,11 @@ QString QOfonoModem::type() const
     return getString(Private::Type);
 }
 
+QString QOfonoModem::softwareVersionNumber() const
+{
+    return getString(Private::SoftwareVersionNumber);
+}
+
 QStringList QOfonoModem::features() const
 {
     return getStringList(Private::Features);
@@ -191,6 +197,8 @@ void QOfonoModem::propertyChanged(const QString &property, const QVariant &value
         Q_EMIT serialChanged(value.toString());
     } else if (property == Private::Type) {
         Q_EMIT typeChanged(value.toString());
+    } else if (property == Private::SoftwareVersionNumber) {
+        Q_EMIT softwareVersionNumberChanged(value.toString());
     } else if (property == Private::Features) {
         Q_EMIT featuresChanged(value.toStringList());
     } else if (property == Private::Interfaces) {
