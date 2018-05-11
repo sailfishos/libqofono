@@ -55,7 +55,7 @@ This package contains qml test for ofono Qt bindings.
 
 %build
 export QT_SELECT=5
-%qmake5
+%qmake5 "VERSION=$(sed 's/+.*//' <<<"%{version}")"
 make %{?_smp_mflags}
 
 %install
