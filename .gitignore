@@ -1,3 +1,6 @@
+build
+run
+libqofono.pro.user*
 *~
 *.a
 *.la
@@ -32,4 +35,3 @@ Makefile*
 moc_*.cpp
 ui_*.h
 qrc_*.cpp
-
