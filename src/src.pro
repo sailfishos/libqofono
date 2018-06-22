@@ -8,6 +8,8 @@ QT += dbus xmlpatterns
 QT -= gui
 QMAKE_CXXFLAGS += -Wno-unused-parameter -Wno-psabi
 
+include(version.pri)
+
 equals(QT_MAJOR_VERSION, 4): {
     TARGET = qofono
     pkgconfig.path = $$[QT_INSTALL_LIBS]/pkgconfig
@@ -60,6 +62,7 @@ XML_FILES += \
     dbus/ofono_voicecallmanager.xml
 
 OTHER_FILES += $$XML_FILES\
+    version.pri \
     qofono.prf \
     qofono-qt5.prf
 
