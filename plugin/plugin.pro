@@ -30,8 +30,7 @@ HEADERS = \
 INCLUDEPATH += ../src
 
 OTHER_FILES += \
-    plugin.json qmldir
-#plugins.qmltypes
+    plugin.json plugins.qmltypes qmldir
 
 equals(QT_MAJOR_VERSION, 4): {
     qmldir.path = $$[QT_INSTALL_IMPORTS]/MeeGo/QOfono
@@ -43,7 +42,9 @@ equals(QT_MAJOR_VERSION, 5): {
     target.path = $$[QT_INSTALL_QML]/MeeGo/QOfono
 }
 
-qmldir.files += qmldir
-
+qmldir.files += qmldir plugins.qmltypes
 
 INSTALLS += target qmldir
+
+qmltypes.commands = qmlplugindump -nonrelocatable MeeGo.QOfono 0.2 > $$PWD/plugins.qmltypes
+QMAKE_EXTRA_TARGETS += qmltypes
