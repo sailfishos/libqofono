@@ -1,7 +1,7 @@
 Name:       libqofono-qt5
 
 Summary:    A library of Qt 5 bindings for ofono
-Version:    0
+Version:    0.94
 Release:    1
 Group:      System/Libraries
 License:    LGPLv2.1
@@ -55,7 +55,7 @@ This package contains qml test for ofono Qt bindings.
 
 %build
 export QT_SELECT=5
-%qmake5
+%qmake5 "VERSION=$(sed 's/+.*//' <<<"%{version}")"
 make %{?_smp_mflags}
 
 %install
