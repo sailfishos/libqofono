@@ -26,8 +26,39 @@ public:
 
     Private() : ofonoManager(NULL), available(false) {}
 
+    QString defaultModem();
+    void handleGetModemsReply(QOfonoManager* obj, ObjectPathPropertiesList reply);
     void getModems(QOfonoManager *manager);
 };
+
+QString QOfonoManager::Private::defaultModem()
+{
+    return modems.isEmpty() ? QString() : modems[0];
+}
+
+void QOfonoManager::Private::handleGetModemsReply(QOfonoManager* obj, ObjectPathPropertiesList reply)
+{
+    bool wasAvailable = available;
+    QString prevDefault = defaultModem();
+    QStringList newModems;
+    const int n = reply.count();
+    for (int i = 0; i < n; i++) {
+        newModems.append(reply.at(i).path.path());
+    }
+    qSort(newModems);
+    available = true;
+    if (modems != newModems) {
+        modems = newModems;
+        Q_EMIT obj->modemsChanged(modems);
+    }
+    QString newDefault = defaultModem();
+    if (newDefault != prevDefault) {
+        Q_EMIT obj->defaultModemChanged(newDefault);
+    }
+    if (!wasAvailable) {
+        Q_EMIT obj->availableChanged(true);
+    }
+}
 
 void QOfonoManager::Private::getModems(QOfonoManager *manager)
 {
@@ -69,9 +100,21 @@ QStringList QOfonoManager::modems()
     return d_ptr->modems;
 }
 
+QStringList QOfonoManager::getModems()
+{
+    if (d_ptr->ofonoManager && !d_ptr->available) {
+        QDBusPendingReply<ObjectPathPropertiesList> reply = d_ptr->ofonoManager->GetModems();
+        reply.waitForFinished();
+        if (!reply.isError()) {
+            d_ptr->handleGetModemsReply(this, reply.value());
+        }
+    }
+    return d_ptr->modems;
+}
+
 QString QOfonoManager::defaultModem()
 {
-    return d_ptr->modems.isEmpty() ? QString() : d_ptr->modems[0];
+    return d_ptr->defaultModem();
 }
 
 bool QOfonoManager::available() const
@@ -128,22 +171,7 @@ void QOfonoManager::onGetModemsFinished(QDBusPendingCallWatcher* watcher)
             qWarning() << reply.error();
         }
     } else {
-        QString prevDefault = defaultModem();
-        QStringList newModems;
-        Q_FOREACH(ObjectPathProperties modem, reply.value()) {
-            newModems.append(modem.path.path());
-        }
-        qSort(newModems);
-        if (d_ptr->modems != newModems) {
-            d_ptr->modems = newModems;
-            Q_EMIT modemsChanged(d_ptr->modems);
-        }
-        QString newDefault = defaultModem();
-        if (newDefault != prevDefault) {
-            Q_EMIT defaultModemChanged(newDefault);
-        }
-        d_ptr->available = true;
-        Q_EMIT availableChanged(true);
+        d_ptr->handleGetModemsReply(this, reply.value());
     }
 }
 

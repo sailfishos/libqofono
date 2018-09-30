@@ -35,6 +35,7 @@ public:
     explicit QOfonoManager(QObject *parent = 0);
     ~QOfonoManager();
 
+    QStringList getModems(); // May block
     QStringList modems();
     QString defaultModem();
     bool available() const;
