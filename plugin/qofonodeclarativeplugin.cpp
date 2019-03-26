@@ -119,12 +119,3 @@ void QOfonoDeclarativePlugin::registerTypes(const char *uri)
 {
     registerTypes(uri, 0, 2);
 }
-
-#if QT_VERSION < 0x050000
-void QOfonoDeclarativePlugin::initializeEngine(QDeclarativeEngine *engine, const char *uri)
-{
-    Q_UNUSED(uri);
-    Q_UNUSED(engine);
-}
-Q_EXPORT_PLUGIN2(ofonomodule, QT_PREPEND_NAMESPACE(QOfonoDeclarativePlugin))
-#endif

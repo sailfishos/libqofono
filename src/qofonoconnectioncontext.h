@@ -91,11 +91,7 @@ public:
 
     bool validateProvisioning(); //check provision against mbpi
     bool validateProvisioning(const QString &provider, const QString &mcc, const QString &mnc); //check provision against mbpi
-    #if QT_VERSION < 0x050000
-    void provision(const QString &provider, const QString &mcc, const QString &mnc, const QString &type="internet");
-    #else
     void provision(const QString &provider, const QString &mcc, const QString &mnc, const QString &type=QStringLiteral("internet")); // provision context against mbpi
-    #endif
     void provisionForCurrentNetwork(const QString &type);
 
     Q_INVOKABLE void disconnect();
