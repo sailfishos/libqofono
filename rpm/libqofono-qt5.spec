@@ -50,6 +50,16 @@ Requires:   mce-tools
 %description tests
 This package contains qml test for ofono Qt bindings.
 
+%package examples
+Summary:    Examples for libqofono
+Group:      Development/Tools
+Requires:   %{name} = %{version}-%{release}
+Requires:   %{name} = %{version}
+Requires:   %{name}-declarative = %{version}
+
+%description examples
+This package contains examples for declarative plugin for libofono.
+
 %prep
 %setup -q -n %{name}-%{version}
 
@@ -88,3 +98,7 @@ export QT_SELECT=5
 %defattr(-,root,root,-)
 %{_libdir}/%{name}/tests/*
 /opt/tests/%{name}/*
+
+%files examples
+%defattr(-,root,root,-)
+/opt/examples/%{name}

@@ -18,26 +18,15 @@
 
 #include "qofono_global.h"
 
-#if QT_VERSION < 0x050000
-#include <QtDeclarative/qdeclarative.h>
-#include <QtDeclarative/QDeclarativeExtensionPlugin>
-class QOFONOSHARED_EXPORT QOfonoDeclarativePlugin : public QDeclarativeExtensionPlugin
-#else
 #include <QtQml/qqmlextensionplugin.h>
 #include <QtQml/qqml.h>
 class QOFONOSHARED_EXPORT QOfonoDeclarativePlugin : public QQmlExtensionPlugin
-#endif
 {
     Q_OBJECT
-#if QT_VERSION >= 0x050000
     Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface" FILE "plugin.json")
-#endif
 public:
     void registerTypes(const char *uri);
     static void registerTypes(const char *uri, int major, int minor);
-#if QT_VERSION < 0x050000
-    void initializeEngine(QDeclarativeEngine *engine, const char *uri);
-#endif
 };
 
 #endif // QOFONODECLARATIVEPLUGIN_H
