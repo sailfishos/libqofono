@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2014 Jolla Ltd.
+** Copyright (C) 2014-2019 Jolla Ltd.
 ** Contact: slava.monich@jolla.com
 **
 ** GNU Lesser General Public License Usage
@@ -32,7 +32,8 @@ public:
         MccRole,
         MncRole,
         TechRole,
-        InfoRole
+        InfoRole,
+        CountryRole
     };
 
     explicit QOfonoNetworkOperatorListModel(QObject* parent = NULL);
@@ -55,16 +56,17 @@ Q_SIGNALS:
 
 private Q_SLOTS:
     void onNetworkOperatorsChanged(const QStringList &list);
-    void onOperatorNameChanged(const QString &value);
-    void onOperatorStatusChanged(const QString &value);
-    void onOperatorMccChanged(const QString &value);
-    void onOperatorMncChanged(const QString &value);
-    void onOperatorTechChanged(const QStringList &value);
-    void onOperatorInfoChanged(const QString &value);
-    void onOperatorPathChanged(const QString &value);
+    void onOperatorNameChanged();
+    void onOperatorStatusChanged();
+    void onOperatorMccChanged();
+    void onOperatorMncChanged();
+    void onOperatorTechChanged();
+    void onOperatorInfoChanged();
+    void onOperatorPathChanged();
 
 private:
     void operatorPropertyChanged(OperatorRole role);
+    void operatorPropertyChanged(const QVector<int> &roles);
 
 private:
     QOfonoNetworkRegistration *netreg;
