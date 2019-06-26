@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2014 Jolla Ltd.
+** Copyright (C) 2014-2019 Jolla Ltd.
 ** Contact: slava.monich@jolla.com
 **
 ** GNU Lesser General Public License Usage
@@ -14,6 +14,7 @@
 ****************************************************************************/
 
 #include "qofononetworkoperatorlistmodel.h"
+#include "qofono.h"
 
 QOfonoNetworkOperatorListModel::QOfonoNetworkOperatorListModel(QObject *parent) :
     QAbstractListModel(parent)
@@ -63,13 +64,14 @@ QVariant QOfonoNetworkOperatorListModel::data(const QModelIndex &index, int role
         QOfonoNetworkOperator* op = netreg->networkOperator(operators[row]);
         if (op) {
             switch (role) {
-            case PathRole:   return op->operatorPath();
-            case NameRole:   return op->name();
-            case StatusRole: return op->status();
-            case MccRole:    return op->mcc();
-            case MncRole:    return op->mnc();
-            case TechRole:   return op->technologies();
-            case InfoRole:   return op->additionalInfo();
+            case PathRole:    return op->operatorPath();
+            case NameRole:    return op->name();
+            case StatusRole:  return op->status();
+            case MccRole:     return op->mcc();
+            case MncRole:     return op->mnc();
+            case TechRole:    return op->technologies();
+            case InfoRole:    return op->additionalInfo();
+            case CountryRole: return QOfono::mobileCountryCodeToAlpha2CountryCode(op->mcc().toInt());
             }
         }
     }
@@ -80,28 +82,33 @@ QVariant QOfonoNetworkOperatorListModel::data(const QModelIndex &index, int role
 QHash<int,QByteArray> QOfonoNetworkOperatorListModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
-    roles[PathRole]   = "operatorPath";
-    roles[NameRole]   = "name";
-    roles[StatusRole] = "status";
-    roles[MccRole]    = "mcc";
-    roles[MncRole]    = "mnc";
-    roles[TechRole]   = "technologies";
-    roles[InfoRole]   = "additionalInfo";
+    roles[PathRole]    = "operatorPath";
+    roles[NameRole]    = "name";
+    roles[StatusRole]  = "status";
+    roles[MccRole]     = "mcc";
+    roles[MncRole]     = "mnc";
+    roles[TechRole]    = "technologies";
+    roles[InfoRole]    = "additionalInfo";
+    roles[CountryRole] = "country";
     return roles;
+}
+
+void QOfonoNetworkOperatorListModel::operatorPropertyChanged(const QVector<int> &roles)
+{
+    QOfonoNetworkOperator* op = qobject_cast<QOfonoNetworkOperator*>(sender());
+    if (op) {
+        const int row = operators.indexOf(op->operatorPath());
+        if (row >= 0) {
+            QModelIndex modelIndex = index(row);
+            Q_EMIT dataChanged(modelIndex, modelIndex, roles);
+        }
+    }
 }
 
 void QOfonoNetworkOperatorListModel::operatorPropertyChanged(OperatorRole role)
 {
-    QOfonoNetworkOperator* op = (QOfonoNetworkOperator*)sender();
-    if (op) {
-        int row = operators.indexOf(op->operatorPath());
-        if (row >= 0) {
-            QModelIndex modelIndex = index(row);
-            QVector<int> roles;
-            roles.append(role);
-            Q_EMIT dataChanged(modelIndex, modelIndex, roles);
-        }
-    }
+    const QVector<int> roles(1, role);
+    operatorPropertyChanged(roles);
 }
 
 void QOfonoNetworkOperatorListModel::onNetworkOperatorsChanged(const QStringList &list)
@@ -113,14 +120,13 @@ void QOfonoNetworkOperatorListModel::onNetworkOperatorsChanged(const QStringList
     for (int i=0; i<n; i++) {
         QOfonoNetworkOperator* op = netreg->networkOperator(list[i]);
         if (op) {
-            op->disconnect(this);
-            connect(op, SIGNAL(operatorPathChanged(QString)), SLOT(onOperatorPathChanged(QString)));
-            connect(op, SIGNAL(nameChanged(QString)), SLOT(onOperatorNameChanged(QString)));
-            connect(op, SIGNAL(statusChanged(QString)), SLOT(onOperatorStatusChanged(QString)));
-            connect(op, SIGNAL(mccChanged(QString)), SLOT(onOperatorMccChanged(QString)));
-            connect(op, SIGNAL(mncChanged(QString)), SLOT(onOperatorMncChanged(QString)));
-            connect(op, SIGNAL(technologiesChanged(QStringList)), SLOT(onOperatorTechChanged(QStringList)));
-            connect(op, SIGNAL(additionalInfoChanged(QString)), SLOT(onOperatorInfoChanged(QString)));
+            connect(op, SIGNAL(operatorPathChanged(QString)), SLOT(onOperatorPathChanged()), Qt::UniqueConnection);
+            connect(op, SIGNAL(nameChanged(QString)), SLOT(onOperatorNameChanged()), Qt::UniqueConnection);
+            connect(op, SIGNAL(statusChanged(QString)), SLOT(onOperatorStatusChanged()), Qt::UniqueConnection);
+            connect(op, SIGNAL(mccChanged(QString)), SLOT(onOperatorMccChanged()), Qt::UniqueConnection);
+            connect(op, SIGNAL(mncChanged(QString)), SLOT(onOperatorMncChanged()), Qt::UniqueConnection);
+            connect(op, SIGNAL(technologiesChanged(QStringList)), SLOT(onOperatorTechChanged()), Qt::UniqueConnection);
+            connect(op, SIGNAL(additionalInfoChanged(QString)), SLOT(onOperatorInfoChanged()), Qt::UniqueConnection);
         }
     }
     if (oldCount != n) {
@@ -129,37 +135,41 @@ void QOfonoNetworkOperatorListModel::onNetworkOperatorsChanged(const QStringList
     endResetModel();
 }
 
-void QOfonoNetworkOperatorListModel::onOperatorPathChanged(const QString &)
+void QOfonoNetworkOperatorListModel::onOperatorPathChanged()
 {
     operatorPropertyChanged(PathRole);
 }
 
-void QOfonoNetworkOperatorListModel::onOperatorNameChanged(const QString &)
+void QOfonoNetworkOperatorListModel::onOperatorNameChanged()
 {
     operatorPropertyChanged(NameRole);
 }
 
-void QOfonoNetworkOperatorListModel::onOperatorStatusChanged(const QString &)
+void QOfonoNetworkOperatorListModel::onOperatorStatusChanged()
 {
     operatorPropertyChanged(StatusRole);
 }
 
-void QOfonoNetworkOperatorListModel::onOperatorMccChanged(const QString &)
+void QOfonoNetworkOperatorListModel::onOperatorMccChanged()
 {
-    operatorPropertyChanged(MccRole);
+    QVector<int> roles;
+    roles.reserve(2);
+    roles.append(MccRole);
+    roles.append(CountryRole);
+    operatorPropertyChanged(roles);
 }
 
-void QOfonoNetworkOperatorListModel::onOperatorMncChanged(const QString &)
+void QOfonoNetworkOperatorListModel::onOperatorMncChanged()
 {
     operatorPropertyChanged(MncRole);
 }
 
-void QOfonoNetworkOperatorListModel::onOperatorTechChanged(const QStringList &)
+void QOfonoNetworkOperatorListModel::onOperatorTechChanged()
 {
     operatorPropertyChanged(TechRole);
 }
 
-void QOfonoNetworkOperatorListModel::onOperatorInfoChanged(const QString &)
+void QOfonoNetworkOperatorListModel::onOperatorInfoChanged()
 {
     operatorPropertyChanged(InfoRole);
 }
