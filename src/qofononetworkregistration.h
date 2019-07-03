@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2014 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2013-2019 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -39,6 +38,7 @@ class QOFONOSHARED_EXPORT QOfonoNetworkRegistration : public QOfonoModemInterfac
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
     Q_PROPERTY(uint strength READ strength NOTIFY strengthChanged)
     Q_PROPERTY(QString baseStation READ baseStation NOTIFY baseStationChanged)
+    Q_PROPERTY(QString country READ country NOTIFY countryChanged) // Since 0.97
 
     Q_PROPERTY(QStringList networkOperators READ networkOperators NOTIFY networkOperatorsChanged)
     Q_PROPERTY(QString currentOperatorPath READ currentOperatorPath NOTIFY currentOperatorPathChanged)
@@ -60,6 +60,7 @@ public:
     QString name() const;
     uint strength() const;
     QString baseStation() const;
+    QString country() const; // Since 0.97
 
     QStringList networkOperators(); // For ABI compatibility
     QStringList networkOperators() const;
@@ -84,6 +85,7 @@ Q_SIGNALS:
     void nameChanged(const QString &name);
     void strengthChanged(uint strength);
     void baseStationChanged(const QString &baseStation);
+    void countryChanged();  // Since 0.97
 
     void networkOperatorsChanged(const QStringList &networkOperators);
     void currentOperatorPathChanged(const QString &);
