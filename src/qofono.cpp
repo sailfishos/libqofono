@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2016 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2013-2019 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -21,7 +20,7 @@ typedef struct _QOfonoMccListEntry {
     char cc[4];
 } QOfonoMccListEntry;
 
-// Updated from Wikipedia on July 23 2016
+// Updated from Wikipedia on June 15, 2017
 // http://en.wikipedia.org/wiki/Mobile_country_code
 //
 // The list can also be produced from tzdata/data/MCC file,
@@ -37,6 +36,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {202, "01", "GR"}, /* Greece */
     {202, "02", "GR"}, /* Greece */
     {202, "03", "GR"}, /* Greece */
+    {202, "04", "GR"}, /* Greece */
     {202, "05", "GR"}, /* Greece */
     {202, "06", "GR"}, /* Greece */
     {202, "07", "GR"}, /* Greece */
@@ -94,7 +94,9 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {206, "09", "BE"}, /* Belgium */
     {206, "10", "BE"}, /* Belgium */
     {206, "15", "BE"}, /* Belgium */
+    {206, "16", "BE"}, /* Belgium */
     {206, "20", "BE"}, /* Belgium */
+    {206, "25", "BE"}, /* Belgium */
     {206, "40", "BE"}, /* Belgium */
     {208, "01", "FR"}, /* France */
     {208, "02", "FR"}, /* France */
@@ -114,6 +116,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {208, "16", "FR"}, /* France */
     {208, "17", "FR"}, /* France */
     {208, "18", "FR"}, /* France */
+    {208, "19", "FR"}, /* France */
     {208, "20", "FR"}, /* France */
     {208, "21", "FR"}, /* France */
     {208, "22", "FR"}, /* France */
@@ -133,8 +136,11 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {208, "92", "FR"}, /* France */
     {208, "93", "FR"}, /* France */
     {208, "94", "FR"}, /* France */
-    {212, "01", "MC"}, /* Monaco */
-    {212, "01", "XK"}, /* Kosovo */
+    {208, "95", "FR"}, /* France */
+    {208, "96", "FR"}, /* France */
+    {208, "97", "FR"}, /* France */
+    {208, "98", "FR"}, /* France */
+    {212, "10", "MC"}, /* Monaco */
     {214, "01", "ES"}, /* Spain */
     {214, "03", "ES"}, /* Spain */
     {214, "04", "ES"}, /* Spain */
@@ -169,9 +175,11 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {214, "33", "ES"}, /* Spain */
     {214, "34", "ES"}, /* Spain */
     {214, "35", "ES"}, /* Spain */
+    {214, "36", "ES"}, /* Spain */
     {216, "01", "HU"}, /* Hungary */
     {216, "02", "HU"}, /* Hungary */
     {216, "03", "HU"}, /* Hungary */
+    {216, "04", "HU"}, /* Hungary */
     {216, "30", "HU"}, /* Hungary */
     {216, "70", "HU"}, /* Hungary */
     {216, "71", "HU"}, /* Hungary */
@@ -189,12 +197,18 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {220, "04", "RS"}, /* Serbia */
     {220, "05", "RS"}, /* Serbia */
     {220, "07", "RS"}, /* Serbia */
+    {220, "09", "RS"}, /* Serbia */
+    {220, "11", "RS"}, /* Serbia */
+    {221, "01", "XK"}, /* Kosovo */
+    {221, "02", "XK"}, /* Kosovo */
+    {221, "06", "XK"}, /* Kosovo */
     {222, "01", "IT"}, /* Italy */
     {222, "02", "IT"}, /* Italy */
     {222, "04", "IT"}, /* Italy */
     {222, "05", "IT"}, /* Italy */
     {222, "06", "IT"}, /* Italy */
     {222, "07", "IT"}, /* Italy */
+    {222, "08", "IT"}, /* Italy */
     {222, "10", "IT"}, /* Italy */
     {222, "30", "IT"}, /* Italy */
     {222, "33", "IT"}, /* Italy */
@@ -206,6 +220,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {222, "39", "IT"}, /* Italy */
     {222, "43", "IT"}, /* Italy */
     {222, "48", "IT"}, /* Italy */
+    {222, "50", "IT"}, /* Italy */
     {222, "77", "IT"}, /* Italy */
     {222, "88", "IT"}, /* Italy */
     {222, "98", "IT"}, /* Italy */
@@ -238,7 +253,9 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {228, "56", "CH"}, /* Switzerland */
     {228, "57", "CH"}, /* Switzerland */
     {228, "58", "CH"}, /* Switzerland */
+    {228, "59", "CH"}, /* Switzerland */
     {228, "60", "CH"}, /* Switzerland */
+    {228, "61", "CH"}, /* Switzerland */
     {228, "99", "CH"}, /* Switzerland */
     {230, "01", "CZ"}, /* Czech Republic */
     {230, "02", "CZ"}, /* Czech Republic */
@@ -277,11 +294,14 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {232, "18", "AT"}, /* Austria */
     {232, "19", "AT"}, /* Austria */
     {232, "20", "AT"}, /* Austria */
+    {232, "21", "AT"}, /* Austria */
+    {232, "22", "AT"}, /* Austria */
     {232, "91", "AT"}, /* Austria */
     {232, "92", "AT"}, /* Austria */
     {234, "00", "GB"}, /* United Kingdom */
     {234, "01", "GB"}, /* United Kingdom */
     {234, "02", "GB"}, /* United Kingdom */
+    {234, "03", "GB"}, /* United Kingdom */
     {234, "03", "GG"}, /* Guernsey (United Kingdom) */
     {234, "03", "JE"}, /* Jersey (United Kingdom) */
     {234, "04", "GB"}, /* United Kingdom */
@@ -317,6 +337,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {234, "33", "GB"}, /* United Kingdom */
     {234, "34", "GB"}, /* United Kingdom */
     {234, "35", "GB"}, /* United Kingdom */
+    {234, "36", "GB"}, /* United Kingdom */
     {234, "36", "IM"}, /* Isle of Man (United Kingdom) */
     {234, "37", "GB"}, /* United Kingdom */
     {234, "38", "GB"}, /* United Kingdom */
@@ -328,13 +349,17 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {234, "52", "GB"}, /* United Kingdom */
     {234, "53", "GB"}, /* United Kingdom */
     {234, "54", "GB"}, /* United Kingdom */
+    {234, "55", "GB"}, /* United Kingdom */
     {234, "55", "GG"}, /* Guernsey (United Kingdom) */
     {234, "55", "JE"}, /* Jersey (United Kingdom) */
     {234, "56", "GB"}, /* United Kingdom */
     {234, "57", "GB"}, /* United Kingdom */
+    {234, "58", "GB"}, /* United Kingdom */
     {234, "58", "IM"}, /* Isle of Man (United Kingdom) */
     {234, "59", "GB"}, /* United Kingdom */
     {234, "70", "GB"}, /* United Kingdom */
+    {234, "71", "GB"}, /* United Kingdom */
+    {234, "72", "GB"}, /* United Kingdom */
     {234, "76", "GB"}, /* United Kingdom */
     {234, "78", "GB"}, /* United Kingdom */
     {234, "86", "GB"}, /* United Kingdom */
@@ -360,15 +385,18 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {238, "11", "DK"}, /* Denmark (Kingdom of Denmark) */
     {238, "12", "DK"}, /* Denmark (Kingdom of Denmark) */
     {238, "13", "DK"}, /* Denmark (Kingdom of Denmark) */
+    {238, "14", "DK"}, /* Denmark (Kingdom of Denmark) */
     {238, "15", "DK"}, /* Denmark (Kingdom of Denmark) */
     {238, "16", "DK"}, /* Denmark (Kingdom of Denmark) */
     {238, "17", "DK"}, /* Denmark (Kingdom of Denmark) */
     {238, "18", "DK"}, /* Denmark (Kingdom of Denmark) */
     {238, "20", "DK"}, /* Denmark (Kingdom of Denmark) */
     {238, "23", "DK"}, /* Denmark (Kingdom of Denmark) */
+    {238, "25", "DK"}, /* Denmark (Kingdom of Denmark) */
     {238, "28", "DK"}, /* Denmark (Kingdom of Denmark) */
     {238, "30", "DK"}, /* Denmark (Kingdom of Denmark) */
     {238, "40", "DK"}, /* Denmark (Kingdom of Denmark) */
+    {238, "42", "DK"}, /* Denmark (Kingdom of Denmark) */
     {238, "43", "DK"}, /* Denmark (Kingdom of Denmark) */
     {238, "66", "DK"}, /* Denmark (Kingdom of Denmark) */
     {238, "77", "DK"}, /* Denmark (Kingdom of Denmark) */
@@ -417,6 +445,8 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {240, "43", "SE"}, /* Sweden */
     {240, "44", "SE"}, /* Sweden */
     {240, "45", "SE"}, /* Sweden */
+    {240, "46", "SE"}, /* Sweden */
+    {240, "60", "SE"}, /* Sweden */
     {242, "01", "NO"}, /* Norway */
     {242, "02", "NO"}, /* Norway */
     {242, "03", "NO"}, /* Norway */
@@ -432,9 +462,11 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {242, "14", "NO"}, /* Norway */
     {242, "20", "NO"}, /* Norway */
     {242, "21", "NO"}, /* Norway */
+    {242, "22", "NO"}, /* Norway */
     {242, "23", "NO"}, /* Norway */
     {242, "24", "NO"}, /* Norway */
     {242, "25", "NO"}, /* Norway */
+    {242, "99", "NO"}, /* Norway */
     {244, "03", "FI"}, /* Finland */
     {244, "04", "FI"}, /* Finland */
     {244, "05", "FI"}, /* Finland */
@@ -457,6 +489,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {244, "25", "FI"}, /* Finland */
     {244, "26", "FI"}, /* Finland */
     {244, "27", "FI"}, /* Finland */
+    {244, "28", "FI"}, /* Finland */
     {244, "29", "FI"}, /* Finland */
     {244, "30", "FI"}, /* Finland */
     {244, "31", "FI"}, /* Finland */
@@ -470,6 +503,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {244, "39", "FI"}, /* Finland */
     {244, "40", "FI"}, /* Finland */
     {244, "41", "FI"}, /* Finland */
+    {244, "42", "FI"}, /* Finland */
     {244, "91", "FI"}, /* Finland */
     {244, "92", "FI"}, /* Finland */
     {246, "01", "LT"}, /* Lithuania */
@@ -480,6 +514,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {246, "06", "LT"}, /* Lithuania */
     {246, "07", "LT"}, /* Lithuania */
     {246, "08", "LT"}, /* Lithuania */
+    {246, "09", "LT"}, /* Lithuania */
     {247, "01", "LV"}, /* Latvia */
     {247, "02", "LV"}, /* Latvia */
     {247, "03", "LV"}, /* Latvia */
@@ -553,11 +588,11 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {257, "04", "BY"}, /* Belarus */
     {257, "05", "BY"}, /* Belarus */
     {257, "06", "BY"}, /* Belarus */
-    {257, "501", "BY"}, /* Belarus */
     {259, "01", "MD"}, /* Moldova */
     {259, "02", "MD"}, /* Moldova */
     {259, "03", "MD"}, /* Moldova */
     {259, "04", "MD"}, /* Moldova */
+    {259, "15", "MD"}, /* Moldova */
     {259, "99", "MD"}, /* Moldova */
     {260, "01", "PL"}, /* Poland */
     {260, "02", "PL"}, /* Poland */
@@ -607,6 +642,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {260, "46", "PL"}, /* Poland */
     {260, "47", "PL"}, /* Poland */
     {260, "48", "PL"}, /* Poland */
+    {260, "49", "PL"}, /* Poland */
     {260, "98", "PL"}, /* Poland */
     {262, "01", "DE"}, /* Germany */
     {262, "02", "DE"}, /* Germany */
@@ -630,6 +666,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {262, "20", "DE"}, /* Germany */
     {262, "21", "DE"}, /* Germany */
     {262, "22", "DE"}, /* Germany */
+    {262, "23", "DE"}, /* Germany */
     {262, "33", "DE"}, /* Germany */
     {262, "41", "DE"}, /* Germany */
     {262, "42", "DE"}, /* Germany */
@@ -643,7 +680,6 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {262, "77", "DE"}, /* Germany */
     {262, "78", "DE"}, /* Germany */
     {262, "79", "DE"}, /* Germany */
-    {262, "901", "DE"}, /* Germany */
     {262, "92", "DE"}, /* Germany */
     {266, "01", "GI"}, /* Gibraltar (United Kingdom) */
     {266, "06", "GI"}, /* Gibraltar (United Kingdom) */
@@ -656,6 +692,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {268, "07", "PT"}, /* Portugal */
     {268, "11", "PT"}, /* Portugal */
     {268, "12", "PT"}, /* Portugal */
+    {268, "13", "PT"}, /* Portugal */
     {268, "21", "PT"}, /* Portugal */
     {268, "80", "PT"}, /* Portugal */
     {270, "01", "LU"}, /* Luxembourg */
@@ -685,7 +722,9 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {274, "08", "IS"}, /* Iceland */
     {274, "11", "IS"}, /* Iceland */
     {274, "12", "IS"}, /* Iceland */
+    {274, "16", "IS"}, /* Iceland */
     {274, "22", "IS"}, /* Iceland */
+    {274, "31", "IS"}, /* Iceland */
     {276, "01", "AL"}, /* Albania */
     {276, "02", "AL"}, /* Albania */
     {276, "03", "AL"}, /* Albania */
@@ -734,7 +773,6 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {293, "20", "SI"}, /* Slovenia */
     {293, "40", "SI"}, /* Slovenia */
     {293, "41", "SI"}, /* Slovenia */
-    {293, "41", "XK"}, /* Kosovo */
     {293, "64", "SI"}, /* Slovenia */
     {293, "70", "SI"}, /* Slovenia */
     {294, "01", "MK"}, /* Macedonia */
@@ -774,6 +812,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {302, "510", "CA"}, /* Canada */
     {302, "520", "CA"}, /* Canada */
     {302, "530", "CA"}, /* Canada */
+    {302, "540", "CA"}, /* Canada */
     {302, "560", "CA"}, /* Canada */
     {302, "570", "CA"}, /* Canada */
     {302, "590", "CA"}, /* Canada */
@@ -781,6 +820,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {302, "620", "CA"}, /* Canada */
     {302, "630", "CA"}, /* Canada */
     {302, "640", "CA"}, /* Canada */
+    {302, "650", "CA"}, /* Canada */
     {302, "652", "CA"}, /* Canada */
     {302, "653", "CA"}, /* Canada */
     {302, "655", "CA"}, /* Canada */
@@ -807,6 +847,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {302, "880", "CA"}, /* Canada */
     {302, "920", "CA"}, /* Canada */
     {302, "940", "CA"}, /* Canada */
+    {302, "990", "CA"}, /* Canada */
     {308, "01", "PM"}, /* Saint Pierre and Miquelon (France) */
     {308, "02", "PM"}, /* Saint Pierre and Miquelon (France) */
     {310, "004", "US"}, /* United States of America */
@@ -943,6 +984,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {311, "060", "US"}, /* United States of America */
     {311, "070", "US"}, /* United States of America */
     {311, "080", "US"}, /* United States of America */
+    {311, "090", "US"}, /* United States of America */
     {311, "100", "US"}, /* United States of America */
     {311, "110", "US"}, /* United States of America */
     {311, "120", "GU"}, /* Guam (United States of America) */
@@ -954,70 +996,226 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {311, "170", "US"}, /* United States of America */
     {311, "180", "US"}, /* United States of America */
     {311, "190", "US"}, /* United States of America */
+    {311, "200", "US"}, /* United States of America */
     {311, "210", "US"}, /* United States of America */
     {311, "220", "US"}, /* United States of America */
     {311, "230", "US"}, /* United States of America */
+    {311, "240", "US"}, /* United States of America */
     {311, "250", "GU"}, /* Guam (United States of America) */
     {311, "250", "US"}, /* United States of America */
+    {311, "270", "US"}, /* United States of America */
+    {311, "271", "US"}, /* United States of America */
+    {311, "272", "US"}, /* United States of America */
+    {311, "273", "US"}, /* United States of America */
+    {311, "274", "US"}, /* United States of America */
+    {311, "275", "US"}, /* United States of America */
+    {311, "276", "US"}, /* United States of America */
+    {311, "277", "US"}, /* United States of America */
+    {311, "278", "US"}, /* United States of America */
+    {311, "279", "US"}, /* United States of America */
+    {311, "280", "US"}, /* United States of America */
+    {311, "281", "US"}, /* United States of America */
+    {311, "282", "US"}, /* United States of America */
+    {311, "283", "US"}, /* United States of America */
+    {311, "284", "US"}, /* United States of America */
+    {311, "285", "US"}, /* United States of America */
+    {311, "286", "US"}, /* United States of America */
+    {311, "287", "US"}, /* United States of America */
+    {311, "288", "US"}, /* United States of America */
+    {311, "289", "US"}, /* United States of America */
+    {311, "290", "US"}, /* United States of America */
+    {311, "300", "US"}, /* United States of America */
+    {311, "310", "US"}, /* United States of America */
+    {311, "320", "US"}, /* United States of America */
     {311, "330", "US"}, /* United States of America */
+    {311, "340", "US"}, /* United States of America */
+    {311, "350", "US"}, /* United States of America */
     {311, "360", "US"}, /* United States of America */
     {311, "370", "US"}, /* United States of America */
+    {311, "380", "US"}, /* United States of America */
+    {311, "390", "US"}, /* United States of America */
+    {311, "400", "US"}, /* United States of America */
     {311, "410", "US"}, /* United States of America */
     {311, "420", "US"}, /* United States of America */
+    {311, "430", "US"}, /* United States of America */
+    {311, "440", "US"}, /* United States of America */
     {311, "450", "US"}, /* United States of America */
+    {311, "460", "US"}, /* United States of America */
+    {311, "470", "US"}, /* United States of America */
     {311, "480", "US"}, /* United States of America */
     {311, "481", "US"}, /* United States of America */
+    {311, "482", "US"}, /* United States of America */
+    {311, "483", "US"}, /* United States of America */
+    {311, "484", "US"}, /* United States of America */
+    {311, "485", "US"}, /* United States of America */
+    {311, "486", "US"}, /* United States of America */
+    {311, "487", "US"}, /* United States of America */
+    {311, "488", "US"}, /* United States of America */
+    {311, "489", "US"}, /* United States of America */
     {311, "490", "US"}, /* United States of America */
     {311, "500", "US"}, /* United States of America */
+    {311, "510", "US"}, /* United States of America */
+    {311, "520", "US"}, /* United States of America */
     {311, "530", "US"}, /* United States of America */
+    {311, "540", "US"}, /* United States of America */
+    {311, "550", "US"}, /* United States of America */
+    {311, "560", "US"}, /* United States of America */
     {311, "570", "US"}, /* United States of America */
     {311, "580", "US"}, /* United States of America */
+    {311, "590", "US"}, /* United States of America */
+    {311, "600", "US"}, /* United States of America */
+    {311, "610", "US"}, /* United States of America */
+    {311, "620", "US"}, /* United States of America */
     {311, "630", "US"}, /* United States of America */
     {311, "640", "US"}, /* United States of America */
     {311, "650", "US"}, /* United States of America */
     {311, "660", "US"}, /* United States of America */
+    {311, "670", "US"}, /* United States of America */
+    {311, "680", "US"}, /* United States of America */
+    {311, "690", "US"}, /* United States of America */
+    {311, "700", "US"}, /* United States of America */
+    {311, "710", "US"}, /* United States of America */
+    {311, "720", "US"}, /* United States of America */
+    {311, "730", "US"}, /* United States of America */
+    {311, "740", "US"}, /* United States of America */
     {311, "750", "US"}, /* United States of America */
+    {311, "760", "US"}, /* United States of America */
+    {311, "770", "US"}, /* United States of America */
+    {311, "780", "US"}, /* United States of America */
     {311, "790", "US"}, /* United States of America */
+    {311, "800", "US"}, /* United States of America */
     {311, "810", "US"}, /* United States of America */
+    {311, "820", "US"}, /* United States of America */
     {311, "830", "US"}, /* United States of America */
+    {311, "840", "US"}, /* United States of America */
+    {311, "850", "US"}, /* United States of America */
+    {311, "860", "US"}, /* United States of America */
     {311, "870", "US"}, /* United States of America */
+    {311, "880", "US"}, /* United States of America */
+    {311, "890", "US"}, /* United States of America */
+    {311, "900", "US"}, /* United States of America */
     {311, "910", "US"}, /* United States of America */
+    {311, "920", "US"}, /* United States of America */
     {311, "930", "US"}, /* United States of America */
+    {311, "940", "US"}, /* United States of America */
     {311, "950", "US"}, /* United States of America */
     {311, "960", "US"}, /* United States of America */
     {311, "970", "US"}, /* United States of America */
+    {311, "980", "US"}, /* United States of America */
     {311, "990", "US"}, /* United States of America */
+    {312, "010", "US"}, /* United States of America */
     {312, "020", "US"}, /* United States of America */
     {312, "030", "US"}, /* United States of America */
     {312, "040", "US"}, /* United States of America */
     {312, "050", "US"}, /* United States of America */
+    {312, "060", "US"}, /* United States of America */
     {312, "070", "US"}, /* United States of America */
     {312, "080", "US"}, /* United States of America */
+    {312, "090", "US"}, /* United States of America */
+    {312, "100", "US"}, /* United States of America */
+    {312, "110", "US"}, /* United States of America */
     {312, "120", "US"}, /* United States of America */
     {312, "130", "US"}, /* United States of America */
+    {312, "140", "US"}, /* United States of America */
+    {312, "150", "US"}, /* United States of America */
+    {312, "160", "US"}, /* United States of America */
+    {312, "170", "US"}, /* United States of America */
     {312, "180", "US"}, /* United States of America */
+    {312, "190", "US"}, /* United States of America */
+    {312, "200", "US"}, /* United States of America */
+    {312, "210", "US"}, /* United States of America */
     {312, "220", "US"}, /* United States of America */
+    {312, "230", "US"}, /* United States of America */
+    {312, "240", "US"}, /* United States of America */
+    {312, "250", "US"}, /* United States of America */
     {312, "260", "US"}, /* United States of America */
     {312, "270", "US"}, /* United States of America */
     {312, "280", "US"}, /* United States of America */
+    {312, "290", "US"}, /* United States of America */
+    {312, "300", "US"}, /* United States of America */
+    {312, "310", "US"}, /* United States of America */
+    {312, "320", "US"}, /* United States of America */
     {312, "330", "US"}, /* United States of America */
     {312, "340", "US"}, /* United States of America */
     {312, "350", "US"}, /* United States of America */
+    {312, "360", "US"}, /* United States of America */
     {312, "370", "US"}, /* United States of America */
     {312, "380", "US"}, /* United States of America */
+    {312, "390", "US"}, /* United States of America */
     {312, "400", "US"}, /* United States of America */
+    {312, "410", "US"}, /* United States of America */
     {312, "420", "US"}, /* United States of America */
+    {312, "430", "US"}, /* United States of America */
+    {312, "440", "US"}, /* United States of America */
+    {312, "450", "US"}, /* United States of America */
     {312, "460", "US"}, /* United States of America */
     {312, "470", "US"}, /* United States of America */
+    {312, "480", "US"}, /* United States of America */
+    {312, "490", "US"}, /* United States of America */
+    {312, "500", "US"}, /* United States of America */
+    {312, "510", "US"}, /* United States of America */
+    {312, "520", "US"}, /* United States of America */
     {312, "530", "US"}, /* United States of America */
+    {312, "540", "US"}, /* United States of America */
+    {312, "550", "US"}, /* United States of America */
+    {312, "560", "US"}, /* United States of America */
+    {312, "570", "US"}, /* United States of America */
+    {312, "580", "US"}, /* United States of America */
     {312, "590", "US"}, /* United States of America */
+    {312, "600", "US"}, /* United States of America */
     {312, "610", "US"}, /* United States of America */
+    {312, "620", "US"}, /* United States of America */
+    {312, "630", "US"}, /* United States of America */
+    {312, "640", "US"}, /* United States of America */
+    {312, "650", "US"}, /* United States of America */
     {312, "660", "US"}, /* United States of America */
+    {312, "670", "US"}, /* United States of America */
+    {312, "680", "US"}, /* United States of America */
+    {312, "690", "US"}, /* United States of America */
+    {312, "700", "US"}, /* United States of America */
+    {312, "710", "US"}, /* United States of America */
+    {312, "720", "US"}, /* United States of America */
+    {312, "730", "US"}, /* United States of America */
+    {312, "740", "US"}, /* United States of America */
+    {312, "750", "US"}, /* United States of America */
+    {312, "760", "US"}, /* United States of America */
+    {312, "770", "US"}, /* United States of America */
     {312, "780", "US"}, /* United States of America */
+    {312, "790", "US"}, /* United States of America */
+    {312, "800", "US"}, /* United States of America */
+    {312, "810", "US"}, /* United States of America */
+    {312, "820", "US"}, /* United States of America */
+    {312, "830", "US"}, /* United States of America */
+    {312, "840", "US"}, /* United States of America */
+    {312, "850", "US"}, /* United States of America */
     {312, "860", "US"}, /* United States of America */
+    {312, "870", "US"}, /* United States of America */
+    {312, "880", "US"}, /* United States of America */
+    {312, "890", "US"}, /* United States of America */
     {312, "900", "US"}, /* United States of America */
+    {312, "910", "US"}, /* United States of America */
+    {312, "920", "US"}, /* United States of America */
+    {312, "930", "US"}, /* United States of America */
+    {312, "940", "US"}, /* United States of America */
+    {312, "950", "US"}, /* United States of America */
+    {312, "960", "US"}, /* United States of America */
+    {312, "970", "US"}, /* United States of America */
+    {312, "980", "US"}, /* United States of America */
+    {312, "990", "US"}, /* United States of America */
+    {313, "000", "US"}, /* United States of America */
+    {313, "010", "US"}, /* United States of America */
+    {313, "020", "US"}, /* United States of America */
+    {313, "030", "US"}, /* United States of America */
+    {313, "040", "US"}, /* United States of America */
+    {313, "050", "US"}, /* United States of America */
+    {313, "060", "US"}, /* United States of America */
+    {313, "070", "US"}, /* United States of America */
+    {313, "080", "US"}, /* United States of America */
+    {313, "090", "US"}, /* United States of America */
     {313, "100", "US"}, /* United States of America */
-    {313, "101", "US"}, /* United States of America */
+    {313, "110", "US"}, /* United States of America */
+    {313, "200", "US"}, /* United States of America */
+    {313, "210", "US"}, /* United States of America */
     {316, "010", "US"}, /* United States of America */
     {316, "011", "US"}, /* United States of America */
     {330, "000", "PR"}, /* Puerto Rico */
@@ -1035,6 +1233,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {334, "080", "MX"}, /* Mexico */
     {334, "090", "MX"}, /* Mexico */
     {338, "020", "JM"}, /* Jamaica */
+    {338, "040", "JM"}, /* Jamaica */
     {338, "050", "BM"}, /* Bermuda */
     {338, "050", "JM"}, /* Jamaica */
     {338, "050", "TC"}, /* Turks and Caicos Islands */
@@ -1089,6 +1288,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {362, "94", "BQ"}, /* Netherlands Antilles (Kingdom of the Netherlands) */
     {362, "95", "BQ"}, /* Netherlands Antilles (Kingdom of the Netherlands) */
     {363, "02", "AW"}, /* Aruba (Kingdom of the Netherlands) */
+    {364, "49", "BS"}, /* Bahamas */
     {365, "010", "AI"}, /* Anguilla (United Kingdom) */
     {366, "020", "DM"}, /* Dominica */
     {366, "110", "DM"}, /* Dominica */
@@ -1346,12 +1546,17 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {413, "01", "LK"}, /* Sri Lanka */
     {413, "02", "LK"}, /* Sri Lanka */
     {413, "03", "LK"}, /* Sri Lanka */
+    {413, "04", "LK"}, /* Sri Lanka */
     {413, "05", "LK"}, /* Sri Lanka */
     {413, "08", "LK"}, /* Sri Lanka */
+    {414, "00", "MM"}, /* Myanmar */
     {414, "01", "MM"}, /* Myanmar */
+    {414, "02", "MM"}, /* Myanmar */
     {414, "03", "MM"}, /* Myanmar */
+    {414, "04", "MM"}, /* Myanmar */
     {414, "05", "MM"}, /* Myanmar */
     {414, "06", "MM"}, /* Myanmar */
+    {414, "09", "MM"}, /* Myanmar */
     {415, "01", "LB"}, /* Lebanon */
     {415, "03", "LB"}, /* Lebanon */
     {415, "05", "LB"}, /* Lebanon */
@@ -1393,11 +1598,12 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {425, "03", "IL"}, /* Israel */
     {425, "04", "IL"}, /* Israel */
     {425, "05", "IL"}, /* Israel */
-    {425, "05", "PS"}, /* Palestine */
+    {425, "05", "PS"}, /* State of Palestine|Palestine */
     {425, "06", "IL"}, /* Israel */
-    {425, "06", "PS"}, /* Palestine */
+    {425, "06", "PS"}, /* State of Palestine|Palestine */
     {425, "07", "IL"}, /* Israel */
     {425, "08", "IL"}, /* Israel */
+    {425, "09", "IL"}, /* Israel */
     {425, "11", "IL"}, /* Israel */
     {425, "12", "IL"}, /* Israel */
     {425, "13", "IL"}, /* Israel */
@@ -1433,8 +1639,8 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {432, "12", "IR"}, /* Iran */
     {432, "14", "IR"}, /* Iran */
     {432, "19", "IR"}, /* Iran */
+    {432, "20", "IR"}, /* Iran */
     {432, "32", "IR"}, /* Iran */
-    {432, "35", "IR"}, /* Iran */
     {432, "70", "IR"}, /* Iran */
     {432, "93", "IR"}, /* Iran */
     {434, "01", "UZ"}, /* Uzbekistan */
@@ -1449,6 +1655,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {436, "03", "TJ"}, /* Tajikistan */
     {436, "04", "TJ"}, /* Tajikistan */
     {436, "05", "TJ"}, /* Tajikistan */
+    {436, "10", "TJ"}, /* Tajikistan */
     {436, "12", "TJ"}, /* Tajikistan */
     {437, "01", "KG"}, /* Kyrgyzstan */
     {437, "03", "KG"}, /* Kyrgyzstan */
@@ -1460,6 +1667,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {440, "00", "JP"}, /* Japan */
     {440, "01", "JP"}, /* Japan */
     {440, "02", "JP"}, /* Japan */
+    {440, "03", "JP"}, /* Japan */
     {440, "05", "JP"}, /* Japan */
     {440, "10", "JP"}, /* Japan */
     {440, "20", "JP"}, /* Japan */
@@ -1480,13 +1688,16 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {441, "00", "JP"}, /* Japan */
     {441, "01", "JP"}, /* Japan */
     {441, "10", "JP"}, /* Japan */
+    {450, "01", "KR"}, /* South Korea */
     {450, "02", "KR"}, /* South Korea */
     {450, "03", "KR"}, /* South Korea */
     {450, "04", "KR"}, /* South Korea */
     {450, "05", "KR"}, /* South Korea */
     {450, "06", "KR"}, /* South Korea */
+    {450, "07", "KR"}, /* South Korea */
     {450, "08", "KR"}, /* South Korea */
     {450, "11", "KR"}, /* South Korea */
+    {450, "12", "KR"}, /* South Korea */
     {452, "01", "VN"}, /* Vietnam */
     {452, "02", "VN"}, /* Vietnam */
     {452, "03", "VN"}, /* Vietnam */
@@ -1519,7 +1730,13 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {454, "21", "HK"}, /* Hong Kong */
     {454, "22", "HK"}, /* Hong Kong */
     {454, "23", "HK"}, /* Hong Kong */
+    {454, "24", "HK"}, /* Hong Kong */
+    {454, "25", "HK"}, /* Hong Kong */
+    {454, "26", "HK"}, /* Hong Kong */
     {454, "29", "HK"}, /* Hong Kong */
+    {454, "30", "HK"}, /* Hong Kong */
+    {454, "31", "HK"}, /* Hong Kong */
+    {454, "32", "HK"}, /* Hong Kong */
     {455, "00", "MO"}, /* Macau (People's Republic of China) */
     {455, "01", "MO"}, /* Macau (People's Republic of China) */
     {455, "02", "MO"}, /* Macau (People's Republic of China) */
@@ -1638,7 +1855,13 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {505, "34", "AU"}, /* Australia */
     {505, "35", "AU"}, /* Australia */
     {505, "36", "AU"}, /* Australia */
+    {505, "37", "AU"}, /* Australia */
     {505, "38", "AU"}, /* Australia */
+    {505, "39", "AU"}, /* Australia */
+    {505, "40", "AU"}, /* Australia */
+    {505, "41", "AU"}, /* Australia */
+    {505, "42", "AU"}, /* Australia */
+    {505, "61", "AU"}, /* Australia */
     {505, "62", "AU"}, /* Australia */
     {505, "68", "AU"}, /* Australia */
     {505, "71", "AU"}, /* Australia */
@@ -1690,6 +1913,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {525, "06", "SG"}, /* Singapore */
     {525, "07", "SG"}, /* Singapore */
     {525, "08", "SG"}, /* Singapore */
+    {525, "09", "SG"}, /* Singapore */
     {525, "12", "SG"}, /* Singapore */
     {528, "01", "BN"}, /* Brunei */
     {528, "02", "BN"}, /* Brunei */
@@ -1720,11 +1944,13 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {542, "03", "FJ"}, /* Fiji */
     {543, "01", "WF"}, /* Wallis and Futuna */
     {545, "01", "KI"}, /* Kiribati */
+    {545, "02", "KI"}, /* Kiribati */
     {545, "09", "KI"}, /* Kiribati */
     {546, "01", "NC"}, /* New Caledonia (France) */
     {547, "05", "PF"}, /* French Polynesia (France) */
     {547, "10", "PF"}, /* French Polynesia (France) */
     {547, "15", "PF"}, /* French Polynesia (France) */
+    {547, "20", "PF"}, /* French Polynesia (France) */
     {548, "01", "CK"}, /* Cook Islands (Pacific Ocean) */
     {549, "01", "WS"}, /* Samoa */
     {550, "01", "FM"}, /* Federated States of Micronesia */
@@ -1732,6 +1958,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {552, "01", "PW"}, /* Palau */
     {552, "80", "PW"}, /* Palau */
     {553, "01", "TV"}, /* Tuvalu */
+    {554, "01", "TK"}, /* Tokelau */
     {555, "01", "NU"}, /* Niue */
     {602, "01", "EG"}, /* Egypt */
     {602, "02", "EG"}, /* Egypt */
@@ -1739,6 +1966,9 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {603, "01", "DZ"}, /* Algeria */
     {603, "02", "DZ"}, /* Algeria */
     {603, "03", "DZ"}, /* Algeria */
+    {603, "07", "DZ"}, /* Algeria */
+    {603, "09", "DZ"}, /* Algeria */
+    {603, "21", "DZ"}, /* Algeria */
     {604, "00", "MA"}, /* Morocco */
     {604, "01", "MA"}, /* Morocco */
     {604, "02", "MA"}, /* Morocco */
@@ -1755,6 +1985,8 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {607, "02", "GM"}, /* Gambia */
     {607, "03", "GM"}, /* Gambia */
     {607, "04", "GM"}, /* Gambia */
+    {607, "05", "GM"}, /* Gambia */
+    {607, "06", "GM"}, /* Gambia */
     {608, "01", "SN"}, /* Senegal */
     {608, "02", "SN"}, /* Senegal */
     {608, "03", "SN"}, /* Senegal */
@@ -1819,6 +2051,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {620, "11", "GH"}, /* Ghana */
     {621, "00", "NG"}, /* Nigeria */
     {621, "20", "NG"}, /* Nigeria */
+    {621, "22", "NG"}, /* Nigeria */
     {621, "24", "NG"}, /* Nigeria */
     {621, "25", "NG"}, /* Nigeria */
     {621, "26", "NG"}, /* Nigeria */
@@ -1840,6 +2073,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {625, "01", "CV"}, /* Cape Verde */
     {625, "02", "CV"}, /* Cape Verde */
     {626, "01", "ST"}, /* Sao Tome and Principe */
+    {626, "02", "ST"}, /* Sao Tome and Principe */
     {627, "01", "GQ"}, /* Equatorial Guinea */
     {627, "03", "GQ"}, /* Equatorial Guinea */
     {628, "01", "GA"}, /* Gabon */
@@ -1847,9 +2081,9 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {628, "03", "GA"}, /* Gabon */
     {628, "04", "GA"}, /* Gabon */
     {628, "05", "GA"}, /* Gabon */
-    {629, "01", "CG"}, /* Republic of the Congo */
-    {629, "07", "CG"}, /* Republic of the Congo */
-    {629, "10", "CG"}, /* Republic of the Congo */
+    {629, "01", "CG"}, /* Republic of the Congo|Congo */
+    {629, "07", "CG"}, /* Republic of the Congo|Congo */
+    {629, "10", "CG"}, /* Republic of the Congo|Congo */
     {630, "01", "CD"}, /* Democratic Republic of the Congo */
     {630, "02", "CD"}, /* Democratic Republic of the Congo */
     {630, "04", "CD"}, /* Democratic Republic of the Congo */
@@ -1860,9 +2094,9 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {630, "89", "CD"}, /* Democratic Republic of the Congo */
     {630, "90", "CD"}, /* Democratic Republic of the Congo */
     {631, "04", "AO"}, /* Angola */
-    {632, "01", "GW"}, /* Guinea */
-    {632, "03", "GW"}, /* Guinea */
-    {632, "07", "GW"}, /* Guinea */
+    {632, "01", "GW"}, /* Guinea-Bissau */
+    {632, "03", "GW"}, /* Guinea-Bissau */
+    {632, "07", "GW"}, /* Guinea-Bissau */
     {633, "01", "SC"}, /* Seychelles */
     {633, "02", "SC"}, /* Seychelles */
     {633, "10", "SC"}, /* Seychelles */
@@ -1906,13 +2140,17 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {640, "09", "TZ"}, /* Tanzania */
     {640, "11", "TZ"}, /* Tanzania */
     {640, "12", "TZ"}, /* Tanzania */
+    {640, "13", "TZ"}, /* Tanzania */
     {641, "01", "UG"}, /* Uganda */
+    {641, "04", "UG"}, /* Uganda */
     {641, "06", "UG"}, /* Uganda */
     {641, "10", "UG"}, /* Uganda */
     {641, "11", "UG"}, /* Uganda */
     {641, "14", "UG"}, /* Uganda */
+    {641, "16", "UG"}, /* Uganda */
     {641, "18", "UG"}, /* Uganda */
     {641, "22", "UG"}, /* Uganda */
+    {641, "26", "UG"}, /* Uganda */
     {641, "30", "UG"}, /* Uganda */
     {641, "33", "UG"}, /* Uganda */
     {641, "40", "UG"}, /* Uganda */
@@ -1931,10 +2169,11 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {646, "02", "MG"}, /* Madagascar */
     {646, "03", "MG"}, /* Madagascar */
     {646, "04", "MG"}, /* Madagascar */
-    {647, "00", "RE"}, /* Reunion (France) */
-    {647, "01", "RE"}, /* Reunion (France) */
-    {647, "02", "RE"}, /* Reunion (France) */
-    {647, "10", "RE"}, /* Reunion (France) */
+    {647, "00", "YT"}, /* French Indian Ocean Territories (France) */
+    {647, "01", "YT"}, /* French Indian Ocean Territories (France) */
+    {647, "02", "YT"}, /* French Indian Ocean Territories (France) */
+    {647, "03", "YT"}, /* French Indian Ocean Territories (France) */
+    {647, "10", "YT"}, /* French Indian Ocean Territories (France) */
     {648, "01", "ZW"}, /* Zimbabwe */
     {648, "03", "ZW"}, /* Zimbabwe */
     {648, "04", "ZW"}, /* Zimbabwe */
@@ -1944,15 +2183,16 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {649, "04", "NA"}, /* Namibia */
     {649, "05", "NA"}, /* Namibia */
     {650, "01", "MW"}, /* Malawi */
+    {650, "02", "MW"}, /* Malawi */
     {650, "10", "MW"}, /* Malawi */
     {651, "01", "LS"}, /* Lesotho */
     {651, "02", "LS"}, /* Lesotho */
     {652, "01", "BW"}, /* Botswana */
-    {652, "02", "MG"}, /* Madagascar */
     {652, "04", "BW"}, /* Botswana */
     {653, "01", "SZ"}, /* Swaziland */
     {653, "10", "SZ"}, /* Swaziland */
     {654, "01", "KM"}, /* Comoros */
+    {654, "02", "KM"}, /* Comoros */
     {655, "01", "ZA"}, /* South Africa */
     {655, "02", "ZA"}, /* South Africa */
     {655, "04", "ZA"}, /* South Africa */
@@ -1980,8 +2220,12 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {655, "36", "ZA"}, /* South Africa */
     {655, "38", "ZA"}, /* South Africa */
     {655, "41", "ZA"}, /* South Africa */
+    {655, "46", "ZA"}, /* South Africa */
     {655, "50", "ZA"}, /* South Africa */
     {655, "51", "ZA"}, /* South Africa */
+    {655, "53", "ZA"}, /* South Africa */
+    {655, "73", "ZA"}, /* South Africa */
+    {655, "74", "ZA"}, /* South Africa */
     {657, "01", "ER"}, /* Eritrea */
     {658, "01", "BL"}, /* Saint Barthélemy (France) */
     {659, "03", "SS"}, /* South Sudan */
@@ -1996,6 +2240,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {704, "02", "GT"}, /* Guatemala */
     {704, "03", "GT"}, /* Guatemala */
     {706, "01", "SV"}, /* El Salvador */
+    {706, "02", "SV"}, /* El Salvador */
     {706, "03", "SV"}, /* El Salvador */
     {706, "04", "SV"}, /* El Salvador */
     {706, "05", "SV"}, /* El Salvador */
@@ -2038,6 +2283,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {724, "11", "BR"}, /* Brazil */
     {724, "15", "BR"}, /* Brazil */
     {724, "16", "BR"}, /* Brazil */
+    {724, "17", "BR"}, /* Brazil */
     {724, "18", "BR"}, /* Brazil */
     {724, "23", "BR"}, /* Brazil */
     {724, "24", "BR"}, /* Brazil */
@@ -2090,6 +2336,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {732, "165", "CO"}, /* Colombia */
     {732, "176", "CO"}, /* Colombia */
     {732, "187", "CO"}, /* Colombia */
+    {732, "199", "CO"}, /* Colombia */
     {734, "01", "VE"}, /* Venezuela */
     {734, "02", "VE"}, /* Venezuela */
     {734, "03", "VE"}, /* Venezuela */
@@ -2104,6 +2351,7 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {740, "00", "EC"}, /* Ecuador */
     {740, "01", "EC"}, /* Ecuador */
     {740, "02", "EC"}, /* Ecuador */
+    {740, "03", "EC"}, /* Ecuador */
     {744, "01", "PY"}, /* Paraguay */
     {744, "02", "PY"}, /* Paraguay */
     {744, "03", "PY"}, /* Paraguay */
@@ -2119,7 +2367,8 @@ static const QOfonoMccListEntry qofonoMccList[] = {
     {748, "03", "UY"}, /* Uruguay */
     {748, "07", "UY"}, /* Uruguay */
     {748, "10", "UY"}, /* Uruguay */
-    {750, "001", "FK"} /* Falkland Islands (United Kingdom) */
+    {750, "001", "FK"}, /* Falkland Islands (United Kingdom) */
+    {995, "01", "IO"} /* British Indian Ocean Territory (United Kingdom) */
 };
 
 QOfono::QOfono()

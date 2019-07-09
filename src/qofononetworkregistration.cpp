@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2015 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2013-2019 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -15,9 +14,24 @@
 
 #include "qofononetworkregistration.h"
 #include "qofononetworkoperator.h"
+#include "qofono.h"
 #include "ofono_network_registration_interface.h"
 
 #define SUPER QOfonoModemInterface
+
+#define PROPERTY_MODE          QStringLiteral("Mode")
+#define PROPERTY_STATUS        QStringLiteral("Status")
+#define PROPERTY_LAC           QStringLiteral("LocationAreaCode")
+#define PROPERTY_CELL_ID       QStringLiteral("CellId")
+#define PROPERTY_MCC           QStringLiteral("MobileCountryCode")
+#define PROPERTY_MNC           QStringLiteral("MobileNetworkCode")
+#define PROPERTY_TECHNOLOGY    QStringLiteral("Technology")
+#define PROPERTY_NAME          QStringLiteral("Name")
+#define PROPERTY_STRENGTH      QStringLiteral("Strength")
+#define PROPERTY_BASE_STATION  QStringLiteral("BaseStation")
+
+#define STATUS_REGISTERED      QStringLiteral("registered")
+#define STATUS_ROAMING         QStringLiteral("roaming")
 
 class QOfonoNetworkRegistration::Private : public QOfonoObject::ExtData
 {
@@ -27,10 +41,32 @@ public:
     QOfonoNetworkOperator* currentOperator;
     QHash<QString,QOfonoNetworkOperator*> networkOperators;
     QStringList operatorPaths;
+    QString country;
 
+public:
     Private() : initialized(false), scanning(false), currentOperator(NULL) {}
     ~Private() { qDeleteAll(networkOperators.values()); }
+
+    bool updateCountry(QOfonoNetworkRegistration *reg);
 };
+
+bool QOfonoNetworkRegistration::Private::updateCountry(QOfonoNetworkRegistration *reg)
+{
+    const QString status(reg->status());
+    QString newCountry;
+    if (status == STATUS_REGISTERED || status == STATUS_ROAMING) {
+        const int mcc = reg->mcc().toInt();
+        if (mcc) {
+            newCountry = QOfono::mobileCountryCodeToAlpha2CountryCode(mcc);
+        }
+    }
+    if (country != newCountry) {
+        country = newCountry;
+        return true;
+    } else {
+        return false;
+    }
+}
 
 QOfonoNetworkRegistration::QOfonoNetworkRegistration(QObject *parent) :
     SUPER(OfonoNetworkRegistration::staticInterfaceName(), new Private, parent)
@@ -70,9 +106,13 @@ void QOfonoNetworkRegistration::dbusInterfaceDropped()
     SUPER::dbusInterfaceDropped();
     Private *d_ptr = privateData();
     d_ptr->initialized = false;
+    const bool emitCountryChanged = d_ptr->updateCountry(this);
+    bool emitScanningChanged;
     if (d_ptr->scanning) {
         d_ptr->scanning = false;
-        scanningChanged(false);
+        emitScanningChanged = true;
+    } else {
+        emitScanningChanged = true;
     }
     if (!d_ptr->networkOperators.isEmpty()) {
         qDeleteAll(d_ptr->networkOperators.values());
@@ -80,6 +120,12 @@ void QOfonoNetworkRegistration::dbusInterfaceDropped()
         d_ptr->networkOperators.clear();
         d_ptr->currentOperator = NULL;
         Q_EMIT networkOperatorsChanged(d_ptr->operatorPaths);
+    }
+    if (emitScanningChanged) {
+        Q_EMIT scanningChanged(false);
+    }
+    if (emitCountryChanged) {
+        Q_EMIT countryChanged();
     }
 }
 
@@ -144,76 +190,87 @@ void QOfonoNetworkRegistration::scan()
 
 QString QOfonoNetworkRegistration::mode() const
 {
-    return getString("Mode");
+    return getString(PROPERTY_MODE);
 }
 
 QString QOfonoNetworkRegistration::status() const
 {
-    return getString("Status");
+    return getString(PROPERTY_STATUS);
 }
 
 uint QOfonoNetworkRegistration::locationAreaCode() const
 {
-    return getUInt("LocalAreaCode");
+    return getUInt(PROPERTY_LAC);
 }
 
 uint QOfonoNetworkRegistration::cellId() const
 {
-    return getUInt("CellId");
+    return getUInt(PROPERTY_CELL_ID);
 }
 
 QString QOfonoNetworkRegistration::mcc() const
 {
-    return getString("MobileCountryCode");
+    return getString(PROPERTY_MCC);
 }
 
 QString QOfonoNetworkRegistration::mnc() const
 {
-    return getString("MobileNetworkCode");
+    return getString(PROPERTY_MNC);
 }
 
 QString QOfonoNetworkRegistration::technology() const
 {
-    return getString("Technology");
+    return getString(PROPERTY_TECHNOLOGY);
 }
 
 QString QOfonoNetworkRegistration::name() const
 {
-    return getString("Name");
+    return getString(PROPERTY_NAME);
 }
 
 uint QOfonoNetworkRegistration::strength() const
 {
-    return getUInt("Strength");
+    return getUInt(PROPERTY_STRENGTH);
 }
 
 QString QOfonoNetworkRegistration::baseStation() const
 {
-    return getString("BaseStation");
+    return getString(PROPERTY_BASE_STATION);
+}
+
+QString QOfonoNetworkRegistration::country() const
+{
+    return privateData()->country;
 }
 
 void QOfonoNetworkRegistration::propertyChanged(const QString &property, const QVariant &value)
 {
     SUPER::propertyChanged(property, value);
-    if (property == QLatin1String("Mode")) {
-        Q_EMIT modeChanged(value.toString());
-    } else if (property == QLatin1String("Status")) {
-        Q_EMIT statusChanged(value.toString());
-    } else if (property == QLatin1String("LocationAreaCode")) {
-        Q_EMIT locationAreaCodeChanged(value.toUInt());
-    } else if (property == QLatin1String("CellId")) {
-        Q_EMIT cellIdChanged(value.toUInt());
-    } else if (property == QLatin1String("MobileCountryCode")) {
-        Q_EMIT mccChanged(value.toString());
-    } else if (property == QLatin1String("MobileNetworkCode")) {
-        Q_EMIT mncChanged(value.toString());
-    } else if (property == QLatin1String("Technology")) {
-        Q_EMIT technologyChanged(value.toString());
-    } else if (property == QLatin1String("Name")) {
-        Q_EMIT nameChanged(value.toString());
-    } else if (property == QLatin1String("Strength")) {
+    if (property == PROPERTY_STRENGTH) {
         Q_EMIT strengthChanged(value.toUInt());
-    } else if (property == QLatin1String("BaseStation")) {
+    } else if (property == PROPERTY_MODE) {
+        Q_EMIT modeChanged(value.toString());
+    } else if (property == PROPERTY_STATUS) {
+        if (privateData()->updateCountry(this)) {
+            Q_EMIT countryChanged();
+        }
+        Q_EMIT statusChanged(value.toString());
+    } else if (property == PROPERTY_LAC) {
+        Q_EMIT locationAreaCodeChanged(value.toUInt());
+    } else if (property == PROPERTY_CELL_ID) {
+        Q_EMIT cellIdChanged(value.toUInt());
+    } else if (property == PROPERTY_MCC) {
+        if (privateData()->updateCountry(this)) {
+            Q_EMIT countryChanged();
+        }
+        Q_EMIT mccChanged(value.toString());
+    } else if (property == PROPERTY_MNC) {
+        Q_EMIT mncChanged(value.toString());
+    } else if (property == PROPERTY_TECHNOLOGY) {
+        Q_EMIT technologyChanged(value.toString());
+    } else if (property == PROPERTY_NAME) {
+        Q_EMIT nameChanged(value.toString());
+    } else if (property == PROPERTY_BASE_STATION) {
         Q_EMIT baseStationChanged(value.toString());
     }
 }
