@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2015 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -13,6 +12,7 @@
 **
 ****************************************************************************/
 
+#include "dbustypes_p.h"
 #include "qofonosupplementaryservices.h"
 #include "ofono_supplementary_services_interface.h"
 
@@ -29,11 +29,9 @@ QOfonoSupplementaryServices::~QOfonoSupplementaryServices()
 
 QDBusAbstractInterface *QOfonoSupplementaryServices::createDbusInterface(const QString &path)
 {
-    QDBusAbstractInterface *iface = new OfonoSupplementaryServices("org.ofono", path, QDBusConnection::systemBus(), this);
-
+    QDBusAbstractInterface *iface = new OfonoSupplementaryServices(OFONO_SERVICE, path, OFONO_BUS, this);
     connect(iface, SIGNAL(NotificationReceived(QString)), this, SIGNAL(notificationReceived(QString)));
     connect(iface, SIGNAL(RequestReceived(QString)), this, SIGNAL(requestReceived(QString)));
-
     return iface;
 }
 

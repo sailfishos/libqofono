@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2015 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -13,6 +12,7 @@
 **
 ****************************************************************************/
 
+#include "dbustypes_p.h"
 #include "qofonosmartmessaging.h"
 #include "ofono_smart_messaging_interface.h"
 
@@ -49,7 +49,7 @@ QOfonoSmartMessaging::~QOfonoSmartMessaging()
 
 QDBusAbstractInterface *QOfonoSmartMessaging::createDbusInterface(const QString &path)
 {
-    return new OfonoSmartMessaging("org.ofono", path, QDBusConnection::systemBus(), this);
+    return new OfonoSmartMessaging(OFONO_SERVICE, path, OFONO_BUS, this);
 }
 
 QDBusObjectPath QOfonoSmartMessaging::sendAppointment(const QString &toPhoneNumber, const QByteArray &appointment)

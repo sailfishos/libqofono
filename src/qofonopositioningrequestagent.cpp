@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2015 Jolla Ltd.
+** Copyright (C) 2013-2020 Jolla Ltd.
 ** Contact: lorn.potter@jollamobile.com
 **
 ** GNU Lesser General Public License Usage
@@ -13,6 +13,7 @@
 **
 ****************************************************************************/
 
+#include "dbustypes_p.h"
 #include "qofonopositioningrequestagent.h"
 #include "qofonoassistedsatellitenavigation.h"
 #include "ofono_positioning_request_agent_adaptor.h"
@@ -33,8 +34,9 @@ QOfonoPositioningRequestAgentPrivate::QOfonoPositioningRequestAgentPrivate() :
 
 QOfonoPositioningRequestAgentPrivate::~QOfonoPositioningRequestAgentPrivate()
 {
-    if (registered)
-        QDBusConnection::systemBus().unregisterObject(positioningAgentPath);
+    if (registered) {
+        OFONO_BUS.unregisterObject(positioningAgentPath);
+    }
 }
 
 QOfonoPositioningRequestAgent::QOfonoPositioningRequestAgent(QObject *parent) :
@@ -52,7 +54,7 @@ QOfonoPositioningRequestAgent::~QOfonoPositioningRequestAgent()
 void QOfonoPositioningRequestAgent::setAgentPath(const QString &path)
 {
     if (d_ptr->positioningAgentPath != path) {
-        QDBusConnection dbus = QDBusConnection::systemBus();
+        QDBusConnection dbus(OFONO_BUS);
         if (d_ptr->registered) {
             dbus.unregisterObject(d_ptr->positioningAgentPath);
             d_ptr->registered = false;

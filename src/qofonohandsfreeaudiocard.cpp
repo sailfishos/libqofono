@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2015 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -13,9 +12,9 @@
 **
 ****************************************************************************/
 
+#include "dbustypes_p.h"
 #include "qofonohandsfreeaudiocard.h"
 #include "ofono_handsfree_audio_card_interface.h"
-
 
 class QOfonoHandsfreeAudioCardPrivate
 {
@@ -57,10 +56,9 @@ void QOfonoHandsfreeAudioCard::setModemPath(const QString &path)
             d_ptr->properties.clear();
         }
         d_ptr->modemPath = path;
-        d_ptr->ofonoHandsfreeAudioCard = new OfonoHandsfreeAudioCard("org.ofono", path, QDBusConnection::systemBus(),this);
+        d_ptr->ofonoHandsfreeAudioCard = new OfonoHandsfreeAudioCard(OFONO_SERVICE, path, OFONO_BUS,this);
 
         if (d_ptr->ofonoHandsfreeAudioCard) {
-
             QDBusPendingReply<QVariantMap> reply;
             reply = d_ptr->ofonoHandsfreeAudioCard->GetProperties();
             reply.waitForFinished();

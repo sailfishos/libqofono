@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2015 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -13,6 +12,7 @@
 **
 ****************************************************************************/
 
+#include "dbustypes_p.h"
 #include "qofonomessagemanager.h"
 #include "ofono_message_manager_interface.h"
 
@@ -43,7 +43,7 @@ bool QOfonoMessageManager::isValid() const
 
 QDBusAbstractInterface *QOfonoMessageManager::createDbusInterface(const QString &path)
 {
-    OfonoMessageManager* iface = new OfonoMessageManager("org.ofono", path, QDBusConnection::systemBus(), this);
+    OfonoMessageManager* iface = new OfonoMessageManager(OFONO_SERVICE, path, OFONO_BUS, this);
     connect(new QDBusPendingCallWatcher(iface->GetMessages(), iface),
         SIGNAL(finished(QDBusPendingCallWatcher*)),
         SLOT(onGetMessagesFinished(QDBusPendingCallWatcher*)));

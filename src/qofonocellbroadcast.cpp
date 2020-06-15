@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2015 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -13,6 +12,7 @@
 **
 ****************************************************************************/
 
+#include "dbustypes_p.h"
 #include "qofonocellbroadcast.h"
 #include "ofono_cell_broadcast_interface.h"
 
@@ -29,7 +29,7 @@ QOfonoCellBroadcast::~QOfonoCellBroadcast()
 
 QDBusAbstractInterface *QOfonoCellBroadcast::createDbusInterface(const QString &path)
 {
-    OfonoCellBroadcast *iface = new OfonoCellBroadcast("org.ofono", path, QDBusConnection::systemBus(), this);
+    OfonoCellBroadcast *iface = new OfonoCellBroadcast(OFONO_SERVICE, path, OFONO_BUS, this);
     connect(iface,
         SIGNAL(IncomingBroadcast(QString,quint16)),
         SIGNAL(incomingBroadcast(QString,quint16)));

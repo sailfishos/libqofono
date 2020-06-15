@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2015 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -13,6 +12,7 @@
 **
 ****************************************************************************/
 
+#include "dbustypes_p.h"
 #include "qofononetworkoperator.h"
 #include "ofono_network_operator_interface.h"
 
@@ -61,7 +61,7 @@ void QOfonoNetworkOperator::objectPathChanged(const QString &path, const QVarian
 
 QDBusAbstractInterface *QOfonoNetworkOperator::createDbusInterface(const QString &path)
 {
-    OfonoNetworkOperator *iface = new OfonoNetworkOperator("org.ofono", path, QDBusConnection::systemBus(), this);
+    OfonoNetworkOperator *iface = new OfonoNetworkOperator(OFONO_SERVICE, path, OFONO_BUS, this);
     iface->setTimeout(120*1000); //increase dbus timeout as registration can take a long time
     return iface;
 }

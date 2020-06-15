@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2015 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -13,6 +12,7 @@
 **
 ****************************************************************************/
 
+#include "dbustypes_p.h"
 #include "qofonolocationreporting.h"
 #include "ofono_location_reporting_interface.h"
 #include <unistd.h>
@@ -46,8 +46,7 @@ QOfonoLocationReporting::~QOfonoLocationReporting()
 
 void QOfonoLocationReporting::setModemPath(const QString &path)
 {
-    if (path == d_ptr->modemPath ||
-            path.isEmpty())
+    if (path == d_ptr->modemPath || path.isEmpty())
         return;
 
     if (path != modemPath()) {
@@ -56,7 +55,7 @@ void QOfonoLocationReporting::setModemPath(const QString &path)
             d_ptr->ofonoLocationReporting = 0;
             d_ptr->properties.clear();
         }
-        d_ptr->ofonoLocationReporting = new OfonoLocationReporting("org.ofono", path, QDBusConnection::systemBus(),this);
+        d_ptr->ofonoLocationReporting = new OfonoLocationReporting(OFONO_SERVICE, path, OFONO_BUS,this);
 
         if (d_ptr->ofonoLocationReporting) {
             d_ptr->modemPath = path;

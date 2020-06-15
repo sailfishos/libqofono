@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2015 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -13,6 +12,7 @@
 **
 ****************************************************************************/
 
+#include "dbustypes_p.h"
 #include "qofonocallbarring.h"
 #include "ofono_call_barring_interface.h"
 
@@ -29,7 +29,7 @@ QOfonoCallBarring::~QOfonoCallBarring()
 
 QDBusAbstractInterface *QOfonoCallBarring::createDbusInterface(const QString &path)
 {
-    return new OfonoCallBarring("org.ofono", path, QDBusConnection::systemBus(), this);
+    return new OfonoCallBarring(OFONO_SERVICE, path, OFONO_BUS, this);
 }
 
 void QOfonoCallBarring::connectOfono()

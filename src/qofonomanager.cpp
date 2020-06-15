@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2016 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -13,6 +12,7 @@
 **
 ****************************************************************************/
 
+#include "dbustypes_p.h"
 #include "qofonomanager.h"
 #include "qofonoutils_p.h"
 #include "ofono_manager_interface.h"
@@ -75,8 +75,8 @@ QOfonoManager::QOfonoManager(QObject *parent) :
     d_ptr(new Private)
 {
     QOfonoDbusTypes::registerObjectPathProperties();
-    QDBusConnection systemBus(QDBusConnection::systemBus());
-    QDBusServiceWatcher *ofonoWatcher = new QDBusServiceWatcher("org.ofono", systemBus,
+    QDBusConnection bus(OFONO_BUS);
+    QDBusServiceWatcher *ofonoWatcher = new QDBusServiceWatcher(OFONO_SERVICE, bus,
             QDBusServiceWatcher::WatchForRegistration |
             QDBusServiceWatcher::WatchForUnregistration, this);
 
@@ -85,7 +85,7 @@ QOfonoManager::QOfonoManager(QObject *parent) :
     connect(ofonoWatcher, SIGNAL(serviceUnregistered(QString)),
             this, SLOT(ofonoUnregistered(QString)));
 
-    if (systemBus.interface()->isServiceRegistered("org.ofono")) {
+    if (bus.interface()->isServiceRegistered(OFONO_SERVICE)) {
         connectToOfono(QString());
     }
 }
@@ -178,7 +178,7 @@ void QOfonoManager::onGetModemsFinished(QDBusPendingCallWatcher* watcher)
 void QOfonoManager::connectToOfono(const QString &)
 {
     if (!d_ptr->ofonoManager) {
-        OfonoManager* mgr = new OfonoManager("org.ofono", "/", QDBusConnection::systemBus(), this);
+        OfonoManager* mgr = new OfonoManager(OFONO_SERVICE, "/", OFONO_BUS, this);
         if (mgr->isValid()) {
             d_ptr->ofonoManager = mgr;
             connect(mgr,

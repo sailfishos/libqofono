@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2015 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -13,6 +12,7 @@
 **
 ****************************************************************************/
 
+#include "dbustypes_p.h"
 #include "qofonohandsfreeaudiomanager.h"
 #include "ofono_handsfree_audio_manager_interface.h"
 
@@ -46,34 +46,12 @@ QOfonoHandsfreeAudioManager::~QOfonoHandsfreeAudioManager()
 
 void QOfonoHandsfreeAudioManager::setModemPath(const QString &path)
 {
-    if (path == d_ptr->modemPath ||
-            path.isEmpty())
+    if (path == d_ptr->modemPath || path.isEmpty())
         return;
-
-    //    if (path != modemPath()) {
-//        if (d_ptr->ofonoHandsfreeAudioManager) {
-//            delete d_ptr->ofonoHandsfreeAudioManager;
-//            d_ptr->ofonoHandsfreeAudioManager = 0;
-//            d_ptr->audioCards.clear();
-//        }
-//        d_ptr->ofonoHandsfreeAudioManager = new OfonoHandsfreeAudioManager("org.ofono", path, QDBusConnection::systemBus(),this);
-
-//        d_ptr->modemPath = path;
-//        QDBusPendingReply<ObjectPathPropertiesList> reply2 = d_ptr->ofonoHandsfreeAudioManager->GetCards();
-//        reply2.waitForFinished();
-
-//        foreach(ObjectPathProperties card, reply2.value()) {
-//            d_ptr->audioCards << card.path.path();
-//            Q_EMIT cardAdded(card.path.path());
-//        }
-//        Q_EMIT modemPathChanged(path);
-//    }
 
     if (!d_ptr->ofonoHandsfreeAudioManager) {
         if (path != modemPath()) {
-            d_ptr->ofonoHandsfreeAudioManager
-                    = new OfonoHandsfreeAudioManager("org.ofono", path, QDBusConnection::systemBus(),this);
-
+            d_ptr->ofonoHandsfreeAudioManager = new OfonoHandsfreeAudioManager(OFONO_SERVICE, path, OFONO_BUS,this);
             if (d_ptr->ofonoHandsfreeAudioManager) {
                 d_ptr->modemPath = path;
                 QDBusReply<ObjectPathPropertiesList> reply2 = d_ptr->ofonoHandsfreeAudioManager->GetCards();
