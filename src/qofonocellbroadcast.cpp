@@ -16,10 +16,15 @@
 #include "qofonocellbroadcast.h"
 #include "ofono_cell_broadcast_interface.h"
 
-#define SUPER QOfonoObject
+#define SUPER QOfonoModemInterface
+
+namespace {
+    const QString Powered("Powered");
+    const QString Topics("Topics");
+}
 
 QOfonoCellBroadcast::QOfonoCellBroadcast(QObject *parent) :
-    SUPER(parent)
+    SUPER(OfonoCellBroadcast::staticInterfaceName(), parent)
 {
 }
 
@@ -39,55 +44,32 @@ QDBusAbstractInterface *QOfonoCellBroadcast::createDbusInterface(const QString &
     return iface;
 }
 
-void QOfonoCellBroadcast::objectPathChanged(const QString &path, const QVariantMap *properties)
-{
-    SUPER::objectPathChanged(path, properties);
-    Q_EMIT modemPathChanged(path);
-}
-
-void QOfonoCellBroadcast::setModemPath(const QString &path)
-{
-    setObjectPath(path);
-}
-
-QString QOfonoCellBroadcast::modemPath() const
-{
-    return objectPath();
-}
-
 void QOfonoCellBroadcast::propertyChanged(const QString &property, const QVariant &value)
 {
     SUPER::propertyChanged(property, value);
-    if (property == QLatin1String("Powered")) {
+    if (property == Powered) {
         Q_EMIT enabledChanged(value.toBool());
-    } else if (property == QLatin1String("Topics")) {
+    } else if (property == Topics) {
         Q_EMIT topicsChanged(value.toString());
     }
 }
 
 bool QOfonoCellBroadcast::enabled() const
 {
-    return getBool("Powered");
+    return getBool(Powered);
 }
 
 void QOfonoCellBroadcast::setEnabled(bool b)
 {
-    setProperty("Powered", b);
+    setProperty(Powered, b);
 }
 
 QString QOfonoCellBroadcast::topics() const
 {
-    return getString("Topics");
+    return getString(Topics);
 }
 
-void QOfonoCellBroadcast::setTopics(const QString &topics) const
+void QOfonoCellBroadcast::setTopics(const QString &topics)
 {
-    // It's not clear why this method is const (probably, copy/paste artifact)
-    // but it has to remain const to maintain ABI
-    ((QOfonoCellBroadcast*)this)->setProperty("Topics", topics);
-}
-
-bool QOfonoCellBroadcast::isValid() const
-{
-    return SUPER::isValid();
+    setProperty(Topics, topics);
 }
