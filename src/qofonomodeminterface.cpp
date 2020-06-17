@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2014-2015 Jolla Ltd.
-** Contact: slava.monich@jolla.com
+** Copyright (C) 2014-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -45,12 +44,12 @@ QOfonoModemInterface::~QOfonoModemInterface()
 {
 }
 
-QOfonoModemInterface::Private* QOfonoModemInterface::privateData() const
+QOfonoModemInterface::Private *QOfonoModemInterface::privateData() const
 {
     return (Private*)SUPER::extData();
 }
 
-QOfonoObject::ExtData* QOfonoModemInterface::extData() const
+QOfonoObject::ExtData *QOfonoModemInterface::extData() const
 {
     return privateData()->ext;
 }
