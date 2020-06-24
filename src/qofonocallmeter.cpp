@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2015 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -13,6 +12,7 @@
 **
 ****************************************************************************/
 
+#include "dbustypes_p.h"
 #include "qofonocallmeter.h"
 #include "ofono_callmeter_interface.h"
 
@@ -29,7 +29,7 @@ QOfonoCallMeter::~QOfonoCallMeter()
 
 QDBusAbstractInterface *QOfonoCallMeter::createDbusInterface(const QString &path)
 {
-    OfonoCallMeter *iface = new OfonoCallMeter("org.ofono", path, QDBusConnection::systemBus(), this);
+    OfonoCallMeter *iface = new OfonoCallMeter(OFONO_SERVICE, path, OFONO_BUS, this);
     connect(iface, SIGNAL(NearMaximumWarning()), SIGNAL(nearMaximumWarning()));
     return iface;
 }

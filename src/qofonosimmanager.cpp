@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2016 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -13,6 +12,7 @@
 **
 ****************************************************************************/
 
+#include "dbustypes_p.h"
 #include "qofonosimmanager.h"
 #include "ofono_simmanager_interface.h"
 
@@ -69,7 +69,7 @@ QOfonoSimManager::~QOfonoSimManager()
 
 QDBusAbstractInterface *QOfonoSimManager::createDbusInterface(const QString &path)
 {
-    return new OfonoSimManager("org.ofono", path, QDBusConnection::systemBus(), this);
+    return new OfonoSimManager(OFONO_SERVICE, path, OFONO_BUS, this);
 }
 
 QVariant QOfonoSimManager::convertProperty(const QString &property, const QVariant &value)

@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2015 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -13,13 +12,19 @@
 **
 ****************************************************************************/
 
+#include "dbustypes_p.h"
 #include "qofonocellbroadcast.h"
 #include "ofono_cell_broadcast_interface.h"
 
-#define SUPER QOfonoObject
+#define SUPER QOfonoModemInterface
+
+namespace {
+    const QString Powered("Powered");
+    const QString Topics("Topics");
+}
 
 QOfonoCellBroadcast::QOfonoCellBroadcast(QObject *parent) :
-    SUPER(parent)
+    SUPER(OfonoCellBroadcast::staticInterfaceName(), parent)
 {
 }
 
@@ -29,7 +34,7 @@ QOfonoCellBroadcast::~QOfonoCellBroadcast()
 
 QDBusAbstractInterface *QOfonoCellBroadcast::createDbusInterface(const QString &path)
 {
-    OfonoCellBroadcast *iface = new OfonoCellBroadcast("org.ofono", path, QDBusConnection::systemBus(), this);
+    OfonoCellBroadcast *iface = new OfonoCellBroadcast(OFONO_SERVICE, path, OFONO_BUS, this);
     connect(iface,
         SIGNAL(IncomingBroadcast(QString,quint16)),
         SIGNAL(incomingBroadcast(QString,quint16)));
@@ -39,55 +44,32 @@ QDBusAbstractInterface *QOfonoCellBroadcast::createDbusInterface(const QString &
     return iface;
 }
 
-void QOfonoCellBroadcast::objectPathChanged(const QString &path, const QVariantMap *properties)
-{
-    SUPER::objectPathChanged(path, properties);
-    Q_EMIT modemPathChanged(path);
-}
-
-void QOfonoCellBroadcast::setModemPath(const QString &path)
-{
-    setObjectPath(path);
-}
-
-QString QOfonoCellBroadcast::modemPath() const
-{
-    return objectPath();
-}
-
 void QOfonoCellBroadcast::propertyChanged(const QString &property, const QVariant &value)
 {
     SUPER::propertyChanged(property, value);
-    if (property == QLatin1String("Powered")) {
+    if (property == Powered) {
         Q_EMIT enabledChanged(value.toBool());
-    } else if (property == QLatin1String("Topics")) {
+    } else if (property == Topics) {
         Q_EMIT topicsChanged(value.toString());
     }
 }
 
 bool QOfonoCellBroadcast::enabled() const
 {
-    return getBool("Powered");
+    return getBool(Powered);
 }
 
 void QOfonoCellBroadcast::setEnabled(bool b)
 {
-    setProperty("Powered", b);
+    setProperty(Powered, b);
 }
 
 QString QOfonoCellBroadcast::topics() const
 {
-    return getString("Topics");
+    return getString(Topics);
 }
 
-void QOfonoCellBroadcast::setTopics(const QString &topics) const
+void QOfonoCellBroadcast::setTopics(const QString &topics)
 {
-    // It's not clear why this method is const (probably, copy/paste artifact)
-    // but it has to remain const to maintain ABI
-    ((QOfonoCellBroadcast*)this)->setProperty("Topics", topics);
-}
-
-bool QOfonoCellBroadcast::isValid() const
-{
-    return SUPER::isValid();
+    setProperty(Topics, topics);
 }

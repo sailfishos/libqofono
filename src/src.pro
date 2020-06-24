@@ -143,6 +143,7 @@ PUBLIC_HEADERS += \
 HEADERS += \
     $$DBUS_HEADERS \
     $$PUBLIC_HEADERS \
+    dbustypes_p.h \
     qofonoutils_p.h
 
 headers.path = $$INSTALL_ROOT$$PREFIX/include/qofono-qt5

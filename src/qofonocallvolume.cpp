@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2015 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -13,6 +12,7 @@
 **
 ****************************************************************************/
 
+#include "dbustypes_p.h"
 #include "qofonocallvolume.h"
 #include "ofono_callvolume_interface.h"
 
@@ -29,7 +29,7 @@ QOfonoCallVolume::~QOfonoCallVolume()
 
 QDBusAbstractInterface *QOfonoCallVolume::createDbusInterface(const QString &path)
 {
-    return new OfonoCallVolume("org.ofono", path, QDBusConnection::systemBus(),this);
+    return new OfonoCallVolume(OFONO_SERVICE, path, OFONO_BUS,this);
 }
 
 void QOfonoCallVolume::propertyChanged(const QString &property, const QVariant &value)

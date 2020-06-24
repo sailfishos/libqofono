@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2014-2015 Jolla Ltd.
-** Contact: slava.monich@jolla.com
+** Copyright (C) 2014-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -17,11 +16,12 @@
 #define QOFONOMODEMINTERFACE_H
 
 #include "qofonoobject.h"
+#include "qofono_global.h"
 
 /**
  * Modem interface with properties.
  */
-class QOfonoModemInterface : public QOfonoObject
+class QOFONOSHARED_EXPORT QOfonoModemInterface : public QOfonoObject
 {
     Q_OBJECT
     Q_PROPERTY(QString modemPath READ modemPath WRITE setModemPath NOTIFY modemPathChanged)
@@ -32,25 +32,25 @@ protected:
     QOfonoModemInterface(const QString &iface, QObject *parent = NULL);
     ~QOfonoModemInterface();
 
-    virtual ExtData* extData() const;
-
-    QString modemPath() const;
-    void setModemPath(const QString &path);
+    virtual ExtData *extData() const Q_DECL_OVERRIDE;
 
     bool isReady() const;
 
 public:
-    bool isValid() const;
+    QString modemPath() const;
+    void setModemPath(const QString &path);
     void fixModemPath(const QString &path);
+
+    bool isValid() const Q_DECL_OVERRIDE;
 
 Q_SIGNALS:
     void modemPathChanged(const QString &path);
-    void readyChanged(/* No parameter for historical reasons */);
+    void readyChanged();
 
 protected:
-    void getPropertiesFinished(const QVariantMap &properties, const QDBusError *error);
-    void updateProperty(const QString &key, const QVariant &value);
-    void objectPathChanged(const QString &path, const QVariantMap *properties);
+    void getPropertiesFinished(const QVariantMap &properties, const QDBusError *error) Q_DECL_OVERRIDE;
+    void updateProperty(const QString &key, const QVariant &value) Q_DECL_OVERRIDE;
+    void objectPathChanged(const QString &path, const QVariantMap *properties) Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
     void onModemInterfacesChanged(const QStringList &interfaces);

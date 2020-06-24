@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2015 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -17,6 +16,7 @@
 #include <QtXmlPatterns/QXmlQuery>
 #endif
 
+#include "dbustypes_p.h"
 #include "qofonoconnectioncontext.h"
 #include "qofonoconnectionmanager.h"
 #include "qofononetworkregistration.h"
@@ -45,7 +45,7 @@ QOfonoConnectionContext::~QOfonoConnectionContext()
 
 QDBusAbstractInterface *QOfonoConnectionContext::createDbusInterface(const QString &path)
 {
-    return new OfonoConnectionContext("org.ofono", path, QDBusConnection::systemBus(), this);
+    return new OfonoConnectionContext(OFONO_SERVICE, path, OFONO_BUS, this);
 }
 
 void QOfonoConnectionContext::objectPathChanged(const QString &path, const QVariantMap *properties)

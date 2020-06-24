@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2019 Jolla Ltd.
+** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -12,6 +12,7 @@
 **
 ****************************************************************************/
 
+#include "dbustypes_p.h"
 #include "qofononetworkregistration.h"
 #include "qofononetworkoperator.h"
 #include "qofono.h"
@@ -90,7 +91,7 @@ bool QOfonoNetworkRegistration::scanning() const
 
 QDBusAbstractInterface *QOfonoNetworkRegistration::createDbusInterface(const QString &path)
 {
-    OfonoNetworkRegistration* iface = new OfonoNetworkRegistration("org.ofono", path, QDBusConnection::systemBus(), this);
+    OfonoNetworkRegistration* iface = new OfonoNetworkRegistration(OFONO_SERVICE, path, OFONO_BUS, this);
     iface->setTimeout(120*1000); //increase dbus timeout as scanning can take a long time
     connect(iface,
         SIGNAL(OperatorsChanged(ObjectPathPropertiesList)),

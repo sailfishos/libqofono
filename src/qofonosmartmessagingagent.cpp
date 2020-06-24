@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2015 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -13,6 +12,7 @@
 **
 ****************************************************************************/
 
+#include "dbustypes_p.h"
 #include "qofonosmartmessagingagent.h"
 #include "ofono_smart_messaging_agent_adaptor.h"
 
@@ -37,15 +37,16 @@ QOfonoSmartMessagingAgent::QOfonoSmartMessagingAgent(QObject *parent) :
 
 QOfonoSmartMessagingAgent::~QOfonoSmartMessagingAgent()
 {
-    if (d_ptr->registered)
-        QDBusConnection::systemBus().unregisterObject(smAgentPath);
+    if (d_ptr->registered) {
+        OFONO_BUS.unregisterObject(smAgentPath);
+    }
     delete d_ptr;
 }
 
 void QOfonoSmartMessagingAgent::setAgentPath(const QString &path)
 {
     if (smAgentPath != path) {
-        QDBusConnection dbus = QDBusConnection::systemBus();
+        QDBusConnection dbus(OFONO_BUS);
         if (d_ptr->registered) {
             dbus.unregisterObject(smAgentPath);
             d_ptr->registered = false;

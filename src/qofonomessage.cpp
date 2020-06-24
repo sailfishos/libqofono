@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2015 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -13,6 +12,7 @@
 **
 ****************************************************************************/
 
+#include "dbustypes_p.h"
 #include "qofonomessage.h"
 #include "ofono_message_interface.h"
 
@@ -43,7 +43,7 @@ void QOfonoMessage::objectPathChanged(const QString &path, const QVariantMap *pr
 
 QDBusAbstractInterface *QOfonoMessage::createDbusInterface(const QString &path)
 {
-    return new OfonoMessage("org.ofono", path, QDBusConnection::systemBus(), this);
+    return new OfonoMessage(OFONO_SERVICE, path, OFONO_BUS, this);
 }
 
 void QOfonoMessage::propertyChanged(const QString &property, const QVariant &value)

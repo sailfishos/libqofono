@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2014 Jolla Ltd.
-** Contact: slava.monich@jolla.com
+** Copyright (C) 2014-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -13,7 +12,11 @@
 **
 ****************************************************************************/
 
-#include "dbustypes.h"
+#include "dbustypes_p.h"
+
+namespace QOfonoDbus {
+    const QString Service(QLatin1String("org.ofono"));
+}
 
 QDBusArgument &operator<<(QDBusArgument &arg, const ObjectPathProperties &props)
 {

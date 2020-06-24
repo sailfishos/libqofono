@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2017 Jolla Ltd.
-** Contact: slava.monich@jolla.com
+** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -13,6 +12,7 @@
 **
 ****************************************************************************/
 
+#include "dbustypes_p.h"
 #include "qofonomodem.h"
 #include "qofonomanager.h"
 #include "ofono_modem_interface.h"
@@ -68,7 +68,7 @@ QOfonoModem::~QOfonoModem()
 
 QDBusAbstractInterface *QOfonoModem::createDbusInterface(const QString &path)
 {
-    return new OfonoModem("org.ofono", path, QDBusConnection::systemBus(), this);
+    return new OfonoModem(OFONO_SERVICE, path, OFONO_BUS, this);
 }
 
 void QOfonoModem::objectPathChanged(const QString &path, const QVariantMap *properties)

@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2015 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -13,6 +12,7 @@
 **
 ****************************************************************************/
 
+#include "dbustypes_p.h"
 #include "qofonoassistedsatellitenavigation.h"
 #include "ofono_assisted_satellite_navigation_interface.h"
 
@@ -54,7 +54,7 @@ void QOfonoAssistedSatelliteNavigation::setModemPath(const QString &path)
             delete d_ptr->ofonoAssistedSatelliteNav;
             d_ptr->ofonoAssistedSatelliteNav = 0;
         }
-        d_ptr->ofonoAssistedSatelliteNav = new OfonoAssistedSatelliteNavigation("org.ofono", path, QDBusConnection::systemBus(),this);
+        d_ptr->ofonoAssistedSatelliteNav = new OfonoAssistedSatelliteNavigation(OFONO_SERVICE, path, OFONO_BUS,this);
         if (d_ptr->ofonoAssistedSatelliteNav->isValid()) {
             d_ptr->modemPath = path;
             Q_EMIT modemPathChanged(path);

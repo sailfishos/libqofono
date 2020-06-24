@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2015 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -13,6 +12,7 @@
 **
 ****************************************************************************/
 
+#include "dbustypes_p.h"
 #include "qofonocallforwarding.h"
 #include "ofono_call_forwarding_interface.h"
 
@@ -29,7 +29,7 @@ QOfonoCallForwarding::~QOfonoCallForwarding()
 
 QDBusAbstractInterface *QOfonoCallForwarding::createDbusInterface(const QString &path)
 {
-    return new OfonoCallForwarding("org.ofono", path, QDBusConnection::systemBus(), this);
+    return new OfonoCallForwarding(OFONO_SERVICE, path, OFONO_BUS, this);
 }
 
 void QOfonoCallForwarding::connectOfono()

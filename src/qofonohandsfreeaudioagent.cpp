@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2015 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -13,6 +12,7 @@
 **
 ****************************************************************************/
 
+#include "dbustypes_p.h"
 #include "qofonohandsfreeaudioagent.h"
 #include "ofono_handsfree_audio_agent_interface.h"
 
@@ -45,7 +45,7 @@ void QOfonoHandsfreeAudioAgent::setAgentPath(const QString &path)
 {
     if (!d_ptr->ofonoHandsfreeAudioAgent) {
         d_ptr->audioAgentPath = path;
-        d_ptr->ofonoHandsfreeAudioAgent = new OfonoHandsfreeAudioAgent("org.ofono", path, QDBusConnection::systemBus(),this);
+        d_ptr->ofonoHandsfreeAudioAgent = new OfonoHandsfreeAudioAgent(OFONO_SERVICE, path, OFONO_BUS,this);
 
     }
 }
