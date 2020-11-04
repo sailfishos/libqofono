@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2014-2016 Jolla Ltd.
-** Contact: slava.monich@jolla.com
+** Copyright (C) 2014-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -17,8 +16,9 @@
 #define QOFONOOBJECT_H
 
 #include "dbustypes.h"
+#include "qofono_global.h"
 
-class QOfonoObject : public QObject
+class QOFONOSHARED_EXPORT QOfonoObject : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool valid READ isValid NOTIFY validChanged)
@@ -40,15 +40,17 @@ public:
     };
 
 protected:
-    QOfonoObject(ExtData *ext, QObject *parent = NULL);
-    QOfonoObject(QObject *parent = NULL);
+    QOfonoObject(ExtData *ext, const QString &path, QObject *parent = Q_NULLPTR);  // Since 1.0.101
+    QOfonoObject(ExtData *ext, QObject *parent = Q_NULLPTR);
+    QOfonoObject(QObject *parent = Q_NULLPTR);
     ~QOfonoObject();
 
-    virtual ExtData* extData() const;
+    virtual ExtData *extData() const;
 
 public:
     QString objectPath() const;
-    void setObjectPath(const QString &path, const QVariantMap *properties = NULL);
+    void setObjectPath(const QString &path, const QVariantMap *properties = Q_NULLPTR);
+    bool getPropertiesSync(); // Since 1.0.101
     virtual bool isValid() const;
 
 Q_SIGNALS:
@@ -83,8 +85,10 @@ protected:
     int getInt(const QString &key) const;
 
     QDBusAbstractInterface *dbusInterface() const;
-    void setDbusInterface(QDBusAbstractInterface *dbus, const QVariantMap *properties = NULL);
-    void resetDbusInterface(const QVariantMap *properties = NULL);
+    void setDbusInterfaceSync(QDBusAbstractInterface *iface);  // Since 1.0.101
+    void resetDbusInterfaceSync();  // Since 1.0.101
+    void setDbusInterface(QDBusAbstractInterface *iface, const QVariantMap *properties = Q_NULLPTR);
+    void resetDbusInterface(const QVariantMap *properties = Q_NULLPTR);
     void fixObjectPath(const QString &path);
 
 private slots:

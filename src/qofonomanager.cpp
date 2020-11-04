@@ -20,25 +20,73 @@
 class QOfonoManager::Private
 {
 public:
+    typedef void (Private::*GetModems)(QOfonoManager *);
+
     OfonoManager *ofonoManager;
     QStringList modems;
     bool available;
 
-    Private() : ofonoManager(NULL), available(false) {}
+    Private();
 
     QString defaultModem();
-    void handleGetModemsReply(QOfonoManager* obj, ObjectPathPropertiesList reply);
-    void getModems(QOfonoManager *manager);
+    void setup(QOfonoManager *obj, GetModems getModems);
+    void connectToOfono(QOfonoManager *obj, GetModems getModems);
+    void handleGetModemsReply(QOfonoManager *obj, ObjectPathPropertiesList reply);
+    void getModems(QOfonoManager *obj);
+    void getModemsSync(QOfonoManager *obj);
 };
+
+QOfonoManager::Private::Private() :
+    ofonoManager(Q_NULLPTR),
+    available(false)
+{
+    QOfonoDbusTypes::registerObjectPathProperties();
+}
 
 QString QOfonoManager::Private::defaultModem()
 {
     return modems.isEmpty() ? QString() : modems[0];
 }
 
-void QOfonoManager::Private::handleGetModemsReply(QOfonoManager* obj, ObjectPathPropertiesList reply)
+void QOfonoManager::Private::setup(QOfonoManager *obj, GetModems getModems)
 {
-    bool wasAvailable = available;
+    QDBusConnection bus(OFONO_BUS);
+    QDBusServiceWatcher *ofonoWatcher = new QDBusServiceWatcher(OFONO_SERVICE, bus,
+            QDBusServiceWatcher::WatchForRegistration |
+            QDBusServiceWatcher::WatchForUnregistration, obj);
+
+    obj->connect(ofonoWatcher, SIGNAL(serviceRegistered(QString)),
+        SLOT(connectToOfono(QString)));
+    obj->connect(ofonoWatcher, SIGNAL(serviceUnregistered(QString)),
+        SLOT(ofonoUnregistered(QString)));
+
+    if (bus.interface()->isServiceRegistered(OFONO_SERVICE)) {
+        connectToOfono(obj, getModems);
+    }
+}
+
+void QOfonoManager::Private::connectToOfono(QOfonoManager *obj, GetModems getModems)
+{
+    if (!ofonoManager) {
+        OfonoManager *mgr = new OfonoManager(OFONO_SERVICE, "/", OFONO_BUS, obj);
+        if (mgr->isValid()) {
+            ofonoManager = mgr;
+            obj->connect(mgr,
+                SIGNAL(ModemAdded(QDBusObjectPath,QVariantMap)),
+                SLOT(onModemAdded(QDBusObjectPath,QVariantMap)));
+            obj->connect(mgr,
+                SIGNAL(ModemRemoved(QDBusObjectPath)),
+                SLOT(onModemRemoved(QDBusObjectPath)));
+            (this->*getModems)(obj);
+        } else {
+            delete mgr;
+        }
+    }
+}
+
+void QOfonoManager::Private::handleGetModemsReply(QOfonoManager *obj, ObjectPathPropertiesList reply)
+{
+    const bool wasAvailable = available;
     QString prevDefault = defaultModem();
     QStringList newModems;
     const int n = reply.count();
@@ -70,24 +118,31 @@ void QOfonoManager::Private::getModems(QOfonoManager *manager)
     }
 }
 
+void QOfonoManager::Private::getModemsSync(QOfonoManager *obj)
+{
+    if (ofonoManager) {
+        QDBusPendingReply<ObjectPathPropertiesList> reply = ofonoManager->GetModems();
+        reply.waitForFinished();
+        if (reply.isError()) {
+            qWarning() << reply.error();
+        } else {
+            handleGetModemsReply(obj, reply.value());
+        }
+    }
+}
+
 QOfonoManager::QOfonoManager(QObject *parent) :
     QObject(parent),
     d_ptr(new Private)
 {
-    QOfonoDbusTypes::registerObjectPathProperties();
-    QDBusConnection bus(OFONO_BUS);
-    QDBusServiceWatcher *ofonoWatcher = new QDBusServiceWatcher(OFONO_SERVICE, bus,
-            QDBusServiceWatcher::WatchForRegistration |
-            QDBusServiceWatcher::WatchForUnregistration, this);
+    d_ptr->setup(this, &Private::getModems);
+}
 
-    connect(ofonoWatcher, SIGNAL(serviceRegistered(QString)),
-            this, SLOT(connectToOfono(QString)));
-    connect(ofonoWatcher, SIGNAL(serviceUnregistered(QString)),
-            this, SLOT(ofonoUnregistered(QString)));
-
-    if (bus.interface()->isServiceRegistered(OFONO_SERVICE)) {
-        connectToOfono(QString());
-    }
+QOfonoManager::QOfonoManager(bool mayBlock, QObject *parent) : // Since 1.0.101
+    QObject(parent),
+    d_ptr(new Private)
+{
+    d_ptr->setup(this, mayBlock ? &Private::getModemsSync :  &Private::getModems);
 }
 
 QOfonoManager::~QOfonoManager()
@@ -102,12 +157,8 @@ QStringList QOfonoManager::modems()
 
 QStringList QOfonoManager::getModems()
 {
-    if (d_ptr->ofonoManager && !d_ptr->available) {
-        QDBusPendingReply<ObjectPathPropertiesList> reply = d_ptr->ofonoManager->GetModems();
-        reply.waitForFinished();
-        if (!reply.isError()) {
-            d_ptr->handleGetModemsReply(this, reply.value());
-        }
+    if (!d_ptr->available) {
+        d_ptr->getModemsSync(this);
     }
     return d_ptr->modems;
 }
@@ -124,12 +175,11 @@ bool QOfonoManager::available() const
 
 bool QOfonoManager::isValid() const
 {
-    // isValid() is essentially the same as available(), keeping it around for
-    // backward compatibility
+    // This is equivalent to available() for historical reasons
     return d_ptr->available;
 }
 
-void QOfonoManager::onModemAdded(const QDBusObjectPath& path, const QVariantMap&)
+void QOfonoManager::onModemAdded(const QDBusObjectPath &path, const QVariantMap&)
 {
     QString pathStr = path.path();
     if (!d_ptr->modems.contains(pathStr)) {
@@ -145,7 +195,7 @@ void QOfonoManager::onModemAdded(const QDBusObjectPath& path, const QVariantMap&
     }
 }
 
-void QOfonoManager::onModemRemoved(const QDBusObjectPath& path)
+void QOfonoManager::onModemRemoved(const QDBusObjectPath &path)
 {
     QString pathStr = path.path();
     QString prevDefault = defaultModem();
@@ -159,7 +209,7 @@ void QOfonoManager::onModemRemoved(const QDBusObjectPath& path)
     }
 }
 
-void QOfonoManager::onGetModemsFinished(QDBusPendingCallWatcher* watcher)
+void QOfonoManager::onGetModemsFinished(QDBusPendingCallWatcher *watcher)
 {
     QDBusPendingReply<ObjectPathPropertiesList> reply(*watcher);
     watcher->deleteLater();
@@ -178,7 +228,7 @@ void QOfonoManager::onGetModemsFinished(QDBusPendingCallWatcher* watcher)
 void QOfonoManager::connectToOfono(const QString &)
 {
     if (!d_ptr->ofonoManager) {
-        OfonoManager* mgr = new OfonoManager(OFONO_SERVICE, "/", OFONO_BUS, this);
+        OfonoManager *mgr = new OfonoManager(OFONO_SERVICE, "/", OFONO_BUS, this);
         if (mgr->isValid()) {
             d_ptr->ofonoManager = mgr;
             connect(mgr,
@@ -202,7 +252,7 @@ void QOfonoManager::ofonoUnregistered(const QString &)
     }
     if (d_ptr->ofonoManager) {
         delete d_ptr->ofonoManager;
-        d_ptr->ofonoManager = NULL;
+        d_ptr->ofonoManager = Q_NULLPTR;
         if (!d_ptr->modems.isEmpty()) {
             Q_FOREACH(QString modem, d_ptr->modems) {
                 Q_EMIT modemRemoved(modem);
@@ -216,11 +266,17 @@ void QOfonoManager::ofonoUnregistered(const QString &)
 
 QSharedPointer<QOfonoManager> QOfonoManager::instance()
 {
+    return instance(false); // Don't block
+}
+
+QSharedPointer<QOfonoManager> QOfonoManager::instance(bool mayBlock)
+{
     static QWeakPointer<QOfonoManager> sharedInstance;
     QSharedPointer<QOfonoManager> mgr = sharedInstance;
     if (mgr.isNull()) {
-        mgr = QSharedPointer<QOfonoManager>::create();
+        mgr = QSharedPointer<QOfonoManager>(new QOfonoManager(mayBlock), &QObject::deleteLater);
         sharedInstance = mgr;
+    } else {
     }
     return mgr;
 }

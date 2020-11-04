@@ -32,7 +32,8 @@ class QOFONOSHARED_EXPORT QOfonoManager : public QObject
     Q_PROPERTY(bool available READ available NOTIFY availableChanged)
 
 public:
-    explicit QOfonoManager(QObject *parent = 0);
+    explicit QOfonoManager(QObject *parent = Q_NULLPTR);
+    QOfonoManager(bool mayBlock, QObject *parent = Q_NULLPTR); // Since 1.0.101
     ~QOfonoManager();
 
     QStringList getModems(); // May block
@@ -42,15 +43,16 @@ public:
     bool isValid() const;
 
     static QSharedPointer<QOfonoManager> instance();
+    static QSharedPointer<QOfonoManager> instance(bool mayBlock); // Since 1.0.101
 
-Q_SIGNALS: // SIGNALS
+Q_SIGNALS:
     void modemAdded(const QString &modem);
     void modemRemoved(const QString &modem);
     void availableChanged(bool available);
     void modemsChanged(const QStringList &modems);
     void defaultModemChanged(const QString &modem);
 
-private slots:
+private Q_SLOTS:
     void onModemAdded(const QDBusObjectPath &path, const QVariantMap &var);
     void onModemRemoved(const QDBusObjectPath &path);
     void onGetModemsFinished(QDBusPendingCallWatcher*);
