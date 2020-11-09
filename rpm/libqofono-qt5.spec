@@ -1,9 +1,8 @@
 Name:       libqofono-qt5
 
 Summary:    A library of Qt 5 bindings for ofono
-Version:    0.100
+Version:    0.101
 Release:    1
-Group:      System/Libraries
 License:    LGPLv2
 URL:        https://git.sailfishos.org/mer-core/libqofono
 Source0:    %{name}-%{version}.tar.bz2
@@ -20,7 +19,6 @@ interfaces.
 
 %package declarative
 Summary:    Declarative plugin for libqofono
-Group:      Development/Tools
 Requires:   %{name} = %{version}-%{release}
 Requires:   %{name} = %{version}
 
@@ -29,7 +27,6 @@ This package contains declarative plugin for libofono.
 
 %package devel
 Summary:    Development files for ofono Qt bindings
-Group:      Development/Libraries
 Requires:   %{name} = %{version}-%{release}
 Requires:   %{name} = %{version}
 
@@ -38,7 +35,6 @@ This package contains the development header files for the ofono Qt bindings.
 
 %package tests
 Summary:    qml test app for the ofono Qt bindings
-Group:      Development/Tools
 Requires:   %{name} = %{version}-%{release}
 Requires:   blts-tools
 Requires:   phonesim
@@ -49,7 +45,6 @@ This package contains qml test for ofono Qt bindings.
 
 %package examples
 Summary:    Examples for libqofono
-Group:      Development/Tools
 Requires:   %{name} = %{version}-%{release}
 Requires:   %{name} = %{version}
 Requires:   %{name}-declarative = %{version}
