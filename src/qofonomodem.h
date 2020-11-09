@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2015 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -47,7 +46,8 @@ class QOFONOSHARED_EXPORT QOfonoModem : public QOfonoObject
     Q_PROPERTY(QString modemPath READ modemPath WRITE setModemPath NOTIFY modemPathChanged)
 
 public:
-    explicit QOfonoModem(QObject *parent = 0);
+    explicit QOfonoModem(QObject *parent = Q_NULLPTR);
+    QOfonoModem(const QString &path, QObject *parent = Q_NULLPTR); // Blocking (since 1.0.101)
     ~QOfonoModem();
 
     QString modemPath() const;
@@ -75,10 +75,12 @@ public:
     QStringList features() const;
     QStringList interfaces() const;
 
-    bool isValid() const;
+    bool isValid() const Q_DECL_OVERRIDE;
 
     // If you use this, remember to keep a QSharedPointer to it, otherwise it may be destroyed.
+    // The second one may block if the shared instance hasn't been initialized yet.
     static QSharedPointer<QOfonoModem> instance(const QString &modemPath);
+    static QSharedPointer<QOfonoModem> instance(const QString &modemPath, bool mayBlock); // Since 1.0.101
 
 Q_SIGNALS:
     void poweredChanged(bool powered);
@@ -100,13 +102,13 @@ private Q_SLOTS:
     bool checkModemPathValidity();
 
 protected:
-    QDBusAbstractInterface *createDbusInterface(const QString &path);
-    void propertyChanged(const QString &key, const QVariant &value);
-    void objectPathChanged(const QString &path, const QVariantMap *properties);
+    QDBusAbstractInterface *createDbusInterface(const QString &path) Q_DECL_OVERRIDE;
+    void propertyChanged(const QString &key, const QVariant &value) Q_DECL_OVERRIDE;
+    void objectPathChanged(const QString &path, const QVariantMap *properties) Q_DECL_OVERRIDE;
 
 private:
     class Private;
-    Private* privateData() const;
+    Private *privateData() const;
 };
 
 #endif // QOFONOMODEM_H

@@ -47,19 +47,47 @@ public:
 
     bool modemPathValid;
     QSharedPointer<QOfonoManager> mgr;
-    Private() : modemPathValid(false), mgr(QOfonoManager::instance()) {}
+
+    Private(QSharedPointer<QOfonoManager> manager) : modemPathValid(false), mgr(manager) {}
+    void setup(QOfonoModem *modem);
+    bool isModemPathValid(const QString &path);
 };
+
+inline void QOfonoModem::Private::setup(QOfonoModem *modem)
+{
+    connect(mgr.data(), SIGNAL(availableChanged(bool)), modem, SLOT(checkModemPathValidity()));
+    connect(mgr.data(), SIGNAL(modemsChanged(QStringList)), modem, SLOT(checkModemPathValidity()));
+}
+
+inline bool QOfonoModem::Private::isModemPathValid(const QString &path)
+{
+    return !path.isEmpty() && mgr->isValid() && mgr->modems().contains(path);
+}
 
 #define DEFINE_PROPERTY(p) const QString QOfonoModem::Private::p(QLatin1String(#p));
 MODEM_PROPERTIES(DEFINE_PROPERTY)
 
 QOfonoModem::QOfonoModem(QObject *parent) :
-    SUPER(new Private, parent)
+    SUPER(new Private(QOfonoManager::instance(false)), parent)
 {
-    QOfonoManager* mgr = privateData()->mgr.data();
-    connect(mgr, SIGNAL(availableChanged(bool)), SLOT(checkModemPathValidity()));
-    connect(mgr, SIGNAL(modemsChanged(QStringList)), SLOT(checkModemPathValidity()));
+    privateData()->setup(this);
     checkModemPathValidity();
+}
+
+QOfonoModem::QOfonoModem(const QString &path, QObject *parent) : // Since 1.0.101
+    SUPER(new Private(QOfonoManager::instance(true)), path, parent)
+{
+    Private* priv = privateData();
+    priv->setup(this);
+    priv->modemPathValid = priv->isModemPathValid(path);
+    if (priv->modemPathValid) {
+        resetDbusInterfaceSync();
+    }
+    if (!isValid()) {
+        // Try to repeat the call asynchronously if something went wrong.
+        // That may help in case if it was a timeout
+        queryProperties();
+    }
 }
 
 QOfonoModem::~QOfonoModem()
@@ -208,11 +236,23 @@ void QOfonoModem::propertyChanged(const QString &property, const QVariant &value
 
 QSharedPointer<QOfonoModem> QOfonoModem::instance(const QString &modemPath)
 {
+    return instance(modemPath, false);
+}
+
+QSharedPointer<QOfonoModem> QOfonoModem::instance(const QString &modemPath, bool mayBlock) // Since 1.0.101
+{
     QSharedPointer<QOfonoModem> modem = modemMap()->value(modemPath);
     if (modem.isNull()) {
-        modem = QSharedPointer<QOfonoModem>::create();
+        modem = QSharedPointer<QOfonoModem>(mayBlock ? new QOfonoModem(modemPath) :
+            new QOfonoModem(), &QObject::deleteLater);
         modem->fixObjectPath(modemPath);
         modemMap()->insert(modemPath, QWeakPointer<QOfonoModem>(modem));
+    } else if (mayBlock && !modem->isValid()) {
+        // This may generate a second (synchronous) GetProperties call for
+        // the same object (if the first call was asynchronous and hasn't
+        // compeleted yet) but that should be a fairly rare case, not worth
+        // optimization.
+        modem->getPropertiesSync();
     }
     return modem;
 }
@@ -222,7 +262,7 @@ bool QOfonoModem::isValid() const
     return SUPER::isValid() && privateData()->modemPathValid;
 }
 
-QOfonoModem::Private* QOfonoModem::privateData() const
+QOfonoModem::Private *QOfonoModem::privateData() const
 {
     return (Private*)SUPER::extData();
 }
@@ -230,14 +270,8 @@ QOfonoModem::Private* QOfonoModem::privateData() const
 bool QOfonoModem::checkModemPathValidity()
 {
     ValidTracker valid(this);
-    bool modemPathValid;
-    Private* priv = privateData();
-    if (priv->mgr->isValid()) {
-        QString path = modemPath();
-        modemPathValid = !path.isEmpty() && priv->mgr->modems().contains(path);
-    } else {
-        modemPathValid = false;
-    }
+    Private *priv = privateData();
+    const bool modemPathValid = priv->isModemPathValid(modemPath());
     if (priv->modemPathValid != modemPathValid) {
         priv->modemPathValid = modemPathValid;
         if (modemPathValid) {
