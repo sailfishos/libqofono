@@ -1,7 +1,7 @@
 Name:       libqofono-qt5
 
 Summary:    A library of Qt 5 bindings for ofono
-Version:    0.101
+Version:    0.102
 Release:    1
 License:    LGPLv2
 URL:        https://git.sailfishos.org/mer-core/libqofono
