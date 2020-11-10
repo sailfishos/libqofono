@@ -276,7 +276,9 @@ QSharedPointer<QOfonoManager> QOfonoManager::instance(bool mayBlock)
     if (mgr.isNull()) {
         mgr = QSharedPointer<QOfonoManager>(new QOfonoManager(mayBlock), &QObject::deleteLater);
         sharedInstance = mgr;
-    } else {
+    } else if (mayBlock) {
+        // Make sure that modems are available
+        mgr->getModems();
     }
     return mgr;
 }
