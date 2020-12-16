@@ -258,12 +258,11 @@ Module {
     }
     Component {
         name: "QOfonoCellBroadcast"
-        prototype: "QOfonoObject"
+        prototype: "QOfonoModemInterface"
         exports: ["MeeGo.QOfono/OfonoCellBroadcast 0.2"]
         exportMetaObjectRevisions: [0]
-        Property { name: "modemPath"; type: "string" }
         Property { name: "enabled"; type: "bool" }
-        Property { name: "topics"; type: "string"; isReadonly: true }
+        Property { name: "topics"; type: "string" }
         Signal {
             name: "enabledChanged"
             Parameter { type: "bool" }
@@ -274,17 +273,13 @@ Module {
         }
         Signal {
             name: "incomingBroadcast"
-            Parameter { type: "string" }
-            Parameter { type: "ushort" }
+            Parameter { name: "text"; type: "string" }
+            Parameter { name: "topic"; type: "ushort" }
         }
         Signal {
             name: "emergencyBroadcast"
-            Parameter { type: "string" }
-            Parameter { type: "QVariantMap" }
-        }
-        Signal {
-            name: "modemPathChanged"
-            Parameter { name: "path"; type: "string" }
+            Parameter { name: "text"; type: "string" }
+            Parameter { name: "properties"; type: "QVariantMap" }
         }
     }
     Component {
