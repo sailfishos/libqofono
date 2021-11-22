@@ -71,6 +71,7 @@ export QT_SELECT=5
 
 %files
 %defattr(-,root,root,-)
+%license COPYING
 %{_libdir}/%{name}.so.*
 
 %files declarative
