@@ -4,14 +4,20 @@ Summary:    A library of Qt 5 bindings for ofono
 Version:    0.103
 Release:    1
 License:    LGPLv2
-URL:        https://git.sailfishos.org/mer-core/libqofono
+URL:        https://github.com/sailfishos/libqofono
 Source0:    %{name}-%{version}.tar.bz2
-Requires(post): /sbin/ldconfig
-Requires(postun): /sbin/ldconfig
+
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(Qt5Test)
+
+# license macro requires rpm >= 4.11
+BuildRequires: pkgconfig(rpm)
+%define license_support %(pkg-config --exists 'rpm >= 4.11'; echo $?)
+
+Requires(post): /sbin/ldconfig
+Requires(postun): /sbin/ldconfig
 
 %description
 This package contains Qt bindings for ofono cellular service
@@ -71,8 +77,10 @@ export QT_SELECT=5
 
 %files
 %defattr(-,root,root,-)
-%license COPYING
 %{_libdir}/%{name}.so.*
+%if %{license_support} == 0
+%license COPYING
+%endif
 
 %files declarative
 %defattr(-,root,root,-)
