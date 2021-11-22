@@ -22,7 +22,9 @@
 		</signal>
 		<signal name="OperatorsChanged">
 			<arg type="a(oa{sv})"/>
+			<!-- Some versions of qdbusxml2cpp want In, some Out -->
 			<annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="ObjectPathPropertiesList"/>
+			<annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="ObjectPathPropertiesList"/>
 		</signal>
 	</interface>
 </node>

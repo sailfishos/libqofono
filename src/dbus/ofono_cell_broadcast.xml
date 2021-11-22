@@ -21,6 +21,8 @@
 		<signal name="EmergencyBroadcast">
 			<arg type="s"/>
 			<arg type="a{sv}"/>
+			<!-- Some versions of qdbusxml2cpp want In, some Out -->
+			<annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="QVariantMap"/>
 			<annotation name="org.qtproject.QtDBus.QtTypeName.Out1" value="QVariantMap"/>
 		</signal>
 	</interface>
