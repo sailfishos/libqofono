@@ -1,9 +1,3 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2013-01-11T09:22:23
-#
-#-------------------------------------------------
-
 QT += dbus
 
 # QT += xmlpatterns
@@ -84,6 +78,7 @@ SOURCES += \
     qofonohandsfreeaudioagent.cpp \
     qofonohandsfreeaudiocard.cpp \
     qofonohandsfreeaudiomanager.cpp\
+    qofonoipmultimediasystem.cpp \
     qofonolocationreporting.cpp \
     qofonomessage.cpp \
     qofonomessagemanager.cpp \
@@ -117,6 +112,7 @@ PUBLIC_HEADERS += \
     qofonocellbroadcast.h \
     qofonocallbarring.h \
     qofonocallforwarding.h \
+    qofonoipmultimediasystem.h \
     qofonolocationreporting.h \
     qofonocallmeter.h \
     qofonocallsettings.h \

@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2015 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2013-2022 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -30,6 +29,8 @@
 #include "qofonocallmeter.h"
 #include "qofonocallsettings.h"
 #include "qofonocallvolume.h"
+
+#include "qofonoipmultimediasystem.h"
 
 #include "qofonomessage.h"
 #include "qofonomessagemanager.h"
@@ -83,6 +84,8 @@ void QOfonoDeclarativePlugin::registerTypes(const char *uri, int major, int mino
 
     qmlRegisterType<QOfonoCallSettings>(uri,major,minor,"OfonoCallSettings");
     qmlRegisterType<QOfonoCallMeter>(uri,major,minor,"OfonoCallMeter");
+
+    qmlRegisterType<QOfonoIpMultimediaSystem>(uri,major,minor,"OfonoIpMultimediaSystem");
 
     qmlRegisterType<QOfonoMessage>(uri,major,minor,"OfonoMessage");
     qmlRegisterType<QOfonoMessageManager>(uri,major,minor,"OfonoMessageManager");
