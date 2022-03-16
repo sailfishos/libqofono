@@ -97,7 +97,6 @@ export QT_SELECT=5
 
 %files tests
 %defattr(-,root,root,-)
-%{_libdir}/%{name}/tests/*
 /opt/tests/%{name}/*
 
 %files examples
