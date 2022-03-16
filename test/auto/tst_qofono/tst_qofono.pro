@@ -9,7 +9,7 @@ QT -= gui
 
 LIBS += -lqofono-qt5
 TARGET = tst_qofonotest-qt5
-target.path = $$[QT_INSTALL_LIBS]/libqofono-qt5/tests
+target.path = /opt/tests/libqofono-qt5
 
 CONFIG   += console
 CONFIG   -= app_bundle

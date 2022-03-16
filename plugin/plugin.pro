@@ -24,15 +24,8 @@ INCLUDEPATH += ../src
 OTHER_FILES += \
     plugin.json plugins.qmltypes qmldir
 
-equals(QT_MAJOR_VERSION, 4): {
-    qmldir.path = $$[QT_INSTALL_IMPORTS]/MeeGo/QOfono
-    target.path = $$[QT_INSTALL_IMPORTS]/MeeGo/QOfono
-}
-
-equals(QT_MAJOR_VERSION, 5): {
-    qmldir.path = $$[QT_INSTALL_QML]/MeeGo/QOfono
-    target.path = $$[QT_INSTALL_QML]/MeeGo/QOfono
-}
+qmldir.path = $$[QT_INSTALL_QML]/MeeGo/QOfono
+target.path = $$[QT_INSTALL_QML]/MeeGo/QOfono
 
 qmldir.files += qmldir plugins.qmltypes
 

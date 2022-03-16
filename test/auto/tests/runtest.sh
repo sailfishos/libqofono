@@ -2,4 +2,4 @@
 
 systemctl --user restart phonesim
 sleep 15
-exec "/usr/lib/libqofono-qt5/tests/${1?Test executable expected}"
+exec "/opt/tests/libqofono-qt5/${1?Test executable expected}"
