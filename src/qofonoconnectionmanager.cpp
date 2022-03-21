@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2020 Jolla Ltd.
+** Copyright (C) 2013-2022 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -143,7 +143,7 @@ void QOfonoConnectionManager::removeContext(const QString &path)
     }
 }
 
-void QOfonoConnectionManager::resetContexts()
+void QOfonoConnectionManager::resetContexts() // Since 0.110
 {
     OfonoConnectionManager *iface = (OfonoConnectionManager*)dbusInterface();
     if (iface) {
