@@ -143,6 +143,17 @@ void QOfonoConnectionManager::removeContext(const QString &path)
     }
 }
 
+void QOfonoConnectionManager::resetContexts()
+{
+    OfonoConnectionManager *iface = (OfonoConnectionManager*)dbusInterface();
+    if (iface) {
+        connect(new QDBusPendingCallWatcher(
+            iface->DeactivateAll(), iface),
+            SIGNAL(finished(QDBusPendingCallWatcher*)),
+            SLOT(onDeactivateAllFinished(QDBusPendingCallWatcher*)));
+    }
+}
+
 bool QOfonoConnectionManager::attached() const
 {
     return getBool("Attached");
@@ -280,6 +291,34 @@ void QOfonoConnectionManager::onAddContextFinished(QDBusPendingCallWatcher *watc
 }
 
 void QOfonoConnectionManager::onRemoveContextFinished(QDBusPendingCallWatcher *watch)
+{
+    watch->deleteLater();
+    QDBusPendingReply<> reply(*watch);
+    if (reply.isError()) {
+        qDebug() << reply.error();
+        Q_EMIT reportError(reply.error().message());
+    }
+}
+
+void QOfonoConnectionManager::onDeactivateAllFinished(QDBusPendingCallWatcher *watch)
+{
+    watch->deleteLater();
+    QDBusPendingReply<> reply(*watch);
+    if (reply.isError()) {
+        qDebug() << reply.error();
+        Q_EMIT reportError(reply.error().message());
+    } else {
+        OfonoConnectionManager *iface = (OfonoConnectionManager*)dbusInterface();
+        if (iface) {
+            connect(new QDBusPendingCallWatcher(
+                iface->ResetContexts(), iface),
+                SIGNAL(finished(QDBusPendingCallWatcher*)),
+                SLOT(onResetContextFinished(QDBusPendingCallWatcher*)));
+        }
+    }
+}
+
+void QOfonoConnectionManager::onResetContextFinished(QDBusPendingCallWatcher *watch)
 {
     watch->deleteLater();
     QDBusPendingReply<> reply(*watch);

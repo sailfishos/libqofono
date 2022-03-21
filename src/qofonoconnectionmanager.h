@@ -79,10 +79,13 @@ public slots:
     void deactivateAll();
     void addContext(const QString &type);
     void removeContext(const QString &path);
+    void resetContexts();
 
 private slots:
     void onAddContextFinished(QDBusPendingCallWatcher *watch);
     void onRemoveContextFinished(QDBusPendingCallWatcher *watch);
+    void onDeactivateAllFinished(QDBusPendingCallWatcher *watch);
+    void onResetContextFinished(QDBusPendingCallWatcher *watch);
     void onGetContextsFinished(QDBusPendingCallWatcher *watch);
     void onContextAdded(const QDBusObjectPath &path, const QVariantMap &propertyMap);
     void onContextRemoved(const QDBusObjectPath &path);
