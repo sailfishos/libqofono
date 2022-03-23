@@ -35,7 +35,8 @@
       <case manual="true" name="tst_qofonocellbroadcast">
         <step>/opt/tests/libqofono-qt5/runtest.sh tst_qofonocellbroadcast</step>
       </case>
-      <case name="tst_qofonoconnmancontext">
+      <case manual="true" name="tst_qofonoconnmancontext">
+        <!-- EXPECTFAIL: Not supported by Sailfish ofono -->
         <step>/opt/tests/libqofono-qt5/runtest.sh tst_qofonoconnmancontext</step>
       </case>
       <case name="tst_qofonoconnman">
