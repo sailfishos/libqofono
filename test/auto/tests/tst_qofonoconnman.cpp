@@ -44,15 +44,9 @@ private slots:
     {
         m->setRoamingAllowed(true);
         QTRY_COMPARE(m->roamingAllowed(), true);
-        Q_FOREACH (QString context, m->contexts()) {
-            m->removeContext(context);
-        }
-        QTRY_VERIFY(m->contexts().isEmpty());
 
         QSignalSpy roam(m,SIGNAL(roamingAllowedChanged(bool)));
         QSignalSpy pow(m, SIGNAL(poweredChanged(bool)));
-        QSignalSpy add(m, SIGNAL(contextAdded(QString)));
-        QSignalSpy rem(m, SIGNAL(contextRemoved(QString)));
 
         m->setPowered(false);
         QTRY_COMPARE(pow.count(), 1);
@@ -72,39 +66,19 @@ private slots:
         QCOMPARE(roam.takeFirst().at(0).toBool(), true);
         QCOMPARE(m->roamingAllowed(), true);
 
-        m->addContext(QString("internet"));
-        QTRY_COMPARE(add.count(), 1);
-
         QCOMPARE(m->powered(),true);
         QCOMPARE(m->attached(),true);
         QCOMPARE(m->suspended(),false);
         QCOMPARE(m->roamingAllowed(),true);
 
-        QString path = add.takeFirst().at(0).toString();
-        m->removeContext(path);
-        QTRY_COMPARE(rem.count(), 1);
-        QCOMPARE(rem.takeFirst().at(0).toString(), path);
+        QOfonoConnectionContext* context = new QOfonoConnectionContext(this);
+        context->setContextPath(m->contexts().first());
 
-        m->addContext(QString("internet"));
-        QTRY_COMPARE(add.count(), 1);
-        path = add.takeFirst().at(0).toString();
-        QOfonoConnectionContext* contextInternet = new QOfonoConnectionContext(this);
-        contextInternet->setContextPath(path);
-        m->addContext(QString("mms"));
-        QTRY_COMPARE(add.count(), 1);
-        path = add.takeFirst().at(0).toString();
-        QOfonoConnectionContext* contextMms = new QOfonoConnectionContext(this);
-        contextMms->setContextPath(path);
-
-        contextInternet->setActive(true);
-        contextMms->setActive(true);
-        QTRY_VERIFY(contextInternet->active() && contextMms->active());
+        context->setActive(true);
+        QTRY_VERIFY(context->active());
 
         m->deactivateAll();
-        QTRY_VERIFY(!contextInternet->active());
-        QTRY_VERIFY(!contextMms->active());
-
-        QCOMPARE(rem.count(), 0);
+        QTRY_VERIFY(!context->active());
     }
 
     void cleanupTestCase()

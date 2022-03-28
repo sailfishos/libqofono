@@ -83,14 +83,14 @@ private slots:
         QCOMPARE(m->subscriberNumbers()[0], QString("358501234567"));
         QTRY_VERIFY(m->serviceNumbers().count() > 0);
         QCOMPARE(m->serviceNumbers().value(".HELP DESK").toString(), QString("2601"));
-        QCOMPARE(m->pinRequired(),QOfonoSimManager::NoPin);
+        QCOMPARE(m->pinRequired(), QOfonoSimManager::NoPin);
         QCOMPARE(m->lockedPins().count(), 0);
         QTRY_COMPARE(m->cardIdentifier(), QString("8949222074451242066"));
         QTRY_VERIFY(m->preferredLanguages().count() > 0);
         QCOMPARE(m->preferredLanguages()[0], QString("de"));
         QCOMPARE(m->pinRetries().count(), 0);
-        QCOMPARE(m->fixedDialing(), false);
-        QCOMPARE(m->barredDialing(), false);
+        QVERIFY(!m->fixedDialing());
+        QVERIFY(!m->barredDialing());
 
         QStringList numbers = m->subscriberNumbers();
         QStringList newNumbers;
@@ -164,11 +164,6 @@ private slots:
         QTRY_COMPARE(preferredLanguages.count(), 1);
         QStringList languages = preferredLanguages.takeFirst().at(0).toStringList();
         QCOMPARE(languages.count(), 0);
-        QCOMPARE(pinRequired.count(), 0);
-        QCOMPARE(lockedPins.count(), 0);
-        QCOMPARE(fixedDialing.count(), 0);
-        QCOMPARE(barredDialing.count(), 0);
-
         QCOMPARE(presence.count(), 0);
         QCOMPARE(subscriberIdentity.count(), 0);
         QCOMPARE(mcc.count(), 0);
@@ -177,10 +172,18 @@ private slots:
         QCOMPARE(serviceNumbers.count(), 0);
         QCOMPARE(cardIdentifier.count(), 0);
         QCOMPARE(preferredLanguages.count(), 0);
-        QCOMPARE(pinRequired.count(), 0);
-        QCOMPARE(lockedPins.count(), 0);
-        QCOMPARE(fixedDialing.count(), 0);
-        QCOMPARE(barredDialing.count(), 0);
+
+        // Signals that fire when the modem powers down
+        QCOMPARE(pinRequired.count(), 1);
+        QCOMPARE(lockedPins.count(), 1);
+        QCOMPARE(fixedDialing.count(), 1);
+        QCOMPARE(barredDialing.count(), 1);
+
+        // Verify that the values didn't change though
+        QCOMPARE(m->pinRequired(), QOfonoSimManager::NoPin);
+        QCOMPARE(m->lockedPins().count(), 0);
+        QVERIFY(!m->fixedDialing());
+        QVERIFY(!m->barredDialing());
 
         modem.setPowered(true);
         QTRY_COMPARE(modemPowered.count(), 1);
@@ -222,10 +225,17 @@ private slots:
         QCOMPARE(serviceNumbers.count(), 0);
         QCOMPARE(cardIdentifier.count(), 0);
         QCOMPARE(preferredLanguages.count(), 0);
-        QCOMPARE(pinRequired.count(), 0);
-        QCOMPARE(lockedPins.count(), 0);
-        QCOMPARE(fixedDialing.count(), 0);
-        QCOMPARE(barredDialing.count(), 0);
+        // Expect that these didn't increase anymore
+        QCOMPARE(pinRequired.count(), 1);
+        QCOMPARE(lockedPins.count(), 1);
+        QCOMPARE(fixedDialing.count(), 1);
+        QCOMPARE(barredDialing.count(), 1);
+
+        // Verify that the values didn't change still
+        QCOMPARE(m->pinRequired(), QOfonoSimManager::NoPin);
+        QCOMPARE(m->lockedPins().count(), 0);
+        QVERIFY(!m->fixedDialing());
+        QVERIFY(!m->barredDialing());
     }
 
     void testQOfonoSimManagerPin()
