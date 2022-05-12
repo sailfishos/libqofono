@@ -21,18 +21,31 @@
 /*!
  * oFono IMS API is documented in
  * https://git.kernel.org/pub/scm/network/ofono/ofono.git/plain/doc/ims-api.txt
+ * https://github.com/sailfishos/ofono/blob/master/ofono/doc/ims-api.txt
  */
 class QOFONOSHARED_EXPORT QOfonoIpMultimediaSystem : public QOfonoModemInterface
 {
     Q_OBJECT
+    Q_ENUMS(Registration)
+    Q_PROPERTY(Registration registration READ registration WRITE setRegistration NOTIFY registrationChanged)
     Q_PROPERTY(bool registered READ registered WRITE setRegistered NOTIFY registeredChanged)
     Q_PROPERTY(bool voiceCapable READ voiceCapable NOTIFY voiceCapableChanged)
     Q_PROPERTY(bool smsCapable READ smsCapable NOTIFY smsCapableChanged)
     class Interface;
 
 public:
+    enum Registration {
+        RegistrationUnknown,
+        RegistrationDisabled,
+        RegistrationEnabled,
+        RegistrationAuto
+    };
+
     explicit QOfonoIpMultimediaSystem(QObject *parent = Q_NULLPTR);
     ~QOfonoIpMultimediaSystem();
+
+    Registration registration() const;
+    void setRegistration(Registration value);
 
     void setRegistered(bool registered);
     bool registered() const;
@@ -43,6 +56,7 @@ public:
     bool unregisterSync(QDBusError *error = Q_NULLPTR);
 
 Q_SIGNALS:
+    void registrationChanged();
     void registeredChanged();
     void voiceCapableChanged();
     void smsCapableChanged();
