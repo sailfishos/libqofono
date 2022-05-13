@@ -52,13 +52,21 @@ void QOfonoConnectionManager::Private::filterContexts()
             QString f(filter);
             f.remove(' ').remove('\t');
             if (f[0] == '!') {
-                QStringList blackList = f.remove(0,1).split(',', QString::SkipEmptyParts);
+                #if (QT_VERSION >= QT_VERSION_CHECK(6,0,0))
+                    QStringList blackList = f.remove(0,1).split(',', Qt::SkipEmptyParts);
+                #else
+                    QStringList blackList = f.remove(0,1).split(',', QString::SkipEmptyParts);
+                #endif
                 foreach (QString path, contextList) {
                     if (!blackList.contains(contextTypes.value(path)))
                         contexts.append(path);
                 }
             } else {
-                QStringList whiteList = f.split(',', QString::SkipEmptyParts);
+                #if (QT_VERSION >= QT_VERSION_CHECK(6,0,0))
+                    QStringList whiteList = f.split(',', Qt::SkipEmptyParts);
+                #else
+                    QStringList whiteList = f.split(',', QString::SkipEmptyParts);
+                #endif
                 foreach (QString path, contextList) {
                     if (whiteList.contains(contextTypes.value(path)))
                         contexts.append(path);

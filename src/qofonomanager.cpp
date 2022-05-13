@@ -93,7 +93,11 @@ void QOfonoManager::Private::handleGetModemsReply(QOfonoManager *obj, ObjectPath
     for (int i = 0; i < n; i++) {
         newModems.append(reply.at(i).path.path());
     }
-    qSort(newModems);
+    #if (QT_VERSION >= QT_VERSION_CHECK(6,0,0))
+        std::sort(newModems.begin(), newModems.end());
+    #else
+        qSort(newModems);
+    #endif
     available = true;
     if (modems != newModems) {
         modems = newModems;
@@ -185,7 +189,11 @@ void QOfonoManager::onModemAdded(const QDBusObjectPath &path, const QVariantMap&
     if (!d_ptr->modems.contains(pathStr)) {
         QString prevDefault = defaultModem();
         d_ptr->modems.append(pathStr);
-        qSort(d_ptr->modems);
+        #if (QT_VERSION >= QT_VERSION_CHECK(6,0,0))
+            std::sort(d_ptr->modems.begin(), d_ptr->modems.end());
+        #else
+            qSort(d_ptr->modems);
+        #endif
         Q_EMIT modemAdded(pathStr);
         Q_EMIT modemsChanged(d_ptr->modems);
         QString newDefault = defaultModem();
