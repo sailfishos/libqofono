@@ -13,6 +13,7 @@
 ****************************************************************************/
 
 #include "dbustypes_p.h"
+#include "qofonoutils_p.h"
 #include "qofonoconnectionmanager.h"
 #include "ofono_connection_manager_interface.h"
 
@@ -52,13 +53,13 @@ void QOfonoConnectionManager::Private::filterContexts()
             QString f(filter);
             f.remove(' ').remove('\t');
             if (f[0] == '!') {
-                QStringList blackList = f.remove(0,1).split(',', QString::SkipEmptyParts);
+                QStringList blackList = f.remove(0,1).split(',', QOfonoSkipEmptyParts);
                 foreach (QString path, contextList) {
                     if (!blackList.contains(contextTypes.value(path)))
                         contexts.append(path);
                 }
             } else {
-                QStringList whiteList = f.split(',', QString::SkipEmptyParts);
+                QStringList whiteList = f.split(',', QOfonoSkipEmptyParts);
                 foreach (QString path, contextList) {
                     if (whiteList.contains(contextTypes.value(path)))
                         contexts.append(path);
