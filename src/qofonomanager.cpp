@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013-2020 Jolla Ltd.
+** Copyright (C) 2013-2022 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -93,7 +93,7 @@ void QOfonoManager::Private::handleGetModemsReply(QOfonoManager *obj, ObjectPath
     for (int i = 0; i < n; i++) {
         newModems.append(reply.at(i).path.path());
     }
-    qSort(newModems);
+    qOfonoSort(newModems);
     available = true;
     if (modems != newModems) {
         modems = newModems;
@@ -185,7 +185,7 @@ void QOfonoManager::onModemAdded(const QDBusObjectPath &path, const QVariantMap&
     if (!d_ptr->modems.contains(pathStr)) {
         QString prevDefault = defaultModem();
         d_ptr->modems.append(pathStr);
-        qSort(d_ptr->modems);
+        qOfonoSort(d_ptr->modems);
         Q_EMIT modemAdded(pathStr);
         Q_EMIT modemsChanged(d_ptr->modems);
         QString newDefault = defaultModem();

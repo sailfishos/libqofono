@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2014-2016 Jolla Ltd.
-** Contact: lorn.potter@jollamobile.com
+** Copyright (C) 2014-2022 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -17,6 +16,14 @@
 #define QOFONOUTILS_P_H
 
 #include "qofono_global.h"
+
+#if (QT_VERSION >= QT_VERSION_CHECK(6,0,0))
+#  define QOfonoSkipEmptyParts Qt::SkipEmptyParts
+#  define qOfonoSort(what) std::sort((what).begin(), (what).end())
+#else
+#  define QOfonoSkipEmptyParts QString::SkipEmptyParts
+#  define qOfonoSort(what) qSort(what)
+#endif
 
 namespace qofono {
 
