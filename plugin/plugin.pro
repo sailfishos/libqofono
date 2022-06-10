@@ -21,15 +21,33 @@ HEADERS = \
 
 INCLUDEPATH += ../src
 
+contains(CONFIG,no-module-prefix) {
+    system("sed -i 's/@@ModulePrefix@@//' qmldir")
+    system("sed -i 's/@@ModulePrefix@@//' plugins.qmltypes")
+    MODULENAME = QOfono
+} else {
+    system("sed -i 's/@@ModulePrefix@@/MeeGo\./' qmldir")
+    system("sed -i 's/@@ModulePrefix@@/MeeGo\./' plugins.qmltypes")
+    MODULENAME = MeeGo/QOfono
+}
+
 OTHER_FILES += \
     plugin.json plugins.qmltypes qmldir
 
-qmldir.path = $$[QT_INSTALL_QML]/MeeGo/QOfono
-target.path = $$[QT_INSTALL_QML]/MeeGo/QOfono
+TARGETPATH = $$[QT_INSTALL_QML]/$$MODULENAME
 
 qmldir.files += qmldir plugins.qmltypes
+qmldir.path = $$TARGETPATH
+target.path = $$TARGETPATH
 
 INSTALLS += target qmldir
 
-qmltypes.commands = qmlplugindump -nonrelocatable MeeGo.QOfono 0.2 > $$PWD/plugins.qmltypes
+qmltypes.target = qmltypes
+
+contains(CONFIG,no-module-prefix) {
+    qmltypes.commands = qmlplugindump -nonrelocatable QOfono 0.2 > $$PWD/plugins.qmltypes
+} else {
+    qmltypes.commands = qmlplugindump -nonrelocatable MeeGo.QOfono 0.2 > $$PWD/plugins.qmltypes
+}
+
 QMAKE_EXTRA_TARGETS += qmltypes
