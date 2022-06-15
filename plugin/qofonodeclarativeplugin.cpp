@@ -66,7 +66,7 @@
 
 void QOfonoDeclarativePlugin::registerTypes(const char *uri, int major, int minor)
 {
-    Q_ASSERT(QLatin1String(uri) == QLatin1String("MeeGo.QOfono"));
+    Q_ASSERT(QLatin1String(uri) == QLatin1String("MeeGo.QOfono") || QLatin1String(uri) == QLatin1String("QOfono"));
 
     qmlRegisterType<QOfonoManager>(uri,major,minor,"OfonoManager");
     qmlRegisterType<QOfonoModem>(uri,major,minor,"OfonoModem");
