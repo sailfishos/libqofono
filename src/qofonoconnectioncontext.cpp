@@ -119,6 +119,8 @@ void QOfonoConnectionContext::propertyChanged(const QString &property, const QVa
     SUPER::propertyChanged(property, value);
     if (property == QLatin1String("Active")) {
         Q_EMIT activeChanged(value.value<bool>());
+    } else if (property == QLatin1String("Preferred")) {
+        Q_EMIT preferredChanged(value.value<bool>());
     } else if (property == QLatin1String("Name")) {
         Q_EMIT nameChanged(value.value<QString>());
     } else if (property == QLatin1String("AccessPointName")) {
@@ -147,6 +149,11 @@ void QOfonoConnectionContext::propertyChanged(const QString &property, const QVa
 bool QOfonoConnectionContext::active() const
 {
     return getBool("Active");
+}
+
+bool QOfonoConnectionContext::preferred() const
+{
+    return getBool("Preferred");
 }
 
 QString QOfonoConnectionContext::accessPointName() const
@@ -211,6 +218,11 @@ void QOfonoConnectionContext::setActive(const bool value)
         Q_EMIT disconnectRequested();
     }
     setProperty("Active", value);
+}
+
+void QOfonoConnectionContext::setPreferred(const bool value)
+{
+    setProperty("Preferred", value);
 }
 
 void QOfonoConnectionContext::setAccessPointName(const QString &value)
