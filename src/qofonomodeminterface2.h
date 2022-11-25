@@ -17,11 +17,12 @@
 #define QOFONOMODEMINTERFACE2_H
 
 #include "dbustypes.h"
+#include "qofono_global.h"
 
 /**
  * Modem interface without properties.
  */
-class QOfonoModemInterface2 : public QObject
+class QOFONOSHARED_EXPORT QOfonoModemInterface2 : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool valid READ isValid NOTIFY validChanged)

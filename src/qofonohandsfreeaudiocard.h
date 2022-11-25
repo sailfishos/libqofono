@@ -20,8 +20,10 @@
 #include <QDBusVariant>
 #include <QDBusPendingCallWatcher>
 
+#include "qofono_global.h"
+
 class QOfonoHandsfreeAudioCardPrivate;
-class QOfonoHandsfreeAudioCard : public QObject
+class QOFONOSHARED_EXPORT QOfonoHandsfreeAudioCard : public QObject
 {
     Q_OBJECT
     Q_ENUMS(Error)

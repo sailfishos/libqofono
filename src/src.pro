@@ -308,7 +308,7 @@ headers.files = $$PUBLIC_HEADERS
 
 xmlfiles.files = $$XML_FILES
 
-CONFIG += create_pc create_prl link_pkgconfig
+CONFIG += hide_symbols create_pc create_prl link_pkgconfig
 
 QMAKE_PKGCONFIG_DESTDIR = pkgconfig
 QMAKE_PKGCONFIG_INCDIR = $$headers.path

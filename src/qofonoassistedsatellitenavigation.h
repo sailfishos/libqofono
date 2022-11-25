@@ -20,8 +20,10 @@
 #include <QDBusVariant>
 #include <QStringList>
 
+#include "qofono_global.h"
+
 class QOfonoAssistedSatelliteNavigationPrivate;
-class QOfonoAssistedSatelliteNavigation : public QObject
+class QOFONOSHARED_EXPORT QOfonoAssistedSatelliteNavigation : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString modemPath READ modemPath WRITE setModemPath NOTIFY modemPathChanged)

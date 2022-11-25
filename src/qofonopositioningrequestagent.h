@@ -19,7 +19,7 @@
 #include "qofono_global.h"
 
 class QOfonoPositioningRequestAgentPrivate;
-class QOfonoPositioningRequestAgent : public QObject
+class QOFONOSHARED_EXPORT QOfonoPositioningRequestAgent : public QObject
 {
     Q_OBJECT
     Q_DISABLE_COPY(QOfonoPositioningRequestAgent)
