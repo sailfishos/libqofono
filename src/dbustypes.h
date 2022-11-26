@@ -19,6 +19,8 @@
 #include <QtDBus>
 #include <QVariant>
 
+#include "qofono_global.h"
+
 struct ObjectPathProperties
 {
     QDBusObjectPath path;
@@ -30,19 +32,19 @@ typedef QList<ObjectPathProperties> ObjectPathPropertiesList;
 Q_DECLARE_METATYPE(ObjectPathProperties)
 Q_DECLARE_METATYPE(ObjectPathPropertiesList)
 
-QDBusArgument &operator<<(QDBusArgument &, const ObjectPathProperties &);
-const QDBusArgument &operator>>(const QDBusArgument &, ObjectPathProperties &);
+QOFONOSHARED_EXPORT QDBusArgument &operator<<(QDBusArgument &, const ObjectPathProperties &);
+QOFONOSHARED_EXPORT const QDBusArgument &operator>>(const QDBusArgument &, ObjectPathProperties &);
 
 namespace QOfonoDbusTypes {
-    void registerObjectPathProperties();
+    QOFONOSHARED_EXPORT void registerObjectPathProperties();
 }
 
 // Deprecated, left in for ABI compatibility
-struct OfonoPathProps { QDBusObjectPath path; QVariantMap properties; };
+struct QOFONOSHARED_EXPORT OfonoPathProps { QDBusObjectPath path; QVariantMap properties; };
 typedef QList<OfonoPathProps> QArrayOfPathProps;
 Q_DECLARE_METATYPE(OfonoPathProps)
 Q_DECLARE_METATYPE (QArrayOfPathProps)
-QDBusArgument &operator<<(QDBusArgument &, const OfonoPathProps &);
-const QDBusArgument &operator>>(const QDBusArgument &, OfonoPathProps &);
+QOFONOSHARED_EXPORT QDBusArgument &operator<<(QDBusArgument &, const OfonoPathProps &);
+QOFONOSHARED_EXPORT const QDBusArgument &operator>>(const QDBusArgument &, OfonoPathProps &);
 
 #endif // DBUSTYPES_H

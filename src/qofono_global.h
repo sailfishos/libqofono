@@ -17,12 +17,13 @@
 #define QOFONO_GLOBAL_H
 
 #include <QtCore/qglobal.h>
-#include "dbustypes.h"
 
 #if defined(QOFONO_LIBRARY)
 #  define QOFONOSHARED_EXPORT Q_DECL_EXPORT
 #else
 #  define QOFONOSHARED_EXPORT Q_DECL_IMPORT
 #endif
+
+#include "dbustypes.h"
 
 #endif // QOFONO_GLOBAL_H

@@ -21,8 +21,10 @@
 #include <QDBusAbstractAdaptor>
 #include <QDBusUnixFileDescriptor>
 
+#include "qofono_global.h"
+
 class QOfonoHandsfreeAudioAgentPrivate;
-class QOfonoHandsfreeAudioAgent : public QObject
+class QOFONOSHARED_EXPORT QOfonoHandsfreeAudioAgent : public QObject
 {
     Q_OBJECT
     Q_DISABLE_COPY(QOfonoHandsfreeAudioAgent)
@@ -51,7 +53,7 @@ private Q_SLOTS:
     void Release();
 };
 
-class QOfonoHandsfreeAudioAgentAdaptor : public QDBusAbstractAdaptor
+class QOFONOSHARED_EXPORT QOfonoHandsfreeAudioAgentAdaptor : public QDBusAbstractAdaptor
 {
     Q_OBJECT
     Q_CLASSINFO ("D-Bus Interface", "org.ofono.HandsfreeAudioAgent")
