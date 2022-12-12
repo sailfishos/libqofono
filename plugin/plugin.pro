@@ -7,7 +7,7 @@ QT_VERSION=$$[QT_VERSION]
 
 QT += qml
 QT -= gui
-LIBS += -L../src -lqofono-qt5
+LIBS += -L../src -lqofono-qt$${QT_MAJOR_VERSION}
 
 SOURCES =  \ 
     qofonodeclarativeplugin.cpp \
