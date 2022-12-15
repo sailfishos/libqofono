@@ -11,7 +11,7 @@ contains(CONFIG,no-module-prefix) {
 
 qml.files += \
     qml/ofonotest/main.qml
-qml.path = /opt/examples/libqofono-qt5/qml/ofonotest/main.qml
+qml.path = /opt/examples/libqofono-qt5/qml/ofonotest
 
 target.path = /opt/examples/libqofono-qt5/
 INSTALLS += target qml
