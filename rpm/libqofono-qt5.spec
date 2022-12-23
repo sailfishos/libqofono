@@ -12,10 +12,6 @@ BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(Qt5Test)
 
-# license macro requires rpm >= 4.11
-BuildRequires: pkgconfig(rpm)
-%define license_support %(pkg-config --exists 'rpm >= 4.11'; echo $?)
-
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 
@@ -67,9 +63,12 @@ export QT_SELECT=5
 make %{?_smp_mflags}
 
 %install
-rm -rf %{buildroot}
 export QT_SELECT=5
 %qmake5_install
+# MeeGo.QOfono legacy import
+mkdir -p %{buildroot}%{_libdir}/qt5/qml/MeeGo/QOfono
+ln -sf ../../QOfono/libQOfonoQtDeclarative.so %{buildroot}%{_libdir}/qt5/qml/MeeGo/QOfono/
+sed 's/module QOfono/module MeeGo.QOfono/' < plugin/qmldir > %{buildroot}%{_libdir}/qt5/qml/MeeGo/QOfono/qmldir
 
 %post -p /sbin/ldconfig
 
@@ -78,13 +77,12 @@ export QT_SELECT=5
 %files
 %defattr(-,root,root,-)
 %{_libdir}/%{name}.so.*
-%if %{license_support} == 0
 %license COPYING
-%endif
 
 %files declarative
 %defattr(-,root,root,-)
-%{_libdir}/qt5/qml/MeeGo/QOfono/*
+%{_libdir}/qt5/qml/QOfono
+%{_libdir}/qt5/qml/MeeGo/QOfono
 
 %files devel
 %defattr(-,root,root,-)

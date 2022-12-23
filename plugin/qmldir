@@ -1,3 +1,3 @@
-module @@ModulePrefix@@QOfono
+module QOfono
 plugin QOfonoQtDeclarative
 typeinfo plugins.qmltypes
