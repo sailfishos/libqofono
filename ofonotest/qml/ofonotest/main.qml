@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import @@ModulePrefix@@QOfono 0.2
+import QOfono 0.2
 
 
 Rectangle {
