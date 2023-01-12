@@ -1,5 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QWindow>
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
