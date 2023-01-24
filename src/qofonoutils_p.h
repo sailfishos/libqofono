@@ -17,12 +17,10 @@
 
 #include "qofono_global.h"
 
-#if (QT_VERSION >= QT_VERSION_CHECK(6,0,0))
+#if (QT_VERSION >= QT_VERSION_CHECK(5,14,0))
 #  define QOfonoSkipEmptyParts Qt::SkipEmptyParts
-#  define qOfonoSort(what) std::sort((what).begin(), (what).end())
 #else
 #  define QOfonoSkipEmptyParts QString::SkipEmptyParts
-#  define qOfonoSort(what) qSort(what)
 #endif
 
 namespace qofono {
