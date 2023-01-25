@@ -47,7 +47,8 @@ qmltypes.target = qmltypes
 contains(CONFIG,no-module-prefix) {
     qmltypes.commands = qmlplugindump -nonrelocatable QOfono 0.2 > $$PWD/plugins.qmltypes
 } else {
-    qmltypes.commands = qmlplugindump -nonrelocatable MeeGo.QOfono 0.2 > $$PWD/plugins.qmltypes
+    qmltypes.commands = qmlplugindump -nonrelocatable MeeGo.QOfono 0.2 \
+        |sed 's/MeeGo\.QOfono/@@ModulePrefix@@QOfono/' > $$PWD/plugins.qmltypes
 }
 
 QMAKE_EXTRA_TARGETS += qmltypes

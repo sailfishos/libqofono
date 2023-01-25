@@ -427,6 +427,7 @@ Module {
             name: "removeContext"
             Parameter { name: "path"; type: "string" }
         }
+        Method { name: "resetContexts" }
     }
     Component {
         name: "QOfonoHandsfree"
@@ -535,6 +536,25 @@ Module {
             Parameter { name: "path"; type: "string" }
             Parameter { name: "codecs"; type: "CodecTypeFlags" }
         }
+    }
+    Component {
+        name: "QOfonoIpMultimediaSystem"
+        prototype: "QOfonoModemInterface"
+        exports: ["@@ModulePrefix@@QOfono/OfonoIpMultimediaSystem 0.2"]
+        exportMetaObjectRevisions: [0]
+        Enum {
+            name: "Registration"
+            values: {
+                "RegistrationUnknown": 0,
+                "RegistrationDisabled": 1,
+                "RegistrationEnabled": 2,
+                "RegistrationAuto": 3
+            }
+        }
+        Property { name: "registration"; type: "Registration" }
+        Property { name: "registered"; type: "bool" }
+        Property { name: "voiceCapable"; type: "bool"; isReadonly: true }
+        Property { name: "smsCapable"; type: "bool"; isReadonly: true }
     }
     Component {
         name: "QOfonoLocationReporting"
