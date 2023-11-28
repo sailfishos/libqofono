@@ -7,9 +7,9 @@
 QT += testlib dbus # xmlpatterns
 QT -= gui
 
-LIBS += -lqofono-qt5
-TARGET = tst_qofonotest-qt5
-target.path = /opt/tests/libqofono-qt5
+LIBS += -lqofono-qt$${QT_MAJOR_VERSION}
+TARGET = tst_qofonotest-qt$${QT_MAJOR_VERSION}
+target.path = /opt/tests/libqofono-qt$${QT_MAJOR_VERSION}
 
 CONFIG   += console
 CONFIG   -= app_bundle

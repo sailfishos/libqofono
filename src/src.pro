@@ -7,8 +7,8 @@ QMAKE_CXXFLAGS += -Wno-unused-parameter
 
 include(version.pri)
 
-TARGET = qofono-qt5
-pkgconfig.path = $$[QT_INSTALL_LIBS]/pkgconfig-qt5
+TARGET = qofono-qt$${QT_MAJOR_VERSION}
+pkgconfig.path = $$[QT_INSTALL_LIBS]/pkgconfig-qt$${QT_MAJOR_VERSION}
 
 TEMPLATE = lib
 
@@ -53,7 +53,7 @@ XML_FILES += \
 
 OTHER_FILES += $$XML_FILES\
     version.pri \
-    qofono-qt5.prf
+    qofono-qt$${QT_MAJOR_VERSION}.prf
 
 SOURCES += \
     qofono.cpp \
@@ -142,11 +142,11 @@ HEADERS += \
     dbustypes_p.h \
     qofonoutils_p.h
 
-headers.path = $$INSTALL_ROOT$$PREFIX/include/qofono-qt5
-qtconfig.path = $$[QT_INSTALL_PREFIX]/share/qt5/mkspecs/features
-qtconfig.files = qofono-qt5.prf
-pkgconfig.files = qofono-qt5.pc
-xmlfiles.path = $$INSTALL_ROOT$$PREFIX/include/qofono-qt5/dbus
+headers.path = $$INSTALL_ROOT$$PREFIX/include/qofono-qt$${QT_MAJOR_VERSION}
+qtconfig.path = $$[QT_INSTALL_PREFIX]/share/qt$${QT_MAJOR_VERSION}/mkspecs/features
+qtconfig.files = qofono-qt$${QT_MAJOR_VERSION}.prf
+pkgconfig.files = qofono-qt$${QT_MAJOR_VERSION}.pc
+xmlfiles.path = $$INSTALL_ROOT$$PREFIX/include/qofono-qt$${QT_MAJOR_VERSION}/dbus
 
 DBUS_INTERFACES += ofono_assisted_satellite_navigation
 ofono_assisted_satellite_navigation.files = dbus/ofono_assisted_satellite_navigation.xml
