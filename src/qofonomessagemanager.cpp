@@ -26,8 +26,8 @@ public:
     Private() : initialized(false) {}
 };
 
-QOfonoMessageManager::QOfonoMessageManager(QObject *parent) :
-    SUPER(OfonoMessageManager::staticInterfaceName(), new Private, parent)
+QOfonoMessageManager::QOfonoMessageManager(QObject *parent)
+    : SUPER(OfonoMessageManager::staticInterfaceName(), new Private, parent)
 {
     QOfonoDbusTypes::registerObjectPathProperties();
 }

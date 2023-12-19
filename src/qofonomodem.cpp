@@ -67,15 +67,15 @@ inline bool QOfonoModem::Private::isModemPathValid(const QString &path)
 #define DEFINE_PROPERTY(p) const QString QOfonoModem::Private::p(QLatin1String(#p));
 MODEM_PROPERTIES(DEFINE_PROPERTY)
 
-QOfonoModem::QOfonoModem(QObject *parent) :
-    SUPER(new Private(QOfonoManager::instance(false)), parent)
+QOfonoModem::QOfonoModem(QObject *parent)
+    : SUPER(new Private(QOfonoManager::instance(false)), parent)
 {
     privateData()->setup(this);
     checkModemPathValidity();
 }
 
-QOfonoModem::QOfonoModem(const QString &path, QObject *parent) : // Since 1.0.101
-    SUPER(new Private(QOfonoManager::instance(true)), path, parent)
+QOfonoModem::QOfonoModem(const QString &path, QObject *parent) // Since 1.0.101
+    : SUPER(new Private(QOfonoManager::instance(true)), path, parent)
 {
     Private* priv = privateData();
     priv->setup(this);
@@ -243,8 +243,9 @@ QSharedPointer<QOfonoModem> QOfonoModem::instance(const QString &modemPath, bool
 {
     QSharedPointer<QOfonoModem> modem = modemMap()->value(modemPath);
     if (modem.isNull()) {
-        modem = QSharedPointer<QOfonoModem>(mayBlock ? new QOfonoModem(modemPath) :
-            new QOfonoModem(), &QObject::deleteLater);
+        modem = QSharedPointer<QOfonoModem>(mayBlock
+                                            ? new QOfonoModem(modemPath) : new QOfonoModem(),
+                                            &QObject::deleteLater);
         modem->fixObjectPath(modemPath);
         modemMap()->insert(modemPath, QWeakPointer<QOfonoModem>(modem));
     } else if (mayBlock && !modem->isValid()) {

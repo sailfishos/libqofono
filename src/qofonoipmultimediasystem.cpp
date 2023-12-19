@@ -64,8 +64,8 @@ public:
 
     static const RegistrationValue RegistrationMap[];
 
-    Interface(QString aPath, QObject *aParent) :
-        QDBusAbstractInterface(OFONO_SERVICE, aPath, NAME, OFONO_BUS, aParent) {}
+    Interface(QString aPath, QObject *aParent)
+        : QDBusAbstractInterface(OFONO_SERVICE, aPath, NAME, OFONO_BUS, aParent) {}
 
     static bool syncCall(Interface *proxy, const QString &method, QDBusError *outError);
 
@@ -121,8 +121,8 @@ bool QOfonoIpMultimediaSystem::Interface::syncCall(Interface *iface, const QStri
 
 #define SUPER QOfonoModemInterface
 
-QOfonoIpMultimediaSystem::QOfonoIpMultimediaSystem(QObject *parent) :
-    SUPER(QLatin1String(Interface::NAME), parent)
+QOfonoIpMultimediaSystem::QOfonoIpMultimediaSystem(QObject *parent)
+    : SUPER(QLatin1String(Interface::NAME), parent)
 {
 }
 

@@ -23,8 +23,8 @@ namespace {
     const QString Topics("Topics");
 }
 
-QOfonoCellBroadcast::QOfonoCellBroadcast(QObject *parent) :
-    SUPER(OfonoCellBroadcast::staticInterfaceName(), parent)
+QOfonoCellBroadcast::QOfonoCellBroadcast(QObject *parent)
+    : SUPER(OfonoCellBroadcast::staticInterfaceName(), parent)
 {
 }
 

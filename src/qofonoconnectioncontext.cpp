@@ -34,8 +34,8 @@ public:
     ~Private() {}
 };
 
-QOfonoConnectionContext::QOfonoConnectionContext(QObject *parent) :
-    SUPER(new Private, parent)
+QOfonoConnectionContext::QOfonoConnectionContext(QObject *parent)
+    : SUPER(new Private, parent)
 {
 }
 

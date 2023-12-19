@@ -69,8 +69,8 @@ void QOfonoConnectionManager::Private::filterContexts()
     }
 }
 
-QOfonoConnectionManager::QOfonoConnectionManager(QObject *parent) :
-    SUPER(OfonoConnectionManager::staticInterfaceName(), new Private, parent)
+QOfonoConnectionManager::QOfonoConnectionManager(QObject *parent)
+    : SUPER(OfonoConnectionManager::staticInterfaceName(), new Private, parent)
 {
     QOfonoDbusTypes::registerObjectPathProperties();
 }

@@ -23,14 +23,14 @@ public:
     bool registered;
 };
 
-QOfonoSmartMessagingAgentPrivate::QOfonoSmartMessagingAgentPrivate() :
-    registered(false)
+QOfonoSmartMessagingAgentPrivate::QOfonoSmartMessagingAgentPrivate()
+    : registered(false)
 {
 }
 
-QOfonoSmartMessagingAgent::QOfonoSmartMessagingAgent(QObject *parent) :
-    QObject(parent)
-  , d_ptr(new QOfonoSmartMessagingAgentPrivate)
+QOfonoSmartMessagingAgent::QOfonoSmartMessagingAgent(QObject *parent)
+    : QObject(parent)
+    , d_ptr(new QOfonoSmartMessagingAgentPrivate)
 {
     new QOfonoSmartMessagingAgentAdaptor(this);
 }

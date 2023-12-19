@@ -18,8 +18,8 @@
 
 #define SUPER QOfonoModemInterface
 
-QOfonoRadioSettings::QOfonoRadioSettings(QObject *parent) :
-    SUPER(OfonoRadioSettings::staticInterfaceName(), parent)
+QOfonoRadioSettings::QOfonoRadioSettings(QObject *parent)
+    :SUPER(OfonoRadioSettings::staticInterfaceName(), parent)
 {
 }
 

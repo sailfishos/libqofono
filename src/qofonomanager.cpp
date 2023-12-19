@@ -36,9 +36,9 @@ public:
     void getModemsSync(QOfonoManager *obj);
 };
 
-QOfonoManager::Private::Private() :
-    ofonoManager(Q_NULLPTR),
-    available(false)
+QOfonoManager::Private::Private()
+    : ofonoManager(Q_NULLPTR)
+    , available(false)
 {
     QOfonoDbusTypes::registerObjectPathProperties();
 }
@@ -131,16 +131,16 @@ void QOfonoManager::Private::getModemsSync(QOfonoManager *obj)
     }
 }
 
-QOfonoManager::QOfonoManager(QObject *parent) :
-    QObject(parent),
-    d_ptr(new Private)
+QOfonoManager::QOfonoManager(QObject *parent)
+    : QObject(parent)
+    , d_ptr(new Private)
 {
     d_ptr->setup(this, &Private::getModems);
 }
 
-QOfonoManager::QOfonoManager(bool mayBlock, QObject *parent) : // Since 1.0.101
-    QObject(parent),
-    d_ptr(new Private)
+QOfonoManager::QOfonoManager(bool mayBlock, QObject *parent) // Since 1.0.101
+    : QObject(parent)
+    , d_ptr(new Private)
 {
     d_ptr->setup(this, mayBlock ? &Private::getModemsSync :  &Private::getModems);
 }

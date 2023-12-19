@@ -32,9 +32,9 @@ public:
     QString objectPath;
     QVariantMap properties;
 
-    Private(QOfonoObject::ExtData *data) : ext(data),
-        interface(Q_NULLPTR), initialized(false), fixedPath(false),
-        validMark(false), validMarkCount(0) {}
+    Private(QOfonoObject::ExtData *data)
+        : ext(data), interface(Q_NULLPTR), initialized(false), fixedPath(false),
+          validMark(false), validMarkCount(0) {}
     ~Private() { delete ext; }
 
     QDBusPendingCall setProperty(const QString &key, const QVariant &value);
@@ -48,8 +48,8 @@ public:
     public:
         QString property;
         SetPropertyWatcher(QDBusAbstractInterface *parent, const QString &name,
-            const QDBusPendingCall &call) : QDBusPendingCallWatcher(call, parent),
-            property(name) {}
+            const QDBusPendingCall &call)
+            : QDBusPendingCallWatcher(call, parent), property(name) {}
     };
 };
 
@@ -57,7 +57,8 @@ QOfonoObject::ExtData::~ExtData()
 {
 }
 
-QOfonoObject::ValidTracker::ValidTracker(QOfonoObject* obj) : object(obj)
+QOfonoObject::ValidTracker::ValidTracker(QOfonoObject* obj)
+    : object(obj)
 {
     if (!(object->d_ptr->validMarkCount++)) {
         object->d_ptr->validMark = obj->isValid();
@@ -103,8 +104,8 @@ bool QOfonoObject::Private::dropDbusInterface()
 void QOfonoObject::Private::setDbusInterface(QOfonoObject *obj, QDBusAbstractInterface *iface)
 {
     interface = iface;
-    connect(iface, SIGNAL(PropertyChanged(QString,QDBusVariant)), obj,
-        SLOT(onPropertyChanged(QString,QDBusVariant)));
+    connect(iface, SIGNAL(PropertyChanged(QString,QDBusVariant)),
+            obj, SLOT(onPropertyChanged(QString,QDBusVariant)));
 }
 
 void QOfonoObject::Private::applyProperties(QOfonoObject *obj, const QVariantMap &props)
@@ -114,24 +115,24 @@ void QOfonoObject::Private::applyProperties(QOfonoObject *obj, const QVariantMap
     }
 }
 
-QOfonoObject::QOfonoObject(QObject *parent) :
-    QObject(parent),
-    d_ptr(new Private(Q_NULLPTR))
+QOfonoObject::QOfonoObject(QObject *parent)
+    : QObject(parent),
+      d_ptr(new Private(Q_NULLPTR))
 {
 }
 
-QOfonoObject::QOfonoObject(ExtData *ext, const QString &path, QObject *parent) :
-    QObject(parent),
-    d_ptr(new Private(ext))
+QOfonoObject::QOfonoObject(ExtData *ext, const QString &path, QObject *parent)
+    : QObject(parent),
+      d_ptr(new Private(ext))
 {
     // Just set the path... This constructor is used by the objects which
     // initialize themselves synchronously by calling setDbusInterfaceSync()
     d_ptr->objectPath = path;
 }
 
-QOfonoObject::QOfonoObject(ExtData *ext, QObject *parent) :
-    QObject(parent),
-    d_ptr(new Private(ext))
+QOfonoObject::QOfonoObject(ExtData *ext, QObject *parent)
+    : QObject(parent),
+      d_ptr(new Private(ext))
 {
 }
 
@@ -224,8 +225,8 @@ void QOfonoObject::setDbusInterfaceSync(QDBusAbstractInterface *iface) // Since 
 
 void QOfonoObject::resetDbusInterfaceSync() // Since 1.0.101
 {
-    setDbusInterfaceSync(d_ptr->objectPath.isEmpty() ? Q_NULLPTR :
-        createDbusInterface(d_ptr->objectPath));
+    setDbusInterfaceSync(d_ptr->objectPath.isEmpty()
+                         ? Q_NULLPTR : createDbusInterface(d_ptr->objectPath));
 }
 
 void QOfonoObject::setDbusInterface(QDBusAbstractInterface *iface, const QVariantMap *properties)
@@ -249,8 +250,8 @@ void QOfonoObject::setDbusInterface(QDBusAbstractInterface *iface, const QVarian
 
 void QOfonoObject::resetDbusInterface(const QVariantMap *properties)
 {
-    setDbusInterface(d_ptr->objectPath.isEmpty() ? Q_NULLPTR :
-        createDbusInterface(d_ptr->objectPath), properties);
+    setDbusInterface(d_ptr->objectPath.isEmpty()
+                     ? Q_NULLPTR : createDbusInterface(d_ptr->objectPath), properties);
 }
 
 void QOfonoObject::dbusInterfaceDropped()

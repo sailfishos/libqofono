@@ -25,8 +25,8 @@ public:
     Private() : importing(false) {}
 };
 
-QOfonoPhonebook::QOfonoPhonebook(QObject *parent) :
-    SUPER(OfonoPhonebook::staticInterfaceName(), new Private, parent)
+QOfonoPhonebook::QOfonoPhonebook(QObject *parent)
+    : SUPER(OfonoPhonebook::staticInterfaceName(), new Private, parent)
 {
 }
 

@@ -36,11 +36,11 @@ public Q_SLOTS:
     void updateSims();
 };
 
-QOfonoSimWatcher::Private::Private(QOfonoSimWatcher *parent) :
-    watcher(parent),
-    ofono(QOfonoManager::instance()),
-    requireSubscriberIdentity(false),
-    valid(false)
+QOfonoSimWatcher::Private::Private(QOfonoSimWatcher *parent)
+    : watcher(parent)
+    , ofono(QOfonoManager::instance())
+    , requireSubscriberIdentity(false)
+    , valid(false)
 {
     connect(ofono.data(), SIGNAL(availableChanged(bool)), SLOT(onOfonoAvailableChanged()));
     connect(ofono.data(), SIGNAL(modemsChanged(QStringList)), SLOT(updateModems()));
@@ -157,9 +157,9 @@ void QOfonoSimWatcher::Private::updateValid()
     }
 }
 
-QOfonoSimWatcher::QOfonoSimWatcher(QObject *parent) :
-    QObject(parent),
-    d_ptr(new Private(this))
+QOfonoSimWatcher::QOfonoSimWatcher(QObject *parent)
+    : QObject(parent)
+    , d_ptr(new Private(this))
 {
 }
 

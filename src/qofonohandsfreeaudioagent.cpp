@@ -25,14 +25,14 @@ public:
 
 };
 
-QOfonoHandsfreeAudioAgentPrivate::QOfonoHandsfreeAudioAgentPrivate() :
-    ofonoHandsfreeAudioAgent(0)
+QOfonoHandsfreeAudioAgentPrivate::QOfonoHandsfreeAudioAgentPrivate()
+    : ofonoHandsfreeAudioAgent(0)
 {
 }
 
-QOfonoHandsfreeAudioAgent::QOfonoHandsfreeAudioAgent(QObject *parent) :
-    QObject(parent)
-  , d_ptr(new QOfonoHandsfreeAudioAgentPrivate)
+QOfonoHandsfreeAudioAgent::QOfonoHandsfreeAudioAgent(QObject *parent)
+    : QObject(parent)
+    , d_ptr(new QOfonoHandsfreeAudioAgentPrivate)
 {
 }
 
@@ -45,8 +45,7 @@ void QOfonoHandsfreeAudioAgent::setAgentPath(const QString &path)
 {
     if (!d_ptr->ofonoHandsfreeAudioAgent) {
         d_ptr->audioAgentPath = path;
-        d_ptr->ofonoHandsfreeAudioAgent = new OfonoHandsfreeAudioAgent(OFONO_SERVICE, path, OFONO_BUS,this);
-
+        d_ptr->ofonoHandsfreeAudioAgent = new OfonoHandsfreeAudioAgent(OFONO_SERVICE, path, OFONO_BUS, this);
     }
 }
 

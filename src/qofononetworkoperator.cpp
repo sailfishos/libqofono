@@ -25,16 +25,16 @@ public:
     Private() : registering(false) {}
 };
 
-QOfonoNetworkOperator::QOfonoNetworkOperator(QObject *parent) :
-    SUPER(new Private, parent)
+QOfonoNetworkOperator::QOfonoNetworkOperator(QObject *parent)
+    : SUPER(new Private, parent)
 {
 }
 
 // Constructs the object with known set of properties, saves a roundtrip
 // via D-Bus and makes the object valid immediately
 QOfonoNetworkOperator::QOfonoNetworkOperator(const QString &path,
-    const QVariantMap &properties, QObject *parent) :
-    SUPER(new Private, parent)
+                                             const QVariantMap &properties, QObject *parent)
+    : SUPER(new Private, parent)
 {
     setObjectPath(path, &properties);
 }

@@ -18,8 +18,8 @@
 
 #define SUPER QOfonoModemInterface
 
-QOfonoSupplementaryServices::QOfonoSupplementaryServices(QObject *parent) :
-    SUPER(OfonoSupplementaryServices::staticInterfaceName(), parent)
+QOfonoSupplementaryServices::QOfonoSupplementaryServices(QObject *parent)
+    : SUPER(OfonoSupplementaryServices::staticInterfaceName(), parent)
 {
 }
 

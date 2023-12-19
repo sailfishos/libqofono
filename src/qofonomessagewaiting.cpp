@@ -18,8 +18,8 @@
 
 #define SUPER QOfonoModemInterface
 
-QOfonoMessageWaiting::QOfonoMessageWaiting(QObject *parent) :
-    SUPER(OfonoMessageWaiting::staticInterfaceName(), parent)
+QOfonoMessageWaiting::QOfonoMessageWaiting(QObject *parent)
+    : SUPER(OfonoMessageWaiting::staticInterfaceName(), parent)
 {
 }
 

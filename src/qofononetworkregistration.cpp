@@ -69,8 +69,8 @@ bool QOfonoNetworkRegistration::Private::updateCountry(QOfonoNetworkRegistration
     }
 }
 
-QOfonoNetworkRegistration::QOfonoNetworkRegistration(QObject *parent) :
-    SUPER(OfonoNetworkRegistration::staticInterfaceName(), new Private, parent)
+QOfonoNetworkRegistration::QOfonoNetworkRegistration(QObject *parent)
+    : SUPER(OfonoNetworkRegistration::staticInterfaceName(), new Private, parent)
 {
     QOfonoDbusTypes::registerObjectPathProperties();
 }

@@ -58,8 +58,8 @@ namespace QOfonoSimManagerPrivate
     static QHash<QOfonoSimManager::PinType, QString> allPinTypes = pinTypes();
 }
 
-QOfonoSimManager::QOfonoSimManager(QObject *parent) :
-    SUPER(OfonoSimManager::staticInterfaceName(), parent)
+QOfonoSimManager::QOfonoSimManager(QObject *parent)
+    : SUPER(OfonoSimManager::staticInterfaceName(), parent)
 {
 }
 
@@ -85,7 +85,7 @@ QVariant QOfonoSimManager::convertProperty(const QString &property, const QVaria
         if (value.userType() == qMetaTypeId<QDBusArgument>()) {
             QMap<QString, QString> numbers;
             value.value<QDBusArgument>() >> numbers;
-            Q_FOREACH(const QString &key, numbers.keys()) {
+            Q_FOREACH (const QString &key, numbers.keys()) {
                 convertedNumbers.insert(key, numbers.value(key));
             }
         }
@@ -94,7 +94,7 @@ QVariant QOfonoSimManager::convertProperty(const QString &property, const QVaria
         QVariantList convertedPins;
         if (value.userType() == qMetaTypeId<QStringList>()) {
             QStringList pins = value.value<QStringList>();
-            Q_FOREACH(QString type, pins) {
+            Q_FOREACH (QString type, pins) {
                 convertedPins << (int)pinTypeFromString(type);
             }
         }
@@ -109,7 +109,7 @@ QVariant QOfonoSimManager::convertProperty(const QString &property, const QVaria
         if (value.userType() == qMetaTypeId<QDBusArgument>()) {
             QMap<QString, unsigned char> retries;
             value.value<QDBusArgument>() >> retries;
-            Q_FOREACH(const QString &type, retries.keys()) {
+            Q_FOREACH (const QString &type, retries.keys()) {
                 QVariant retryCountVariant = retries[type];
                 bool ok = false;
                 int retryCount = retryCountVariant.toInt(&ok);

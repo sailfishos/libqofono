@@ -18,8 +18,8 @@
 
 #define SUPER QOfonoModemInterface
 
-QOfonoTextTelephony::QOfonoTextTelephony(QObject *parent) :
-    SUPER(OfonoTextTelephony::staticInterfaceName(), parent)
+QOfonoTextTelephony::QOfonoTextTelephony(QObject *parent)
+    : SUPER(OfonoTextTelephony::staticInterfaceName(), parent)
 {
 }
 
