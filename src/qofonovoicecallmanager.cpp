@@ -279,7 +279,7 @@ void QOfonoVoiceCallManager::onGetCallsFinished(QDBusPendingCallWatcher *watch)
             qDebug() << "Retrying GetCalls...";
             Private::getCalls(this, (OfonoVoiceCallManager*)dbusInterface());
         } else {
-            qDebug() << reply.error();
+            qDebug() << "QOfonoVoiceCallManager getCalls failure:" << reply.error();
             Q_EMIT reportError(reply.error().message());
         }
     } else {

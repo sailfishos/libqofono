@@ -256,7 +256,7 @@ void QOfonoConnectionManager::onGetContextsFinished(QDBusPendingCallWatcher *wat
     watch->deleteLater();
     QDBusPendingReply<ObjectPathPropertiesList> reply(*watch);
     if (reply.isError()) {
-        qDebug() << reply.error();
+        qDebug() << "QOfonoConnectionManager getContexts failure:" << reply.error();
         Q_EMIT reportError(reply.error().message());
     } else {
         Private *d_ptr = privateData();
@@ -286,7 +286,7 @@ void QOfonoConnectionManager::onAddContextFinished(QDBusPendingCallWatcher *watc
     watch->deleteLater();
     QDBusPendingReply<QDBusObjectPath> reply(*watch);
     if (reply.isError()) {
-        qDebug() << reply.error();
+        qDebug() << "QOfonoConnectionManager addContext failure:"  << reply.error();
         Q_EMIT reportError(reply.error().message());
     }
 }
@@ -296,7 +296,7 @@ void QOfonoConnectionManager::onRemoveContextFinished(QDBusPendingCallWatcher *w
     watch->deleteLater();
     QDBusPendingReply<> reply(*watch);
     if (reply.isError()) {
-        qDebug() << reply.error();
+        qDebug() << "QOfonoConnectionManager removeContext failure:" << reply.error();
         Q_EMIT reportError(reply.error().message());
     }
 }
@@ -306,7 +306,7 @@ void QOfonoConnectionManager::onDeactivateAllFinished(QDBusPendingCallWatcher *w
     watch->deleteLater();
     QDBusPendingReply<> reply(*watch);
     if (reply.isError()) {
-        qDebug() << reply.error();
+        qDebug() << "QOfonoConnectionManager deactivateAll failure:" << reply.error();
         Q_EMIT reportError(reply.error().message());
     } else {
         OfonoConnectionManager *iface = (OfonoConnectionManager*)dbusInterface();
@@ -324,7 +324,7 @@ void QOfonoConnectionManager::onResetContextFinished(QDBusPendingCallWatcher *wa
     watch->deleteLater();
     QDBusPendingReply<> reply(*watch);
     if (reply.isError()) {
-        qDebug() << reply.error();
+        qDebug() << "QOfonoConnectionManager resetContext failure:" << reply.error();
         Q_EMIT reportError(reply.error().message());
     }
 }

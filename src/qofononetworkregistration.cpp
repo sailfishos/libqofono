@@ -344,7 +344,7 @@ void QOfonoNetworkRegistration::onGetOperatorsFinished(QDBusPendingCallWatcher *
     watch->deleteLater();
     QDBusPendingReply<ObjectPathPropertiesList> reply(*watch);
     if (reply.isError()) {
-        qDebug() << reply.error();
+        qDebug() << "QOfonoNetworkRegistration getOperators failure:" << reply.error();
         Q_EMIT reportError(reply.error().message());
     } else {
         ValidTracker valid(this);
@@ -358,7 +358,7 @@ void QOfonoNetworkRegistration::onScanFinished(QDBusPendingCallWatcher *watch)
     watch->deleteLater();
     QDBusPendingReply<ObjectPathPropertiesList> reply(*watch);
     if (reply.isError()) {
-        qDebug() << reply.error();
+        qDebug() << "QOfonoNetworkRegistration scan failure:" << reply.error();
         Q_EMIT scanError(reply.error().message());
     } else {
         onOperatorsChanged(reply.value());

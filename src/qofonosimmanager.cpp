@@ -316,7 +316,7 @@ QByteArray QOfonoSimManager::getIcon(quint8 id)
         if (!reply.isError()) {
             return reply.value();
         }
-        qDebug() << reply.error().message();
+        qDebug() << "QOfonoSimManager getIcon failure:" << reply.error().message();
     }
     return QByteArray();
 }

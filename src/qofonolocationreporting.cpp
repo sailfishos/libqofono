@@ -50,8 +50,8 @@ void QOfonoLocationReporting::setModemPath(const QString &path)
         return;
 
     if (path != modemPath()) {
-        delete d_ptr->ofonoLocationReporting;
         d_ptr->properties.clear();
+        delete d_ptr->ofonoLocationReporting;
         d_ptr->ofonoLocationReporting = new OfonoLocationReporting(OFONO_SERVICE, path, OFONO_BUS, this);
         d_ptr->modemPath = path;
         QDBusPendingReply<QVariantMap> reply;

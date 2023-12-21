@@ -68,7 +68,7 @@ void QOfonoAssistedSatelliteNavigation::registerPositioningRequestAgent(const QS
     if (d_ptr->ofonoAssistedSatelliteNav) {
         QDBusPendingReply <> reply = d_ptr->ofonoAssistedSatelliteNav->RegisterPositioningRequestAgent(QDBusObjectPath(path));
         if (reply.isError())
-            qDebug() << reply.error().message();
+            qDebug() << "QOfonoAssistedNavigation failed to register agent:" << reply.error().message();
     }
 }
 

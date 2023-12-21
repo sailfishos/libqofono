@@ -199,7 +199,7 @@ bool QOfonoObject::getPropertiesSync() // Since 1.0.101
         ValidTracker valid(this);
         QDBusPendingReply<QVariantMap> reply(d_ptr->interface->call(GET_PROPERTIES));
         if (reply.isError()) {
-            qWarning() << reply.error();
+            qWarning() << "QOfono GetProperties failure:" << reply.error();
         } else {
             const QVariantMap properties(reply.value());
             Private::applyProperties(this, properties);

@@ -124,7 +124,7 @@ void QOfonoManager::Private::getModemsSync(QOfonoManager *obj)
         QDBusPendingReply<ObjectPathPropertiesList> reply = ofonoManager->GetModems();
         reply.waitForFinished();
         if (reply.isError()) {
-            qWarning() << reply.error();
+            qWarning() << "QOfonoManager synchronous getModems failure:" << reply.error();
         } else {
             handleGetModemsReply(obj, reply.value());
         }
@@ -218,7 +218,7 @@ void QOfonoManager::onGetModemsFinished(QDBusPendingCallWatcher *watcher)
             qDebug() << "Retrying GetModems...";
             d_ptr->getModems(this);
         } else {
-            qWarning() << reply.error();
+            qWarning() << "QOfonoManager getModems failure:" << reply.error();
         }
     } else {
         d_ptr->handleGetModemsReply(this, reply.value());
