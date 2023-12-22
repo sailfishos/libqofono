@@ -27,8 +27,8 @@ public:
     bool registered;
 };
 
-QOfonoPositioningRequestAgentPrivate::QOfonoPositioningRequestAgentPrivate() :
-    registered(false)
+QOfonoPositioningRequestAgentPrivate::QOfonoPositioningRequestAgentPrivate()
+    : registered(false)
 {
 }
 
@@ -39,9 +39,9 @@ QOfonoPositioningRequestAgentPrivate::~QOfonoPositioningRequestAgentPrivate()
     }
 }
 
-QOfonoPositioningRequestAgent::QOfonoPositioningRequestAgent(QObject *parent) :
-    QObject(parent)
-  , d_ptr(new QOfonoPositioningRequestAgentPrivate)
+QOfonoPositioningRequestAgent::QOfonoPositioningRequestAgent(QObject *parent)
+    : QObject(parent)
+    , d_ptr(new QOfonoPositioningRequestAgentPrivate)
 {
     new QOfonoPositioningRequestAgentAdaptor(this);
 }

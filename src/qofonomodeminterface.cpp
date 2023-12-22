@@ -25,18 +25,18 @@ public:
     QOfonoModem::ExtData *ext;
     bool modemValid;
 
-    Private(const QString &iface, QOfonoModem::ExtData *data) :
-        interfaceName(iface), ext(data), modemValid(false) {}
+    Private(const QString &iface, QOfonoModem::ExtData *data)
+        : interfaceName(iface), ext(data), modemValid(false) {}
     ~Private() { delete ext; }
 };
 
-QOfonoModemInterface::QOfonoModemInterface(const QString &iface, ExtData *ext, QObject *parent) :
-    SUPER(new Private(iface, ext), parent)
+QOfonoModemInterface::QOfonoModemInterface(const QString &iface, ExtData *ext, QObject *parent)
+    : SUPER(new Private(iface, ext), parent)
 {
 }
 
-QOfonoModemInterface::QOfonoModemInterface(const QString &iface, QObject *parent) :
-    SUPER(new Private(iface, NULL), parent)
+QOfonoModemInterface::QOfonoModemInterface(const QString &iface, QObject *parent)
+    : SUPER(new Private(iface, NULL), parent)
 {
 }
 
@@ -87,21 +87,21 @@ void QOfonoModemInterface::objectPathChanged(const QString &path, const QVariant
     if (!d_ptr->modem.isNull()) {
         QOfonoModem *modem = d_ptr->modem.data();
         disconnect(modem, SIGNAL(interfacesChanged(QStringList)),
-            this, SLOT(onModemInterfacesChanged(QStringList)));
+                   this, SLOT(onModemInterfacesChanged(QStringList)));
         disconnect(modem, SIGNAL(validChanged(bool)),
-            this, SLOT(onModemValidChanged(bool)));
+                   this, SLOT(onModemValidChanged(bool)));
         d_ptr->modemValid = false;
         d_ptr->modem.reset();
     }
 
-    setDbusInterface(NULL, NULL);
+    setDbusInterface(nullptr, nullptr);
 
     d_ptr->modem = QOfonoModem::instance(objectPath());
     QOfonoModem *modem = d_ptr->modem.data();
     connect(modem, SIGNAL(interfacesChanged(QStringList)),
-        this, SLOT(onModemInterfacesChanged(QStringList)));
+            this, SLOT(onModemInterfacesChanged(QStringList)));
     connect(modem, SIGNAL(validChanged(bool)),
-        this, SLOT(onModemValidChanged(bool)));
+            this, SLOT(onModemValidChanged(bool)));
     d_ptr->modemValid = modem->isValid();
 
     Q_EMIT modemPathChanged(path);

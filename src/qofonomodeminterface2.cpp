@@ -25,8 +25,8 @@ public:
     QDBusAbstractInterface *interface;
     QOfonoModemInterface2::ExtData *ext;
 
-    Private(const QString &iname, QOfonoModemInterface2::ExtData *data) :
-        interfaceName(iname), interface(NULL), ext(data) {}
+    Private(const QString &iname, QOfonoModemInterface2::ExtData *data)
+        : interfaceName(iname), interface(NULL), ext(data) {}
     ~Private() { delete ext; }
 };
 
@@ -34,15 +34,15 @@ QOfonoModemInterface2::ExtData::~ExtData()
 {
 }
 
-QOfonoModemInterface2::QOfonoModemInterface2(const QString &iname, ExtData *ext, QObject *parent) :
-    QObject(parent),
-    d_ptr(new Private(iname, ext))
+QOfonoModemInterface2::QOfonoModemInterface2(const QString &iname, ExtData *ext, QObject *parent)
+    : QObject(parent)
+    , d_ptr(new Private(iname, ext))
 {
 }
 
-QOfonoModemInterface2::QOfonoModemInterface2(const QString &iname, QObject *parent) :
-    QObject(parent),
-    d_ptr(new Private(iname, NULL))
+QOfonoModemInterface2::QOfonoModemInterface2(const QString &iname, QObject *parent)
+    : QObject(parent)
+    , d_ptr(new Private(iname, NULL))
 {
 }
 

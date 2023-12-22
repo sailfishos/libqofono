@@ -22,18 +22,17 @@ public:
     QOfonoAssistedSatelliteNavigationPrivate();
     QString modemPath;
     OfonoAssistedSatelliteNavigation *ofonoAssistedSatelliteNav;
-
 };
 
-QOfonoAssistedSatelliteNavigationPrivate::QOfonoAssistedSatelliteNavigationPrivate() :
-    modemPath(QString())
-  , ofonoAssistedSatelliteNav(0)
+QOfonoAssistedSatelliteNavigationPrivate::QOfonoAssistedSatelliteNavigationPrivate()
+    : modemPath(QString())
+    , ofonoAssistedSatelliteNav(0)
 {
 }
 
-QOfonoAssistedSatelliteNavigation::QOfonoAssistedSatelliteNavigation(QObject *parent) :
-    QObject(parent)
-  , d_ptr(new QOfonoAssistedSatelliteNavigationPrivate)
+QOfonoAssistedSatelliteNavigation::QOfonoAssistedSatelliteNavigation(QObject *parent)
+    : QObject(parent)
+    , d_ptr(new QOfonoAssistedSatelliteNavigationPrivate)
 {
 }
 
@@ -50,11 +49,8 @@ void QOfonoAssistedSatelliteNavigation::setModemPath(const QString &path)
         return;
 
     if (path != modemPath()) {
-        if (d_ptr->ofonoAssistedSatelliteNav) {
-            delete d_ptr->ofonoAssistedSatelliteNav;
-            d_ptr->ofonoAssistedSatelliteNav = 0;
-        }
-        d_ptr->ofonoAssistedSatelliteNav = new OfonoAssistedSatelliteNavigation(OFONO_SERVICE, path, OFONO_BUS,this);
+        delete d_ptr->ofonoAssistedSatelliteNav;
+        d_ptr->ofonoAssistedSatelliteNav = new OfonoAssistedSatelliteNavigation(OFONO_SERVICE, path, OFONO_BUS, this);
         if (d_ptr->ofonoAssistedSatelliteNav->isValid()) {
             d_ptr->modemPath = path;
             Q_EMIT modemPathChanged(path);
@@ -72,7 +68,7 @@ void QOfonoAssistedSatelliteNavigation::registerPositioningRequestAgent(const QS
     if (d_ptr->ofonoAssistedSatelliteNav) {
         QDBusPendingReply <> reply = d_ptr->ofonoAssistedSatelliteNav->RegisterPositioningRequestAgent(QDBusObjectPath(path));
         if (reply.isError())
-          qDebug() << reply.error().message();
+            qDebug() << "QOfonoAssistedNavigation failed to register agent:" << reply.error().message();
     }
 }
 

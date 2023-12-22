@@ -29,17 +29,17 @@ public:
     QOfonoSmartMessagingCallWatcher(QOfonoSmartMessaging* target,
         OfonoSmartMessaging *parent, const char* callName,
         const QString &path, const QDBusPendingCall &call,
-        SignalSuccess ok, SignalError err) :
-        QDBusPendingCallWatcher(call, parent),
-        name(callName), objectPath(path), success(ok), error(err)
+        SignalSuccess ok, SignalError err)
+        : QDBusPendingCallWatcher(call, parent)
+        , name(callName), objectPath(path), success(ok), error(err)
     {
         connect(this, SIGNAL(finished(QDBusPendingCallWatcher*)),
-            target, SLOT(onDbusCallFinished(QDBusPendingCallWatcher*)));
+                target, SLOT(onDbusCallFinished(QDBusPendingCallWatcher*)));
     }
 };
 
-QOfonoSmartMessaging::QOfonoSmartMessaging(QObject *parent) :
-    SUPER(OfonoSmartMessaging::staticInterfaceName(), parent)
+QOfonoSmartMessaging::QOfonoSmartMessaging(QObject *parent)
+    : SUPER(OfonoSmartMessaging::staticInterfaceName(), parent)
 {
 }
 

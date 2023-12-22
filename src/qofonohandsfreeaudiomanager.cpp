@@ -26,16 +26,16 @@ public:
 
 };
 
-QOfonoHandsfreeAudioManagerPrivate::QOfonoHandsfreeAudioManagerPrivate() :
-    modemPath(QString())
-  , ofonoHandsfreeAudioManager(0),
-    audioCards(QStringList())
+QOfonoHandsfreeAudioManagerPrivate::QOfonoHandsfreeAudioManagerPrivate()
+    : modemPath(QString())
+    , ofonoHandsfreeAudioManager(0)
+    , audioCards(QStringList())
 {
 }
 
-QOfonoHandsfreeAudioManager::QOfonoHandsfreeAudioManager(QObject *parent) :
-    QObject(parent)
-  , d_ptr(new QOfonoHandsfreeAudioManagerPrivate)
+QOfonoHandsfreeAudioManager::QOfonoHandsfreeAudioManager(QObject *parent)
+    : QObject(parent)
+    , d_ptr(new QOfonoHandsfreeAudioManagerPrivate)
 {
 }
 
@@ -84,7 +84,7 @@ void QOfonoHandsfreeAudioManager::registerAgent(const QString &path, CodecTypeFl
 
     if (codecs & CVSD) ba += CVSD;
     if (codecs & mSBC) ba += mSBC;
-    d_ptr->ofonoHandsfreeAudioManager->Register(QDBusObjectPath(path),ba);
+    d_ptr->ofonoHandsfreeAudioManager->Register(QDBusObjectPath(path), ba);
 }
 
 bool QOfonoHandsfreeAudioManager::isValid() const

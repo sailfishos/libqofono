@@ -55,9 +55,9 @@ public:
         const char* name;
         Signal signal;
         ObjectPathListWatcher(QOfonoVoiceCallManager* target, OfonoVoiceCallManager *parent,
-            const char* callName, const QDBusPendingCall &call, Signal complete) :
-            QDBusPendingCallWatcher(call, parent),
-            name(callName), signal(complete)
+            const char* callName, const QDBusPendingCall &call, Signal complete)
+            : QDBusPendingCallWatcher(call, parent)
+            , name(callName), signal(complete)
         {
             connect(this, SIGNAL(finished(QDBusPendingCallWatcher*)),
                 target, SLOT(onObjectPathListCallFinished(QDBusPendingCallWatcher*)));
@@ -65,8 +65,8 @@ public:
     };
 };
 
-QOfonoVoiceCallManager::QOfonoVoiceCallManager(QObject *parent) :
-    SUPER(OfonoVoiceCallManager::staticInterfaceName(), new Private, parent)
+QOfonoVoiceCallManager::QOfonoVoiceCallManager(QObject *parent)
+    : SUPER(OfonoVoiceCallManager::staticInterfaceName(), new Private, parent)
 {
     QOfonoDbusTypes::registerObjectPathProperties();
 }
@@ -279,7 +279,7 @@ void QOfonoVoiceCallManager::onGetCallsFinished(QDBusPendingCallWatcher *watch)
             qDebug() << "Retrying GetCalls...";
             Private::getCalls(this, (OfonoVoiceCallManager*)dbusInterface());
         } else {
-            qDebug() << reply.error();
+            qDebug() << "QOfonoVoiceCallManager getCalls failure:" << reply.error();
             Q_EMIT reportError(reply.error().message());
         }
     } else {

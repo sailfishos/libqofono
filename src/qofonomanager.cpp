@@ -36,9 +36,9 @@ public:
     void getModemsSync(QOfonoManager *obj);
 };
 
-QOfonoManager::Private::Private() :
-    ofonoManager(Q_NULLPTR),
-    available(false)
+QOfonoManager::Private::Private()
+    : ofonoManager(Q_NULLPTR)
+    , available(false)
 {
     QOfonoDbusTypes::registerObjectPathProperties();
 }
@@ -124,23 +124,23 @@ void QOfonoManager::Private::getModemsSync(QOfonoManager *obj)
         QDBusPendingReply<ObjectPathPropertiesList> reply = ofonoManager->GetModems();
         reply.waitForFinished();
         if (reply.isError()) {
-            qWarning() << reply.error();
+            qWarning() << "QOfonoManager synchronous getModems failure:" << reply.error();
         } else {
             handleGetModemsReply(obj, reply.value());
         }
     }
 }
 
-QOfonoManager::QOfonoManager(QObject *parent) :
-    QObject(parent),
-    d_ptr(new Private)
+QOfonoManager::QOfonoManager(QObject *parent)
+    : QObject(parent)
+    , d_ptr(new Private)
 {
     d_ptr->setup(this, &Private::getModems);
 }
 
-QOfonoManager::QOfonoManager(bool mayBlock, QObject *parent) : // Since 1.0.101
-    QObject(parent),
-    d_ptr(new Private)
+QOfonoManager::QOfonoManager(bool mayBlock, QObject *parent) // Since 1.0.101
+    : QObject(parent)
+    , d_ptr(new Private)
 {
     d_ptr->setup(this, mayBlock ? &Private::getModemsSync :  &Private::getModems);
 }
@@ -218,7 +218,7 @@ void QOfonoManager::onGetModemsFinished(QDBusPendingCallWatcher *watcher)
             qDebug() << "Retrying GetModems...";
             d_ptr->getModems(this);
         } else {
-            qWarning() << reply.error();
+            qWarning() << "QOfonoManager getModems failure:" << reply.error();
         }
     } else {
         d_ptr->handleGetModemsReply(this, reply.value());

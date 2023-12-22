@@ -27,15 +27,15 @@ public:
 
 };
 
-QOfonoLocationReportingPrivate::QOfonoLocationReportingPrivate() :
-    modemPath(QString())
-  , ofonoLocationReporting(0)
+QOfonoLocationReportingPrivate::QOfonoLocationReportingPrivate()
+    : modemPath(QString())
+    , ofonoLocationReporting(0)
 {
 }
 
-QOfonoLocationReporting::QOfonoLocationReporting(QObject *parent) :
-    QObject(parent)
-  , d_ptr(new QOfonoLocationReportingPrivate)
+QOfonoLocationReporting::QOfonoLocationReporting(QObject *parent)
+    : QObject(parent)
+    , d_ptr(new QOfonoLocationReportingPrivate)
 {
 }
 
@@ -50,21 +50,15 @@ void QOfonoLocationReporting::setModemPath(const QString &path)
         return;
 
     if (path != modemPath()) {
-        if (d_ptr->ofonoLocationReporting) {
-            delete d_ptr->ofonoLocationReporting;
-            d_ptr->ofonoLocationReporting = 0;
-            d_ptr->properties.clear();
-        }
-        d_ptr->ofonoLocationReporting = new OfonoLocationReporting(OFONO_SERVICE, path, OFONO_BUS,this);
-
-        if (d_ptr->ofonoLocationReporting) {
-            d_ptr->modemPath = path;
-            QDBusPendingReply<QVariantMap> reply;
-            reply = d_ptr->ofonoLocationReporting->GetProperties();
-            reply.waitForFinished();
-            d_ptr->properties = reply.value();
-            Q_EMIT modemPathChanged(path);
-        }
+        d_ptr->properties.clear();
+        delete d_ptr->ofonoLocationReporting;
+        d_ptr->ofonoLocationReporting = new OfonoLocationReporting(OFONO_SERVICE, path, OFONO_BUS, this);
+        d_ptr->modemPath = path;
+        QDBusPendingReply<QVariantMap> reply;
+        reply = d_ptr->ofonoLocationReporting->GetProperties();
+        reply.waitForFinished();
+        d_ptr->properties = reply.value();
+        Q_EMIT modemPathChanged(path);
     }
 }
 

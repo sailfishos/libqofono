@@ -24,17 +24,17 @@ public:
     const char* name;
     Signal signal;
     QOfonoVoiceCallWatcher(QOfonoVoiceCall* target, OfonoVoiceCall *parent,
-        const char* callName, const QDBusPendingCall &call, Signal complete) :
-        QDBusPendingCallWatcher(call, parent),
-        name(callName), signal(complete)
+        const char* callName, const QDBusPendingCall &call, Signal complete)
+        : QDBusPendingCallWatcher(call, parent)
+        , name(callName), signal(complete)
     {
         connect(this, SIGNAL(finished(QDBusPendingCallWatcher*)),
             target, SLOT(onDbusCallFinished(QDBusPendingCallWatcher*)));
     }
 };
 
-QOfonoVoiceCall::QOfonoVoiceCall(QObject *parent) :
-    SUPER(parent)
+QOfonoVoiceCall::QOfonoVoiceCall(QObject *parent)
+    : SUPER(parent)
 {
 }
 

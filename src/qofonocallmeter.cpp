@@ -18,8 +18,8 @@
 
 #define SUPER QOfonoModemInterface
 
-QOfonoCallMeter::QOfonoCallMeter(QObject *parent) :
-    SUPER(OfonoCallMeter::staticInterfaceName(), parent)
+QOfonoCallMeter::QOfonoCallMeter(QObject *parent)
+    : SUPER(OfonoCallMeter::staticInterfaceName(), parent)
 {
 }
 

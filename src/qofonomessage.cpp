@@ -16,8 +16,8 @@
 #include "qofonomessage.h"
 #include "ofono_message_interface.h"
 
-QOfonoMessage::QOfonoMessage(QObject *parent) :
-    QOfonoObject(parent)
+QOfonoMessage::QOfonoMessage(QObject *parent)
+    : QOfonoObject(parent)
 {
 }
 

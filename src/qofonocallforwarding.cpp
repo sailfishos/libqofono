@@ -18,8 +18,8 @@
 
 #define SUPER QOfonoModemInterface
 
-QOfonoCallForwarding::QOfonoCallForwarding(QObject *parent) :
-    SUPER(OfonoCallForwarding::staticInterfaceName(), parent)
+QOfonoCallForwarding::QOfonoCallForwarding(QObject *parent)
+    : SUPER(OfonoCallForwarding::staticInterfaceName(), parent)
 {
 }
 

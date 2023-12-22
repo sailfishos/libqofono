@@ -26,15 +26,15 @@ public:
 
 };
 
-QOfonoHandsfreePrivate::QOfonoHandsfreePrivate() :
-    modemPath(QString())
-  , ofonoHandsFree(0)
+QOfonoHandsfreePrivate::QOfonoHandsfreePrivate()
+    : modemPath(QString())
+    , ofonoHandsFree(0)
 {
 }
 
-QOfonoHandsfree::QOfonoHandsfree(QObject *parent) :
-    QObject(parent)
-  , d_ptr(new QOfonoHandsfreePrivate)
+QOfonoHandsfree::QOfonoHandsfree(QObject *parent)
+    : QObject(parent)
+    , d_ptr(new QOfonoHandsfreePrivate)
 {
 }
 
@@ -45,29 +45,24 @@ QOfonoHandsfree::~QOfonoHandsfree()
 
 void QOfonoHandsfree::setModemPath(const QString &path)
 {
-    if (path == d_ptr->modemPath ||
-            path.isEmpty())
+    if (path == d_ptr->modemPath
+            || path.isEmpty())
         return;
 
     if (path != modemPath()) {
-        if (d_ptr->ofonoHandsFree) {
-            delete d_ptr->ofonoHandsFree;
-            d_ptr->ofonoHandsFree = 0;
-            d_ptr->properties.clear();
-        }
-        d_ptr->ofonoHandsFree = new OfonoHandsfree(OFONO_SERVICE, path, OFONO_BUS,this);
+        d_ptr->properties.clear();
+        delete d_ptr->ofonoHandsFree;
+        d_ptr->ofonoHandsFree = new OfonoHandsfree(OFONO_SERVICE, path, OFONO_BUS, this);
 
-        if (d_ptr->ofonoHandsFree) {
-            d_ptr->modemPath = path;
-            connect(d_ptr->ofonoHandsFree,SIGNAL(PropertyChanged(QString,QDBusVariant)),
-                    this,SLOT(propertyChanged(QString,QDBusVariant)));
+        d_ptr->modemPath = path;
+        connect(d_ptr->ofonoHandsFree, SIGNAL(PropertyChanged(QString,QDBusVariant)),
+                this, SLOT(propertyChanged(QString,QDBusVariant)));
 
-            QDBusPendingReply<QVariantMap> reply;
-            reply = d_ptr->ofonoHandsFree->GetProperties();
-            reply.waitForFinished();
-            d_ptr->properties = reply.value();
-            Q_EMIT modemPathChanged(path);
-        }
+        QDBusPendingReply<QVariantMap> reply;
+        reply = d_ptr->ofonoHandsFree->GetProperties();
+        reply.waitForFinished();
+        d_ptr->properties = reply.value();
+        Q_EMIT modemPathChanged(path);
     }
 }
 

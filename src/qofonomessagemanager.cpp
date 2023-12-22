@@ -26,8 +26,8 @@ public:
     Private() : initialized(false) {}
 };
 
-QOfonoMessageManager::QOfonoMessageManager(QObject *parent) :
-    SUPER(OfonoMessageManager::staticInterfaceName(), new Private, parent)
+QOfonoMessageManager::QOfonoMessageManager(QObject *parent)
+    : SUPER(OfonoMessageManager::staticInterfaceName(), new Private, parent)
 {
     QOfonoDbusTypes::registerObjectPathProperties();
 }
@@ -163,7 +163,7 @@ void QOfonoMessageManager::onGetMessagesFinished(QDBusPendingCallWatcher *watch)
     watch->deleteLater();
     QDBusPendingReply<ObjectPathPropertiesList> reply(*watch);
     if (reply.isError()) {
-        qDebug() << reply.error();
+        qDebug() << "QOfonoMessageManager getMessages failure:" << reply.error();
         Q_EMIT reportError(reply.error().message());
     } else {
         ValidTracker valid(this);
@@ -190,7 +190,7 @@ void QOfonoMessageManager::onSendMessageFinished(QDBusPendingCallWatcher *watch)
     watch->deleteLater();
     QDBusPendingReply<QDBusObjectPath> reply = *watch;
     if (reply.isError()) {
-        qWarning() << reply.error();
+        qWarning() << "QOfonoMessageManager sendMessage failure:" << reply.error();
         Q_EMIT sendMessageComplete(false, QString());
     } else {
         Q_EMIT sendMessageComplete(true, reply.value().path());
