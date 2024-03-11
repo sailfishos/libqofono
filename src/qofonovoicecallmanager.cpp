@@ -89,6 +89,12 @@ QDBusAbstractInterface *QOfonoVoiceCallManager::createDbusInterface(const QStrin
     connect(iface,
         SIGNAL(CallRemoved(QDBusObjectPath)),
         SLOT(onCallRemoved(QDBusObjectPath)));
+    connect(iface,
+        SIGNAL(CallIgnored(QVariantMap)),
+        SLOT(onCallIgnored(QVariantMap)));
+    connect(iface,
+        SIGNAL(CallBlocked(QVariantMap)),
+        SLOT(onCallBlocked(QVariantMap)));
     connect(iface, SIGNAL(BarringActive(QString)), SIGNAL(barringActive(QString)));
     connect(iface, SIGNAL(Forwarded(QString)), SIGNAL(forwarded(QString)));
     Private::getCalls(this, iface);
@@ -303,6 +309,16 @@ void QOfonoVoiceCallManager::onCallRemoved(const QDBusObjectPath &path)
 void QOfonoVoiceCallManager::onCallAdded(const QDBusObjectPath &path, const QVariantMap &)
 {
     addCall(path.path());
+}
+
+void QOfonoVoiceCallManager::onCallIgnored(const QVariantMap &properties)
+{
+    emit callFiltered(Ignored, properties.value("LineIdentification").toString());
+}
+
+void QOfonoVoiceCallManager::onCallBlocked(const QVariantMap &properties)
+{
+    emit callFiltered(Blocked, properties.value("LineIdentification").toString());
 }
 
 QString QOfonoVoiceCallManager::modemPath() const

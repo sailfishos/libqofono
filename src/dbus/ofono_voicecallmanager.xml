@@ -45,6 +45,18 @@
 		<signal name="CallRemoved">
 			<arg type="o"/>
 		</signal>
+		<signal name="CallIgnored">
+			<arg type="a{sv}"/>
+			<!-- Some versions of qdbusxml2cpp want In, some Out -->
+			<annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="QVariantMap"/>
+			<annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QVariantMap"/>
+		</signal>
+		<signal name="CallBlocked">
+			<arg type="a{sv}"/>
+			<!-- Some versions of qdbusxml2cpp want In, some Out -->
+			<annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="QVariantMap"/>
+			<annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QVariantMap"/>
+		</signal>
 		<signal name="BarringActive">
 			<arg type="s"/>
 		</signal>

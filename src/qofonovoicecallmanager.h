@@ -27,10 +27,16 @@
 class QOFONOSHARED_EXPORT QOfonoVoiceCallManager : public QOfonoModemInterface
 {
     Q_OBJECT
+    Q_ENUMS(FilterType)
     Q_PROPERTY(QStringList emergencyNumbers READ emergencyNumbers NOTIFY emergencyNumbersChanged)
     Q_PROPERTY(QString errorMessage READ errorMessage)
 
 public:
+    enum FilterType {
+        Ignored,
+        Blocked
+    };
+
     explicit QOfonoVoiceCallManager(QObject *parent = 0);
     ~QOfonoVoiceCallManager();
 
@@ -50,6 +56,8 @@ Q_SIGNALS:
 
     void callAdded(const QString &call);
     void callRemoved(const QString &call);
+
+    void callFiltered(FilterType filter, const QString &lineIdentification);
 
     void dialComplete(bool status);
     void hangupAllComplete(bool status);
@@ -83,6 +91,8 @@ private slots:
     void onObjectPathListCallFinished(QDBusPendingCallWatcher *watch);
     void onCallAdded(const QDBusObjectPath &, const QVariantMap &map);
     void onCallRemoved(const QDBusObjectPath &);
+    void onCallIgnored(const QVariantMap &map);
+    void onCallBlocked(const QVariantMap &map);
 
 private:
     void addCall(const QString &callPath);
