@@ -14,7 +14,7 @@
             <arg type="s"/>
             <arg type="v"/>
         </signal>
-        <method name="RequestPhoneNumber"/>
+        <method name="RequestPhoneNumber">
 			<arg type="s" direction="out"/>
 		</method>
 	</interface>
