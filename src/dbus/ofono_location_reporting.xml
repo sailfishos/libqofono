@@ -10,7 +10,6 @@
                         <arg type="h" direction="out"/>
                 </method>
                 <method name="Release" />
-                </method>
         </interface>
 
 </node>
