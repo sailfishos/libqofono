@@ -66,7 +66,7 @@ protected:
     QDBusAbstractInterface *createDbusInterface(const QString &path);
     void propertyChanged(const QString &key, const QVariant &value);
 
-private slots:
+private Q_SLOTS:
     void initiateResponseReceived(QDBusPendingCallWatcher*);
     void respondResponseReceived(QDBusPendingCallWatcher*);
     void cancelResponseReceived(QDBusPendingCallWatcher*);

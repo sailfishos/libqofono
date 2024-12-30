@@ -41,7 +41,7 @@ public:
     bool enabled() const;
 
     bool isValid() const;
-public slots:
+public Q_SLOTS:
     void release();
     int request();
 Q_SIGNALS:
@@ -50,7 +50,7 @@ Q_SIGNALS:
 private:
     QOfonoLocationReportingPrivate *d_ptr;
 
-private slots:
+private Q_SLOTS:
 };
 
 #endif // QOFONOQLOCATIONREPORTING_H

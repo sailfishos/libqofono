@@ -44,10 +44,10 @@ Q_SIGNALS:
     void importFailed();
     void importingChanged();
 
-public slots:
+public Q_SLOTS:
     void beginImport();
 
-private slots:
+private Q_SLOTS:
     void onImportFinished(QDBusPendingCallWatcher *watch);
 
 protected:

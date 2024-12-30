@@ -96,7 +96,7 @@ Q_SIGNALS:
     void registrationFinished();
     void registrationError(const QString &errorMessage);
 
-private slots:
+private Q_SLOTS:
     void onOperatorsChanged(const ObjectPathPropertiesList &operators);
     void onOperatorStatusChanged(const QString &status);
     void onScanFinished(QDBusPendingCallWatcher *watch);

@@ -91,7 +91,7 @@ Q_SIGNALS:
     void hangupComplete(QOfonoVoiceCall::Error error, const QString &errorString);
     void deflectComplete(QOfonoVoiceCall::Error error, const QString &errorString);
 
-public slots:
+public Q_SLOTS:
     void answer();
     void hangup();
     void deflect(const QString &number);
@@ -99,7 +99,7 @@ public slots:
 private:
     static Error errorNameToEnum(const QString &errorName);
 
-private slots:
+private Q_SLOTS:
     void onDbusCallFinished(QDBusPendingCallWatcher *watch);
 
 protected:
