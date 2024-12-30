@@ -60,13 +60,13 @@ Q_SIGNALS:
     void disableAllIncomingComplete(bool success);
     void disableAllOutgoingComplete(bool success);
 
-public slots:
+public Q_SLOTS:
     void changePassword(const QString &oldPassword, const QString &newPassword);
     void disableAll(const QString &password);
     void disableAllIncoming(const QString &password);
     void disableAllOutgoing(const QString &password);
 
-private slots:
+private Q_SLOTS:
     void setVoiceIncomingComplete(QDBusPendingCallWatcher *);
     void setVoiceOutgoingComplete(QDBusPendingCallWatcher *);
     void changePasswordCallComplete(QDBusPendingCallWatcher *);

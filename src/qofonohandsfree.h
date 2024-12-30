@@ -58,7 +58,7 @@ Q_SIGNALS:
 private:
     QOfonoHandsfreePrivate *d_ptr;
 
-private slots:
+private Q_SLOTS:
     void propertyChanged(const QString &property,const QDBusVariant &value);
 };
 

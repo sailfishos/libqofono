@@ -76,7 +76,7 @@ Q_SIGNALS:
     void setBearerComplete(bool success);
     void setAlphabetComplete(bool success);
 
-private slots:
+private Q_SLOTS:
     void onMessageAdded(const QDBusObjectPath &path, const QVariantMap &properties);
     void onMessageRemoved(const QDBusObjectPath &path);
     void onGetMessagesFinished(QDBusPendingCallWatcher *watch);

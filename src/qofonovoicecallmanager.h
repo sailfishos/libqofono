@@ -65,7 +65,7 @@ Q_SIGNALS:
     void barringActive(const QString &type);
     void forwarded(const QString &type);
 
-public slots:
+public Q_SLOTS:
     void dial(const QString &number, const QString &calleridHide);
     void hangupAll();
     void sendTones(const QString &tonestring);
@@ -77,7 +77,7 @@ public slots:
     void createMultiparty();
     void hangupMultiparty();
 
-private slots:
+private Q_SLOTS:
     void onGetCallsFinished(QDBusPendingCallWatcher *watch);
     void onVoidCallFinished(QDBusPendingCallWatcher *watch);
     void onObjectPathListCallFinished(QDBusPendingCallWatcher *watch);

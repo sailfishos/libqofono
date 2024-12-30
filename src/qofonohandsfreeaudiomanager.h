@@ -51,7 +51,7 @@ Q_SIGNALS:
 
     void modemPathChanged(const QString &path);
 
-public slots:
+public Q_SLOTS:
     QStringList cards() const;
     void registerAgent(const QString &path, CodecTypeFlags codecs);
 

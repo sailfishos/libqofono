@@ -42,7 +42,7 @@ Q_SIGNALS:
     void newConnection(const QString &card, QDBusUnixFileDescriptor sco, const QByteArray &codec);
     void release();
 
-public slots:
+public Q_SLOTS:
     
 private:
     QOfonoHandsfreeAudioAgentPrivate *d_ptr;

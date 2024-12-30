@@ -75,7 +75,7 @@ Q_SIGNALS:
 private:
     static Error errorNameToEnum(const QString &errorName);
 
-private slots:
+private Q_SLOTS:
     void onResetFinished(QDBusPendingCallWatcher *call);
 
 protected:

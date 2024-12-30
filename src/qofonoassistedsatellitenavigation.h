@@ -40,7 +40,7 @@ public:
 Q_SIGNALS:
     void modemPathChanged(const QString &path);
 
-public slots:
+public Q_SLOTS:
 
     void registerPositioningRequestAgent(const QString &path);
     void sendPositioningElement(const QString &xmlElement);

@@ -74,13 +74,13 @@ Q_SIGNALS:
     void contextsChanged(const QStringList &contexts);
     void filterChanged(const QString &filter);
 
-public slots:
+public Q_SLOTS:
     void deactivateAll();
     void addContext(const QString &type);
     void removeContext(const QString &path);
     void resetContexts(); // Since 0.110
 
-private slots:
+private Q_SLOTS:
     void onAddContextFinished(QDBusPendingCallWatcher *watch);
     void onRemoveContextFinished(QDBusPendingCallWatcher *watch);
     void onDeactivateAllFinished(QDBusPendingCallWatcher *watch);

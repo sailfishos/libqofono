@@ -55,7 +55,7 @@ protected:
     virtual void dbusInterfaceDropped();
     QDBusAbstractInterface *dbusInterface() const;
 
-private slots:
+private Q_SLOTS:
     void onModemInterfacesChanged(const QStringList &interfaces);
 
 private:

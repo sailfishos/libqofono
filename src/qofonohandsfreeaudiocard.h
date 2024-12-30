@@ -55,14 +55,14 @@ Q_SIGNALS:
     void modemPathChanged(const QString &path);
     void connectAudioComplete(QOfonoHandsfreeAudioCard::Error error, const QString &errorString);
 
-public slots:
+public Q_SLOTS:
     void connectAudio();
 
 private:
     QOfonoHandsfreeAudioCardPrivate *d_ptr;
     Error errorNameToEnum(const QString &errorName);
 
-private slots:
+private Q_SLOTS:
     void propertyChanged(const QString &property,const QDBusVariant &value);
     void connectAudioFinished(QDBusPendingCallWatcher *call);
 };

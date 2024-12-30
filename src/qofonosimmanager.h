@@ -119,7 +119,7 @@ Q_SIGNALS:
     void lockPinComplete(QOfonoSimManager::Error error, const QString &errorString);
     void unlockPinComplete(QOfonoSimManager::Error error, const QString &errorString);
 
-public slots:
+public Q_SLOTS:
     void changePin(QOfonoSimManager::PinType pinType, const QString &oldpin, const QString &newpin);
     void enterPin(QOfonoSimManager::PinType pinType, const QString &pin);
     void resetPin(QOfonoSimManager::PinType pinType, const QString &puk, const QString &newpin);
@@ -144,7 +144,7 @@ protected:
     QVariant convertProperty(const QString &property, const QVariant &value);
     void propertyChanged(const QString &property, const QVariant &value);
 
-private slots:
+private Q_SLOTS:
     void changePinCallFinished(QDBusPendingCallWatcher *call);
     void enterPinCallFinished(QDBusPendingCallWatcher *call);
     void resetPinCallFinished(QDBusPendingCallWatcher *call);
