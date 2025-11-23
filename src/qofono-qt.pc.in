@@ -1,0 +1,12 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include/qofono-qt@QT_MAJOR_VERSION@
+
+
+Name: Qofono-qt@QT_MAJOR_VERSION@
+Description: Qofono-qt@QT_MAJOR_VERSION@ Library
+Version: @PROJECT_VERSION@
+Libs: -lqofono-qt@QT_MAJOR_VERSION@ 
+Cflags: -I${includedir}
+
