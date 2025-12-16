@@ -27,14 +27,17 @@ Q_GLOBAL_STATIC(QOfonoConnectionManagerMap, ofonoConnectionManagerList)
 class QOfonoConnectionManager::Private : public QOfonoObject::ExtData
 {
 public:
+    Private()
+        : initialized(false)
+    {}
+
+    void filterContexts();
+
     bool initialized;
     QStringList contexts;
     QHash<QString,QString> contextTypes;
     QString modemPath;
     QString filter;
-
-    Private() : initialized(false) {}
-    void filterContexts();
 };
 
 // FILTER = [!]NAMES

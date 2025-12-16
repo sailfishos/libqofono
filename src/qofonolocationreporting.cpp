@@ -21,10 +21,10 @@ class QOfonoLocationReportingPrivate
 {
 public:
     QOfonoLocationReportingPrivate();
+
     QString modemPath;
     OfonoLocationReporting *ofonoLocationReporting;
     QVariantMap properties;
-
 };
 
 QOfonoLocationReportingPrivate::QOfonoLocationReportingPrivate()

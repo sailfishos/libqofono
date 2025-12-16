@@ -20,6 +20,7 @@ class QOfonoSmartMessagingAgentPrivate
 {
 public:
     QOfonoSmartMessagingAgentPrivate();
+
     bool registered;
 };
 

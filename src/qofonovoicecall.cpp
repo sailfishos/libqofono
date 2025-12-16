@@ -18,11 +18,11 @@
 
 #define SUPER QOfonoObject
 
-class QOfonoVoiceCallWatcher : public QDBusPendingCallWatcher {
+class QOfonoVoiceCallWatcher : public QDBusPendingCallWatcher
+{
 public:
     typedef void (QOfonoVoiceCall::*Signal)(QOfonoVoiceCall::Error,const QString&);
-    const char* name;
-    Signal signal;
+
     QOfonoVoiceCallWatcher(QOfonoVoiceCall* target, OfonoVoiceCall *parent,
         const char* callName, const QDBusPendingCall &call, Signal complete)
         : QDBusPendingCallWatcher(call, parent)
@@ -31,6 +31,9 @@ public:
         connect(this, SIGNAL(finished(QDBusPendingCallWatcher*)),
             target, SLOT(onDbusCallFinished(QDBusPendingCallWatcher*)));
     }
+
+    const char* name;
+    Signal signal;
 };
 
 QOfonoVoiceCall::QOfonoVoiceCall(QObject *parent)

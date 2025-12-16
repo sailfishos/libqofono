@@ -22,19 +22,8 @@
 class QOfonoVoiceCallManager::Private : public SUPER::ExtData
 {
 public:
-    bool initialized;
-    QStringList callList;
-    QString errorMessage;
-
-    Private() : initialized(false) {}
-
-    static void getCalls(QOfonoVoiceCallManager *parent, OfonoVoiceCallManager* iface) {
-        connect(new QDBusPendingCallWatcher(iface->GetCalls(), iface),
-            SIGNAL(finished(QDBusPendingCallWatcher*)), parent,
-            SLOT(onGetCallsFinished(QDBusPendingCallWatcher*)));
-    }
-
-    class Watcher : public QDBusPendingCallWatcher {
+    class Watcher : public QDBusPendingCallWatcher
+    {
     public:
         typedef void (QOfonoVoiceCallManager::*Signal)(bool);
         const char* name;
@@ -49,7 +38,8 @@ public:
         }
     };
 
-    class ObjectPathListWatcher : public QDBusPendingCallWatcher {
+    class ObjectPathListWatcher : public QDBusPendingCallWatcher
+    {
     public:
         typedef void (QOfonoVoiceCallManager::*Signal)(bool, const QStringList&);
         const char* name;
@@ -63,6 +53,21 @@ public:
                 target, SLOT(onObjectPathListCallFinished(QDBusPendingCallWatcher*)));
         }
     };
+
+    Private()
+        : initialized(false)
+    {}
+
+    static void getCalls(QOfonoVoiceCallManager *parent, OfonoVoiceCallManager* iface)
+    {
+        connect(new QDBusPendingCallWatcher(iface->GetCalls(), iface),
+            SIGNAL(finished(QDBusPendingCallWatcher*)), parent,
+            SLOT(onGetCallsFinished(QDBusPendingCallWatcher*)));
+    }
+
+    bool initialized;
+    QStringList callList;
+    QString errorMessage;
 };
 
 QOfonoVoiceCallManager::QOfonoVoiceCallManager(QObject *parent)

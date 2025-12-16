@@ -20,10 +20,10 @@ class QOfonoHandsfreeAudioManagerPrivate
 {
 public:
     QOfonoHandsfreeAudioManagerPrivate();
+
     QString modemPath;
     OfonoHandsfreeAudioManager *ofonoHandsfreeAudioManager;
     QStringList audioCards;
-
 };
 
 QOfonoHandsfreeAudioManagerPrivate::QOfonoHandsfreeAudioManagerPrivate()

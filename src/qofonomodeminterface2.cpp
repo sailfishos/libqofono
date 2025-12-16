@@ -19,15 +19,20 @@
 class QOfonoModemInterface2::Private
 {
 public:
+    Private(const QString &iname, QOfonoModemInterface2::ExtData *data)
+        : interfaceName(iname), interface(NULL), ext(data)
+    {}
+
+    ~Private()
+    {
+        delete ext;
+    }
+
     QString modemPath;
     QString interfaceName;
     QSharedPointer<QOfonoModem> modem;
     QDBusAbstractInterface *interface;
     QOfonoModemInterface2::ExtData *ext;
-
-    Private(const QString &iname, QOfonoModemInterface2::ExtData *data)
-        : interfaceName(iname), interface(NULL), ext(data) {}
-    ~Private() { delete ext; }
 };
 
 QOfonoModemInterface2::ExtData::~ExtData()

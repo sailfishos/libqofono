@@ -27,11 +27,16 @@
 class QOfonoConnectionContext::Private : public SUPER::ExtData
 {
 public:
+    Private()
+        : provisioning(false), mgrValid(false)
+    {}
+
+    ~Private()
+    {}
+
     bool provisioning;
     bool mgrValid;
     QSharedPointer<QOfonoConnectionManager> mgr;
-    Private() : provisioning(false), mgrValid(false) {}
-    ~Private() {}
 };
 
 QOfonoConnectionContext::QOfonoConnectionContext(QObject *parent)

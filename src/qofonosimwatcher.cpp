@@ -16,7 +16,8 @@
 #include "qofonosimwatcher.h"
 #include "qofonomanager.h"
 
-class QOfonoSimWatcher::Private : public QObject {
+class QOfonoSimWatcher::Private : public QObject
+{
     Q_OBJECT
 
 public:

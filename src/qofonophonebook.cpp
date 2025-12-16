@@ -21,8 +21,11 @@
 class QOfonoPhonebook::Private : public SUPER::ExtData
 {
 public:
+    Private()
+        : importing(false)
+    {}
+
     bool importing;
-    Private() : importing(false) {}
 };
 
 QOfonoPhonebook::QOfonoPhonebook(QObject *parent)
