@@ -7,6 +7,7 @@ License:    LGPLv2
 URL:        https://github.com/sailfishos/libqofono
 Source0:    %{name}-%{version}.tar.bz2
 
+BuildRequires:  cmake
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(Qt5Quick)
@@ -58,45 +59,36 @@ This package contains examples for declarative plugin for libofono.
 %setup -q -n %{name}-%{version}
 
 %build
-export QT_SELECT=5
-%qmake5 "VERSION=$(sed 's/+.*//' <<<"%{version}")"
-make %{?_smp_mflags}
+%cmake . -DLIBQOFONO_VERSION=$(sed 's/+.*//' <<<"%{version}")
+%cmake_build
 
 %install
-export QT_SELECT=5
-%qmake5_install
+%cmake_install
 # MeeGo.QOfono legacy import
 mkdir -p %{buildroot}%{_libdir}/qt5/qml/MeeGo/QOfono
 ln -sf ../../QOfono/libQOfonoQtDeclarative.so %{buildroot}%{_libdir}/qt5/qml/MeeGo/QOfono/
-sed 's/module QOfono/module MeeGo.QOfono/' < plugin/qmldir > %{buildroot}%{_libdir}/qt5/qml/MeeGo/QOfono/qmldir
+sed 's/module QOfono/module MeeGo.QOfono/' < %{buildroot}%{_libdir}/qt5/qml/QOfono/qmldir > %{buildroot}%{_libdir}/qt5/qml/MeeGo/QOfono/qmldir
 
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
 
 %files
-%defattr(-,root,root,-)
 %{_libdir}/%{name}.so.*
 %license COPYING
 
 %files declarative
-%defattr(-,root,root,-)
 %{_libdir}/qt5/qml/QOfono
 %{_libdir}/qt5/qml/MeeGo/QOfono
 
 %files devel
-%defattr(-,root,root,-)
-%{_libdir}/%{name}.prl
 %{_libdir}/%{name}.so
 %{_libdir}/pkgconfig/qofono-qt5.pc
 %{_includedir}/qofono-qt5/*.h
 %{_includedir}/qofono-qt5/dbus/ofono*.xml
-%{_datadir}/qt5/mkspecs/features/qofono-qt5.prf
 
 %files tests
-%defattr(-,root,root,-)
 /opt/tests/%{name}/*
 
 %files examples
-%defattr(-,root,root,-)
 /opt/examples/%{name}
