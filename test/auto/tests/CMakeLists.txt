@@ -30,7 +30,7 @@ foreach(SRC ${TEST_SRCS})
         ${CMAKE_CURRENT_SOURCE_DIR}/..
         ${CMAKE_SOURCE_DIR}/src
     )
-    target_link_libraries(${TEST_NAME} PRIVATE Qt5::Test Qt5::Core Qt5::DBus qofono-qt${QT_MAJOR_VERSION})
+    target_link_libraries(${TEST_NAME} PRIVATE ${QTTEST_LIB} ${QTCORE_LIB} ${QTDBUS_LIB} qofono-qt${QT_MAJOR_VERSION})
     add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME})
 
     install(TARGETS ${TEST_NAME}

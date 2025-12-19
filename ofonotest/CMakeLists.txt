@@ -5,8 +5,8 @@ add_executable(ofonotest
 )
 
 target_link_libraries(ofonotest PRIVATE
-    Qt5::Quick
-    Qt5::Qml
+    ${QTQUICK_LIB}
+    ${QTQML_LIB}
 )
 
 set(OFONO_EXAMPLES_PREFIX "/opt/examples/libqofono-qt${QT_MAJOR_VERSION}")

@@ -9,8 +9,8 @@ target_include_directories(tst_qofonotest-qt${QT_MAJOR_VERSION} PRIVATE
 )
 
 target_link_libraries(tst_qofonotest-qt${QT_MAJOR_VERSION} PRIVATE
-    Qt5::Test
-    Qt5::DBus
+    ${QTTEST_LIB}
+    ${QTDBUS_LIB}
     qofono-qt${QT_MAJOR_VERSION}
 )
 

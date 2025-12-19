@@ -17,14 +17,19 @@ enable_testing()
 
 include(GNUInstallDirs)
 include(FeatureSummary)
-find_package(Qt5 COMPONENTS Core DBus Qml Quick Test)
 
-set_package_properties(Qt5
+find_package(Qt${QT_MAJOR_VERSION} COMPONENTS Core DBus Qml Quick Test)
+set_package_properties(Qt${QT_MAJOR_VERSION}
     PROPERTIES
     TYPE REQUIRED
-    DESCRIPTION "Qt5 libraries"
+    DESCRIPTION "Qt${QT_MAJOR_VERSION} libraries"
     URL "https://www.qt.io"
 )
+set(QTCORE_LIB Qt${QT_MAJOR_VERSION}::Core)
+set(QTDBUS_LIB Qt${QT_MAJOR_VERSION}::DBus)
+set(QTQML_LIB Qt${QT_MAJOR_VERSION}::Qml)
+set(QTQUICK_LIB Qt${QT_MAJOR_VERSION}::Quick)
+set(QTTEST_LIB Qt${QT_MAJOR_VERSION}::Test)
 
 feature_summary(WHAT REQUIRED_PACKAGES_NOT_FOUND FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
