@@ -1,6 +1,6 @@
-Name:       libqofono-qt5
+Name:       libqofono-qt6
 
-Summary:    A library of Qt 5 bindings for ofono
+Summary:    A library of Qt 6 bindings for ofono
 Version:    0.124
 Release:    1
 License:    LGPLv2
@@ -8,10 +8,10 @@ URL:        https://github.com/sailfishos/libqofono
 Source0:    %{name}-%{version}.tar.bz2
 
 BuildRequires:  cmake
-BuildRequires:  pkgconfig(Qt5Core)
-BuildRequires:  pkgconfig(Qt5DBus)
-BuildRequires:  pkgconfig(Qt5Quick)
-BuildRequires:  pkgconfig(Qt5Test)
+BuildRequires:  pkgconfig(Qt6Core)
+BuildRequires:  pkgconfig(Qt6DBus)
+BuildRequires:  pkgconfig(Qt6Quick)
+BuildRequires:  pkgconfig(Qt6Test)
 
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
@@ -59,15 +59,11 @@ This package contains examples for declarative plugin for libofono.
 %setup -q -n %{name}-%{version}
 
 %build
-%cmake . -DLIBQOFONO_VERSION=$(sed 's/+.*//' <<<"%{version}")
+%cmake . -DLIBQOFONO_VERSION=$(sed 's/+.*//' <<<"%{version}") -DQT_MAJOR_VERSION=6
 %cmake_build
 
 %install
 %cmake_install
-# MeeGo.QOfono legacy import
-mkdir -p %{buildroot}%{_libdir}/qt5/qml/MeeGo/QOfono
-ln -sf ../../QOfono/libQOfonoQtDeclarative.so %{buildroot}%{_libdir}/qt5/qml/MeeGo/QOfono/
-sed 's/module QOfono/module MeeGo.QOfono/' < %{buildroot}%{_libdir}/qt5/qml/QOfono/qmldir > %{buildroot}%{_libdir}/qt5/qml/MeeGo/QOfono/qmldir
 
 %post -p /sbin/ldconfig
 
@@ -78,14 +74,13 @@ sed 's/module QOfono/module MeeGo.QOfono/' < %{buildroot}%{_libdir}/qt5/qml/QOfo
 %license COPYING
 
 %files declarative
-%{_libdir}/qt5/qml/QOfono
-%{_libdir}/qt5/qml/MeeGo/QOfono
+%{_libdir}/qt6/qml/QOfono
 
 %files devel
 %{_libdir}/%{name}.so
-%{_libdir}/pkgconfig/qofono-qt5.pc
-%{_includedir}/qofono-qt5/*.h
-%{_includedir}/qofono-qt5/dbus/ofono*.xml
+%{_libdir}/pkgconfig/qofono-qt6.pc
+%{_includedir}/qofono-qt6/*.h
+%{_includedir}/qofono-qt6/dbus/ofono*.xml
 
 %files tests
 /opt/tests/%{name}/*
