@@ -180,7 +180,7 @@ Module {
         Property { name: "callMeter"; type: "uint"; isReadonly: true }
         Property { name: "accumulatedCallMeter"; type: "uint"; isReadonly: true }
         Property { name: "accumulatedCallMeterMaximum"; type: "uint"; isReadonly: true }
-        Property { name: "pricePerUnit"; type: "float"; isReadonly: true }
+        Property { name: "pricePerUnit"; type: "double"; isReadonly: true }
         Property { name: "currency"; type: "string"; isReadonly: true }
         Signal { name: "nearMaximumWarning" }
         Signal {
@@ -189,7 +189,7 @@ Module {
         }
         Signal {
             name: "pricePerUnitChanged"
-            Parameter { type: "float" }
+            Parameter { type: "double" }
         }
         Signal {
             name: "resetComplete"
