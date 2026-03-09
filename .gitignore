@@ -12,6 +12,7 @@ libqofono.pro.user*
 *.swp
 *.rej
 *.so
+*.so.*
 *.pbxuser
 *.mode1
 *.mode1v3
@@ -35,3 +36,8 @@ Makefile*
 moc_*.cpp
 ui_*.h
 qrc_*.cpp
+CMakeFiles
+*.cmake
+*.moc_parameters
+mocs_*
+install_manifest.txt
