@@ -21,9 +21,12 @@
 class QOfonoMessageManager::Private : public QOfonoObject::ExtData
 {
 public:
+    Private()
+        : initialized(false)
+    {}
+
     bool initialized;
     QStringList messageList;
-    Private() : initialized(false) {}
 };
 
 QOfonoMessageManager::QOfonoMessageManager(QObject *parent)

@@ -21,8 +21,11 @@
 class QOfonoNetworkOperator::Private : public SUPER::ExtData
 {
 public:
+    Private()
+        : registering(false)
+    {}
+
     bool registering;
-    Private() : registering(false) {}
 };
 
 QOfonoNetworkOperator::QOfonoNetworkOperator(QObject *parent)

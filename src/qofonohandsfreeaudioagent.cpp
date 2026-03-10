@@ -20,9 +20,9 @@ class QOfonoHandsfreeAudioAgentPrivate
 {
 public:
     QOfonoHandsfreeAudioAgentPrivate();
+
     QString audioAgentPath;
     OfonoHandsfreeAudioAgent *ofonoHandsfreeAudioAgent;
-
 };
 
 QOfonoHandsfreeAudioAgentPrivate::QOfonoHandsfreeAudioAgentPrivate()

@@ -42,15 +42,18 @@ Q_GLOBAL_STATIC(ModemMap, modemMap)
 class QOfonoModem::Private : public SUPER::ExtData
 {
 public:
+    Private(QSharedPointer<QOfonoManager> manager)
+        : modemPathValid(false), mgr(manager)
+    {}
+
+    void setup(QOfonoModem *modem);
+    bool isModemPathValid(const QString &path);
+
 #define DECLARE_PROPERTY(p) static const QString p;
     MODEM_PROPERTIES(DECLARE_PROPERTY)
 
     bool modemPathValid;
     QSharedPointer<QOfonoManager> mgr;
-
-    Private(QSharedPointer<QOfonoManager> manager) : modemPathValid(false), mgr(manager) {}
-    void setup(QOfonoModem *modem);
-    bool isModemPathValid(const QString &path);
 };
 
 inline void QOfonoModem::Private::setup(QOfonoModem *modem)

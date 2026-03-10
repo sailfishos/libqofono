@@ -65,7 +65,8 @@ public:
     static const RegistrationValue RegistrationMap[];
 
     Interface(QString aPath, QObject *aParent)
-        : QDBusAbstractInterface(OFONO_SERVICE, aPath, NAME, OFONO_BUS, aParent) {}
+        : QDBusAbstractInterface(OFONO_SERVICE, aPath, NAME, OFONO_BUS, aParent)
+    {}
 
     static bool syncCall(Interface *proxy, const QString &method, QDBusError *outError);
 

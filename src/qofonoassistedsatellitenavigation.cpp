@@ -20,6 +20,7 @@ class QOfonoAssistedSatelliteNavigationPrivate
 {
 public:
     QOfonoAssistedSatelliteNavigationPrivate();
+
     QString modemPath;
     OfonoAssistedSatelliteNavigation *ofonoAssistedSatelliteNav;
 };

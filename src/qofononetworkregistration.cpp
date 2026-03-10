@@ -37,18 +37,23 @@
 class QOfonoNetworkRegistration::Private : public QOfonoObject::ExtData
 {
 public:
+    Private()
+        : initialized(false), scanning(false), currentOperator(NULL)
+    {}
+
+    ~Private()
+    {
+        qDeleteAll(networkOperators.values());
+    }
+
+    bool updateCountry(QOfonoNetworkRegistration *reg);
+
     bool initialized;
     bool scanning;
     QOfonoNetworkOperator* currentOperator;
     QHash<QString,QOfonoNetworkOperator*> networkOperators;
     QStringList operatorPaths;
     QString country;
-
-public:
-    Private() : initialized(false), scanning(false), currentOperator(NULL) {}
-    ~Private() { qDeleteAll(networkOperators.values()); }
-
-    bool updateCountry(QOfonoNetworkRegistration *reg);
 };
 
 bool QOfonoNetworkRegistration::Private::updateCountry(QOfonoNetworkRegistration *reg)

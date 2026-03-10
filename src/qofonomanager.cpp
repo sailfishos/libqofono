@@ -22,10 +22,6 @@ class QOfonoManager::Private
 public:
     typedef void (Private::*GetModems)(QOfonoManager *);
 
-    OfonoManager *ofonoManager;
-    QStringList modems;
-    bool available;
-
     Private();
 
     QString defaultModem();
@@ -34,6 +30,10 @@ public:
     void handleGetModemsReply(QOfonoManager *obj, ObjectPathPropertiesList reply);
     void getModems(QOfonoManager *obj);
     void getModemsSync(QOfonoManager *obj);
+
+    OfonoManager *ofonoManager;
+    QStringList modems;
+    bool available;
 };
 
 QOfonoManager::Private::Private()

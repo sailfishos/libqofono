@@ -27,11 +27,16 @@
 class QOfonoConnectionContext::Private : public SUPER::ExtData
 {
 public:
+    Private()
+        : provisioning(false), mgrValid(false)
+    {}
+
+    ~Private()
+    {}
+
     bool provisioning;
     bool mgrValid;
     QSharedPointer<QOfonoConnectionManager> mgr;
-    Private() : provisioning(false), mgrValid(false) {}
-    ~Private() {}
 };
 
 QOfonoConnectionContext::QOfonoConnectionContext(QObject *parent)
@@ -353,7 +358,7 @@ bool QOfonoConnectionContext::validateProvisioning(const QString &providerString
     }
 
     //provider
-    query.setQuery("/serviceproviders/country/provider[ name =  '"+provider+"']/string()");
+    query.setQuery("/serviceproviders/country/provider[ name =  '" + provider + "']/string()");
     QString providerName;
     query.evaluateTo(&providerName);
     providerName = providerName.simplified();
@@ -362,7 +367,7 @@ bool QOfonoConnectionContext::validateProvisioning(const QString &providerString
         //try with uppercase
         provider[0] = provider.at(0).toUpper();
 
-        query.setQuery("/serviceproviders/country/provider[ name =  '"+provider+"']/string()");
+        query.setQuery("/serviceproviders/country/provider[ name =  '" + provider + "']/string()");
         query.evaluateTo(&providerName);
         if (providerName.isEmpty()) {
             qDebug() << "provider not found";
@@ -371,7 +376,8 @@ bool QOfonoConnectionContext::validateProvisioning(const QString &providerString
     }
 
     // apn
-    query.setQuery("/serviceproviders/country/provider[ name =  '"+provider+"']/gsm[ network-id [ @mcc = '"+mcc+"' and @mnc = '"+mnc+"' ] ]/apn/@value/string()");
+    query.setQuery("/serviceproviders/country/provider[ name =  '" + provider
+                   + "']/gsm[ network-id [ @mcc = '" + mcc + "' and @mnc = '" + mnc + "' ] ]/apn/@value/string()");
     QStringList accessPointNameList;
     query.evaluateTo(&accessPointNameList);
 
@@ -387,7 +393,9 @@ bool QOfonoConnectionContext::validateProvisioning(const QString &providerString
     }
 
 
-    QString queryString("/serviceproviders/country/provider[ name =  '"+provider+"']//gsm[ network-id[@mcc = '"+mcc+"' and @mnc = '"+mnc+"']]/apn [ @value = '"+apn+ "']/");
+    QString queryString("/serviceproviders/country/provider[ name =  '" + provider
+                        + "']//gsm[ network-id[@mcc = '" + mcc + "' and @mnc = '" + mnc
+                        + "']]/apn [ @value = '" + apn + "']/");
 
     //type
     query.setQuery(queryString+"usage/@type/string()");
@@ -465,7 +473,7 @@ void QOfonoConnectionContext::provision(const QString &provider, const QString &
     }
 
     // provider
-    query.setQuery("/serviceproviders/country/provider[ name =  '"+providerStr+"']/string()");
+    query.setQuery("/serviceproviders/country/provider[ name =  '" + providerStr + "']/string()");
     QString providerName;
     query.evaluateTo(&providerName);
     providerName = providerName.simplified();
@@ -474,7 +482,7 @@ void QOfonoConnectionContext::provision(const QString &provider, const QString &
         //try with uppercase first letter
         providerStr[0] = providerStr.at(0).toUpper();
 
-        query.setQuery("/serviceproviders/country/provider  [ name =  '"+providerStr+"']/string()");
+        query.setQuery("/serviceproviders/country/provider  [ name =  '" + providerStr + "']/string()");
         query.evaluateTo(&providerName);
         if (providerName.isEmpty()) {
             Q_EMIT reportError("Provider not found");
@@ -483,7 +491,8 @@ void QOfonoConnectionContext::provision(const QString &provider, const QString &
     }
 
     // apn
-    query.setQuery("/serviceproviders/country/provider[ name =  '"+providerStr+"']/gsm[ network-id [ @mcc = '"+mcc+"' and @mnc = '"+mnc+"' ] ]/apn/@value/string()");
+    query.setQuery("/serviceproviders/country/provider[ name =  '" + providerStr
+                   + "']/gsm[ network-id [ @mcc = '" + mcc + "' and @mnc = '" + mnc + "' ] ]/apn/@value/string()");
     QStringList accessPointNameList;
     query.evaluateTo(&accessPointNameList);
 
@@ -494,7 +503,9 @@ void QOfonoConnectionContext::provision(const QString &provider, const QString &
 
     Q_FOREACH( const QString &apn, accessPointNameList) {
 
-        QString queryString("/serviceproviders/country/provider[ name =  '"+providerStr+"']//gsm[ network-id[@mcc = '"+mcc+"' and @mnc = '"+mnc+"']]/apn [ @value = '"+apn+ "']/");
+        QString queryString("/serviceproviders/country/provider[ name =  '" + providerStr
+                            + "']//gsm[ network-id[@mcc = '" + mcc
+                            + "' and @mnc = '" + mnc + "']]/apn [ @value = '" + apn + "']/");
 
         // type
         query.setQuery(queryString+"usage/@type/string()");

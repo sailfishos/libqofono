@@ -20,10 +20,10 @@ class QOfonoHandsfreeAudioCardPrivate
 {
 public:
     QOfonoHandsfreeAudioCardPrivate();
+
     QString modemPath;
     OfonoHandsfreeAudioCard *ofonoHandsfreeAudioCard;
     QVariantMap properties;
-
 };
 
 QOfonoHandsfreeAudioCardPrivate::QOfonoHandsfreeAudioCardPrivate()

@@ -23,6 +23,35 @@ namespace {
 class QOfonoObject::Private
 {
 public:
+    class SetPropertyWatcher : public QDBusPendingCallWatcher
+    {
+    public:
+        SetPropertyWatcher(QDBusAbstractInterface *parent, const QString &name, const QDBusPendingCall &call)
+            : QDBusPendingCallWatcher(call, parent)
+            , property(name)
+        {}
+
+        QString property;
+    };
+
+    Private(QOfonoObject::ExtData *data)
+        : ext(data), interface(Q_NULLPTR), initialized(false), fixedPath(false),
+          validMark(false), validMarkCount(0)
+    {}
+
+    ~Private()
+    {
+        delete ext;
+    }
+
+    QDBusPendingCall setProperty(const QString &key, const QVariant &value);
+    void getProperties(QOfonoObject *obj);
+
+    bool dropDbusInterface();
+    void setDbusInterface(QOfonoObject *obj, QDBusAbstractInterface *iface);
+
+    static void applyProperties(QOfonoObject *obj, const QVariantMap &properties);
+
     QOfonoObject::ExtData *ext;
     QDBusAbstractInterface *interface;
     bool initialized;
@@ -31,26 +60,6 @@ public:
     int validMarkCount;
     QString objectPath;
     QVariantMap properties;
-
-    Private(QOfonoObject::ExtData *data)
-        : ext(data), interface(Q_NULLPTR), initialized(false), fixedPath(false),
-          validMark(false), validMarkCount(0) {}
-    ~Private() { delete ext; }
-
-    QDBusPendingCall setProperty(const QString &key, const QVariant &value);
-    void getProperties(QOfonoObject *obj);
-
-    bool dropDbusInterface();
-    void setDbusInterface(QOfonoObject *obj, QDBusAbstractInterface *iface);
-    static void applyProperties(QOfonoObject *obj, const QVariantMap &properties);
-
-    class SetPropertyWatcher : public QDBusPendingCallWatcher {
-    public:
-        QString property;
-        SetPropertyWatcher(QDBusAbstractInterface *parent, const QString &name,
-            const QDBusPendingCall &call)
-            : QDBusPendingCallWatcher(call, parent), property(name) {}
-    };
 };
 
 QOfonoObject::ExtData::~ExtData()

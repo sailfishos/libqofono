@@ -23,6 +23,7 @@ class QOfonoPositioningRequestAgentPrivate
 public:
     QOfonoPositioningRequestAgentPrivate();
     ~QOfonoPositioningRequestAgentPrivate();
+
     QString positioningAgentPath;
     bool registered;
 };

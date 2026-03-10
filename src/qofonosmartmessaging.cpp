@@ -18,14 +18,12 @@
 
 #define SUPER QOfonoModemInterface2
 
-class QOfonoSmartMessagingCallWatcher : public QDBusPendingCallWatcher {
+class QOfonoSmartMessagingCallWatcher : public QDBusPendingCallWatcher
+{
 public:
     typedef void (QOfonoSmartMessaging::*SignalSuccess)(const QString&);
     typedef void (QOfonoSmartMessaging::*SignalError)(const QString&, const QString&);
-    const char* name;
-    QString objectPath;
-    SignalSuccess success;
-    SignalError error;
+
     QOfonoSmartMessagingCallWatcher(QOfonoSmartMessaging* target,
         OfonoSmartMessaging *parent, const char* callName,
         const QString &path, const QDBusPendingCall &call,
@@ -36,6 +34,11 @@ public:
         connect(this, SIGNAL(finished(QDBusPendingCallWatcher*)),
                 target, SLOT(onDbusCallFinished(QDBusPendingCallWatcher*)));
     }
+
+    const char* name;
+    QString objectPath;
+    SignalSuccess success;
+    SignalError error;    
 };
 
 QOfonoSmartMessaging::QOfonoSmartMessaging(QObject *parent)

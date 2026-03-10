@@ -20,14 +20,19 @@
 class QOfonoModemInterface::Private : public QOfonoObject::ExtData
 {
 public:
+    Private(const QString &iface, QOfonoModem::ExtData *data)
+        : interfaceName(iface), ext(data), modemValid(false)
+    {}
+
+    ~Private()
+    {
+        delete ext;
+    }
+
     QString interfaceName;
     QSharedPointer<QOfonoModem> modem;
     QOfonoModem::ExtData *ext;
     bool modemValid;
-
-    Private(const QString &iface, QOfonoModem::ExtData *data)
-        : interfaceName(iface), ext(data), modemValid(false) {}
-    ~Private() { delete ext; }
 };
 
 QOfonoModemInterface::QOfonoModemInterface(const QString &iface, ExtData *ext, QObject *parent)

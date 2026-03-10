@@ -20,10 +20,10 @@ class QOfonoHandsfreePrivate
 {
 public:
     QOfonoHandsfreePrivate();
+
     QString modemPath;
     OfonoHandsfree *ofonoHandsFree;
     QVariantMap properties;
-
 };
 
 QOfonoHandsfreePrivate::QOfonoHandsfreePrivate()
