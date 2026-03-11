@@ -38,6 +38,10 @@ foreach(SRC ${TEST_SRCS})
     )
 endforeach()
 
-install(FILES runtest.sh tests.xml
+install(PROGRAMS runtest.sh
+    DESTINATION /opt/tests/libqofono-qt${QT_MAJOR_VERSION}
+)
+
+install(FILES tests.xml
     DESTINATION /opt/tests/libqofono-qt${QT_MAJOR_VERSION}
 )
