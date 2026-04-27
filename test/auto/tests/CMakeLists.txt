@@ -31,17 +31,29 @@ foreach(SRC ${TEST_SRCS})
         ${CMAKE_SOURCE_DIR}/src
     )
     target_link_libraries(${TEST_NAME} PRIVATE ${QTTEST_LIB} ${QTCORE_LIB} ${QTDBUS_LIB} qofono-qt${QT_MAJOR_VERSION})
-    add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME})
+    add_test(NAME ${TEST_NAME} COMMAND ${DBUS_RUNNER}
+        --bus-type=both
+        --dbus-config=${CMAKE_CURRENT_SOURCE_DIR}/session.conf
+        --task ${CMAKE_CURRENT_BINARY_DIR}/testenv.sh
+        -p enable
+        -p online
+        -p ${CMAKE_CURRENT_BINARY_DIR}/${TEST_NAME})
+    set_tests_properties(${TEST_NAME} PROPERTIES TIMEOUT 30)
 
     install(TARGETS ${TEST_NAME}
-        RUNTIME DESTINATION /opt/tests/libqofono-qt${QT_MAJOR_VERSION}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_LIBEXECDIR}/libqofono-qt${QT_MAJOR_VERSION}/tests
     )
 endforeach()
 
-install(PROGRAMS runtest.sh
-    DESTINATION /opt/tests/libqofono-qt${QT_MAJOR_VERSION}
+configure_file(tests.xml.in ${CMAKE_CURRENT_BINARY_DIR}/tests.xml)
+configure_file(testenv.sh.in ${CMAKE_CURRENT_BINARY_DIR}/testenv.sh)
+configure_file(runtest.sh.in ${CMAKE_CURRENT_BINARY_DIR}/runtest.sh @ONLY)
+
+install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/testenv.sh
+        ${CMAKE_CURRENT_BINARY_DIR}/runtest.sh
+    DESTINATION ${CMAKE_INSTALL_LIBEXECDIR}/libqofono-qt${QT_MAJOR_VERSION}/tests
 )
 
-install(FILES tests.xml
-    DESTINATION /opt/tests/libqofono-qt${QT_MAJOR_VERSION}
+install(FILES phonesim.conf session.conf ${CMAKE_CURRENT_BINARY_DIR}/tests.xml
+    DESTINATION ${CMAKE_INSTALL_LIBEXECDIR}/libqofono-qt${QT_MAJOR_VERSION}/tests
 )
