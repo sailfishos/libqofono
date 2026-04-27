@@ -42,7 +42,7 @@ private slots:
         m = new QOfonoVoiceCallManager(this);
         m->setModemPath("/phonesim");
 
-        QCOMPARE(m->isValid(), true);
+        QTRY_COMPARE(m->isValid(), true);
     }
 
     void testOfonoMultipartyCalls()
