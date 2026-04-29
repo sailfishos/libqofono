@@ -15,6 +15,10 @@ install(TARGETS ofonotest
     RUNTIME DESTINATION ${OFONO_EXAMPLES_PREFIX}
 )
 
+install(FILES ofonotest.desktop
+    DESTINATION /usr/share/applications
+)
+
 install(FILES qml/ofonotest/main.qml
     DESTINATION ${OFONO_EXAMPLES_PREFIX}/qml/ofonotest/main.qml
 )
