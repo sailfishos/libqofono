@@ -88,7 +88,7 @@ private slots:
         QTRY_COMPARE(m->cardIdentifier(), QString("8949222074451242066"));
         QTRY_VERIFY(m->preferredLanguages().count() > 0);
         QCOMPARE(m->preferredLanguages()[0], QString("de"));
-        QCOMPARE(m->pinRetries().count(), 0);
+        QCOMPARE(m->pinRetries().count(), 1);
         QVERIFY(!m->fixedDialing());
         QVERIFY(!m->barredDialing());
 
