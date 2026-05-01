@@ -1,0 +1,14 @@
+#!/bin/sh -e
+
+export TESTDIR=/usr/@CMAKE_INSTALL_LIBEXECDIR@/libqofono-qt@QT_MAJOR_VERSION@/tests
+export OFONO_PHONESIM_CONFIG=$TESTDIR/phonesim.conf
+export RUN_WITH_GUI=1
+export HIDE_DEBUGGING=1
+
+@DBUS_RUNNER@ --bus-type=both \
+    --dbus-config=$TESTDIR/session.conf \
+    --keep-env \
+    --task $TESTDIR/testenv.sh \
+    -p enable \
+    -p online \
+    -p $TESTDIR/${1?Test executable expected}
