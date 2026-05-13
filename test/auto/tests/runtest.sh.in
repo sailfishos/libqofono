@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-export TESTDIR=/opt/tests/libqofono-qt@QT_MAJOR_VERSION@
+export TESTDIR=@QOFONO_TESTS_PREFIX@
 export OFONO_PHONESIM_CONFIG=$TESTDIR/phonesim.conf
 export RUN_WITH_GUI=1
 export HIDE_DEBUGGING=1

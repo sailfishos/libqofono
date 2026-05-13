@@ -41,7 +41,7 @@ foreach(SRC ${TEST_SRCS})
     set_tests_properties(${TEST_NAME} PROPERTIES TIMEOUT 30)
 
     install(TARGETS ${TEST_NAME}
-        RUNTIME DESTINATION /opt/tests/libqofono-qt${QT_MAJOR_VERSION}
+        RUNTIME DESTINATION ${QOFONO_TESTS_PREFIX}
     )
 endforeach()
 
@@ -51,9 +51,9 @@ configure_file(runtest.sh.in ${CMAKE_CURRENT_BINARY_DIR}/runtest.sh @ONLY)
 
 install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/testenv.sh
         ${CMAKE_CURRENT_BINARY_DIR}/runtest.sh
-    DESTINATION /opt/tests/libqofono-qt${QT_MAJOR_VERSION}
+    DESTINATION ${QOFONO_TESTS_PREFIX}
 )
 
 install(FILES phonesim.conf session.conf ${CMAKE_CURRENT_BINARY_DIR}/tests.xml
-    DESTINATION /opt/tests/libqofono-qt${QT_MAJOR_VERSION}
+    DESTINATION ${QOFONO_TESTS_PREFIX}
 )
