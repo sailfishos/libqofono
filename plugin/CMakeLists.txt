@@ -29,12 +29,8 @@ configure_file(qmldir ${CMAKE_CURRENT_BINARY_DIR}/QOfono/qmldir COPYONLY)
 # by the build system instead using QML_ELEMENT macros to declare the 
 # types in the plugin.
 if(QT_MAJOR_VERSION STREQUAL "5")
-    find_program(QMLPLUGINDUMP_CMD NAMES qmlplugindump-qt5 qmlplugindump)
-    
     add_custom_target(qmltypes
-        COMMAND ${CMAKE_COMMAND} -E env "QML2_IMPORT_PATH=${CMAKE_CURRENT_BINARY_DIR}" ${QMLPLUGINDUMP_CMD} -nonrelocatable QOfono 0.2 > ${CMAKE_CURRENT_SOURCE_DIR}/plugins.qmltypes
-        DEPENDS QOfonoQtDeclarative
-        COMMENT "Generating plugins.qmltypes"
+        COMMAND qmlplugindump -nonrelocatable QOfono 0.2 > ${CMAKE_CURRENT_SOURCE_DIR}/plugins.qmltypes
     )
 endif()
 
