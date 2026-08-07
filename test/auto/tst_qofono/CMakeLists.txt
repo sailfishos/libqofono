@@ -15,5 +15,5 @@ target_link_libraries(tst_qofonotest-qt${QT_MAJOR_VERSION} PRIVATE
 )
 
 install(TARGETS tst_qofonotest-qt${QT_MAJOR_VERSION}
-    RUNTIME DESTINATION /opt/tests/libqofono-qt${QT_MAJOR_VERSION}
+    RUNTIME DESTINATION ${QOFONO_TESTS_PREFIX}
 )

@@ -6,6 +6,3 @@ Terminal=false
 Name=ofonotest
 Exec=/opt/ofonotest/bin/ofonotest
 Icon=ofonotest64
-X-Window-Icon=
-X-HildonDesk-ShowInToolbar=true
-X-Osso-Type=application/x-executable
