@@ -30,6 +30,9 @@ foreach(SRC ${TEST_SRCS})
         ${CMAKE_CURRENT_SOURCE_DIR}/..
         ${CMAKE_SOURCE_DIR}/src
     )
+    if(TEST_NAME STREQUAL "tst_qofonocellbroadcast")
+        target_include_directories(${TEST_NAME} PRIVATE ${CMAKE_BINARY_DIR}/src)
+    endif()
     target_link_libraries(${TEST_NAME} PRIVATE ${QTTEST_LIB} ${QTCORE_LIB} ${QTDBUS_LIB} qofono-qt${QT_MAJOR_VERSION})
     add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME})
 

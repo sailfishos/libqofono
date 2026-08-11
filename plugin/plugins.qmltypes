@@ -277,6 +277,11 @@ Module {
             Parameter { name: "topic"; type: "ushort" }
         }
         Signal {
+            name: "incomingBroadcastWithProperties"
+            Parameter { name: "text"; type: "string" }
+            Parameter { name: "properties"; type: "QVariantMap" }
+        }
+        Signal {
             name: "emergencyBroadcast"
             Parameter { name: "text"; type: "string" }
             Parameter { name: "properties"; type: "QVariantMap" }

@@ -35,12 +35,12 @@ QOfonoCellBroadcast::~QOfonoCellBroadcast()
 QDBusAbstractInterface *QOfonoCellBroadcast::createDbusInterface(const QString &path)
 {
     OfonoCellBroadcast *iface = new OfonoCellBroadcast(OFONO_SERVICE, path, OFONO_BUS, this);
-    connect(iface,
-        SIGNAL(IncomingBroadcast(QString,quint16)),
-        SIGNAL(incomingBroadcast(QString,quint16)));
-    connect(iface,
-        SIGNAL(EmergencyBroadcast(QString,QVariantMap)),
-        SIGNAL(emergencyBroadcast(QString,QVariantMap)));
+    connect(iface, &OfonoCellBroadcast::IncomingBroadcast,
+        this, &QOfonoCellBroadcast::incomingBroadcast);
+    connect(iface, &OfonoCellBroadcast::IncomingBroadcastWithProperties,
+        this, &QOfonoCellBroadcast::incomingBroadcastWithProperties);
+    connect(iface, &OfonoCellBroadcast::EmergencyBroadcast,
+        this, &QOfonoCellBroadcast::emergencyBroadcast);
     return iface;
 }
 
