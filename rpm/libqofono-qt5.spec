@@ -15,6 +15,7 @@ BuildRequires:  pkgconfig(Qt5Test)
 
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
+Provides:   libqofono-vowifi-api = 1
 
 %description
 This package contains Qt bindings for ofono cellular service
