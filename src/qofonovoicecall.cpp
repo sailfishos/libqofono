@@ -81,6 +81,8 @@ void QOfonoVoiceCall::propertyChanged(const QString &property, const QVariant &v
         Q_EMIT startTimeChanged(value.toString());
     } else if (property == QLatin1String("Information")) {
         Q_EMIT informationChanged(value.toString());
+    } else if (property == QLatin1String("Bearer")) {
+        Q_EMIT bearerChanged(value.toString());
     } else if (property == QLatin1String("IncomingLine")) {
         Q_EMIT incomingLineChanged(value.toString());
     } else if (property == QLatin1String("Multiparty")) {
@@ -124,6 +126,11 @@ QString QOfonoVoiceCall::startTime() const
 QString QOfonoVoiceCall::information() const
 {
     return getString("Information");
+}
+
+QString QOfonoVoiceCall::bearer() const
+{
+    return getString("Bearer");
 }
 
 bool QOfonoVoiceCall::multiparty() const

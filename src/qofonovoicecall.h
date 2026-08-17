@@ -36,6 +36,7 @@ class QOFONOSHARED_EXPORT QOfonoVoiceCall : public QOfonoObject
     Q_PROPERTY(QString state READ state NOTIFY stateChanged)
     Q_PROPERTY(QString startTime READ startTime NOTIFY startTimeChanged)
     Q_PROPERTY(QString information READ information NOTIFY informationChanged)
+    Q_PROPERTY(QString bearer READ bearer NOTIFY bearerChanged)
     Q_PROPERTY(bool multiparty READ multiparty NOTIFY multipartyChanged)
     Q_PROPERTY(bool emergency READ emergency NOTIFY emergencyChanged)
     Q_PROPERTY(bool remoteHeld READ remoteHeld NOTIFY remoteHeldChanged)
@@ -63,6 +64,7 @@ public:
     QString state() const;
     QString startTime() const;
     QString information() const;
+    QString bearer() const;
     bool multiparty() const;
     bool emergency() const;
     quint8 icon() const;
@@ -77,6 +79,7 @@ Q_SIGNALS:
     void stateChanged(const QString &state);
     void startTimeChanged(const QString &time);
     void informationChanged(const QString &mcc);
+    void bearerChanged(const QString &bearer);
     void incomingLineChanged(const QString &line);
     void disconnectReason(const QString &reason);
     void multipartyChanged(bool multiparty);

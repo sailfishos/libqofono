@@ -29,6 +29,7 @@ class QOFONOSHARED_EXPORT QOfonoIpMultimediaSystem : public QOfonoModemInterface
     Q_ENUMS(Registration)
     Q_PROPERTY(Registration registration READ registration WRITE setRegistration NOTIFY registrationChanged)
     Q_PROPERTY(bool registered READ registered WRITE setRegistered NOTIFY registeredChanged)
+    Q_PROPERTY(QString registrationTechnology READ registrationTechnology NOTIFY registrationTechnologyChanged)
     Q_PROPERTY(bool voiceCapable READ voiceCapable NOTIFY voiceCapableChanged)
     Q_PROPERTY(bool smsCapable READ smsCapable NOTIFY smsCapableChanged)
     class Interface;
@@ -49,6 +50,7 @@ public:
 
     void setRegistered(bool registered);
     bool registered() const;
+    QString registrationTechnology() const;
     bool voiceCapable() const;
     bool smsCapable() const;
 
@@ -58,6 +60,7 @@ public:
 Q_SIGNALS:
     void registrationChanged();
     void registeredChanged();
+    void registrationTechnologyChanged();
     void voiceCapableChanged();
     void smsCapableChanged();
 

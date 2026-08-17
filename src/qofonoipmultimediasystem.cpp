@@ -50,6 +50,7 @@ public:
     static const QString METHOD_REGISTER;
     static const QString METHOD_UNREGISTER;
     static const QString PROP_REGISTERED;
+    static const QString PROP_REGISTRATION_TECHNOLOGY;
     static const QString PROP_VOICE_CAPABLE;
     static const QString PROP_SMS_CAPABLE;
     static const QString PROP_REGISTRATION;
@@ -82,6 +83,7 @@ const char QOfonoIpMultimediaSystem::Interface::NAME[] = "org.ofono.IpMultimedia
 const QString QOfonoIpMultimediaSystem::Interface::METHOD_REGISTER(QStringLiteral("Register"));
 const QString QOfonoIpMultimediaSystem::Interface::METHOD_UNREGISTER(QStringLiteral("Unregister"));
 const QString QOfonoIpMultimediaSystem::Interface::PROP_REGISTERED(QStringLiteral("Registered"));
+const QString QOfonoIpMultimediaSystem::Interface::PROP_REGISTRATION_TECHNOLOGY(QStringLiteral("RegistrationTechnology"));
 const QString QOfonoIpMultimediaSystem::Interface::PROP_VOICE_CAPABLE(QStringLiteral("VoiceCapable"));
 const QString QOfonoIpMultimediaSystem::Interface::PROP_SMS_CAPABLE(QStringLiteral("SmsCapable"));
 const QString QOfonoIpMultimediaSystem::Interface::PROP_REGISTRATION(QStringLiteral("Registration"));
@@ -140,6 +142,8 @@ void QOfonoIpMultimediaSystem::propertyChanged(const QString &property, const QV
 {
     if (property == Interface::PROP_REGISTERED) {
         Q_EMIT registeredChanged();
+    } else if (property == Interface::PROP_REGISTRATION_TECHNOLOGY) {
+        Q_EMIT registrationTechnologyChanged();
     } else if (property == Interface::PROP_VOICE_CAPABLE) {
         Q_EMIT voiceCapableChanged();
     } else if (property == Interface::PROP_SMS_CAPABLE) {
@@ -177,6 +181,11 @@ void QOfonoIpMultimediaSystem::setRegistration(Registration value)
 bool QOfonoIpMultimediaSystem::registered() const
 {
     return getBool(Interface::PROP_REGISTERED);
+}
+
+QString QOfonoIpMultimediaSystem::registrationTechnology() const
+{
+    return getString(Interface::PROP_REGISTRATION_TECHNOLOGY);
 }
 
 bool QOfonoIpMultimediaSystem::voiceCapable() const
