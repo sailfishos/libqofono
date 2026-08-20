@@ -24,42 +24,50 @@
 #include <QtTest/QtTest>
 
 #include "qofonocellbroadcast.h"
+#include "ofono_cell_broadcast_interface.h"
+
+class TestCellBroadcast : public QOfonoCellBroadcast
+{
+public:
+    explicit TestCellBroadcast(QObject *parent = 0) :
+        QOfonoCellBroadcast(parent)
+    {
+    }
+
+    OfonoCellBroadcast *createInterface()
+    {
+        return static_cast<OfonoCellBroadcast *>(
+            createDbusInterface(QLatin1String("/test")));
+    }
+};
 
 class TestQOfonoCellBroadcast : public QObject
 {
     Q_OBJECT
 
-    static const int INTERACTIVE_STEP_TIMEOUT = 30000;
-
 private slots:
-    void initTestCase()
+    void testIncomingBroadcastWithProperties()
     {
-        m = new QOfonoCellBroadcast( this);
-        m->setModemPath("/phonesim");
-        QTRY_VERIFY(m->isValid());
+        TestCellBroadcast cellBroadcast;
+        OfonoCellBroadcast *interface = cellBroadcast.createInterface();
+        QSignalSpy spy(&cellBroadcast,
+            &QOfonoCellBroadcast::incomingBroadcastWithProperties);
+        const QString message = QLatin1String("Test broadcast");
+        QVariantMap properties;
+        properties.insert(QLatin1String("MessageCode"), 42);
+
+        const int signalIndex = interface->metaObject()->indexOfSignal(
+            "IncomingBroadcastWithProperties(QString,QVariantMap)");
+        QVERIFY(signalIndex >= 0);
+        QVERIFY(interface->metaObject()->method(signalIndex).invoke(
+            interface, Qt::DirectConnection,
+            Q_ARG(QString, message), Q_ARG(QVariantMap, properties)));
+
+        QCOMPARE(spy.count(), 1);
+        const QList<QVariant> arguments = spy.takeFirst();
+        QCOMPARE(arguments.at(0).toString(), message);
+        QCOMPARE(arguments.at(1).toMap(), properties);
     }
-
-    void testQOfonoCellBroadcast()
-    {
-        QSignalSpy inBroadcast(m, SIGNAL(incomingBroadcast( QString ,quint16)));
-        //QSignalSpy emBroadcast(m, SIGNAL(emergencyBroadcast( QString , QVariantMap)));
-        QSignalSpy topicsSpy(m, SIGNAL(topicsChanged(QString)));
-
-        qDebug() << "Please send CBM using phonesim";
-        //QCOMPARE(emBroadcast.count(), 1);
-        QTRY_COMPARE_WITH_TIMEOUT(inBroadcast.count(), 1, INTERACTIVE_STEP_TIMEOUT);
-
-        QString topicsList = "20,50-51,60";
-        m->setTopics("");
-        QTRY_COMPARE(topicsSpy.count(), 1);
-        QCOMPARE(topicsSpy.takeFirst().at(0).toString(), QString());
-        m->setTopics(topicsList);
-        QTRY_COMPARE(topicsSpy.count(), 1);
-        QCOMPARE(topicsSpy.takeFirst().at(0).toString(), topicsList);
-    }
-
-private:
-    QOfonoCellBroadcast *m;
 };
 
 QTEST_MAIN(TestQOfonoCellBroadcast)

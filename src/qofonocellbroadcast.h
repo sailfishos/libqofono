@@ -43,6 +43,8 @@ Q_SIGNALS:
     void enabledChanged(bool);
     void topicsChanged(const QString &);
     void incomingBroadcast(const QString &text, quint16 topic);
+    void incomingBroadcastWithProperties(const QString &text,
+                                         const QVariantMap &properties);
     void emergencyBroadcast(const QString &text, const QVariantMap &properties);
 
 protected:
