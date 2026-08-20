@@ -37,6 +37,7 @@ moc_*.cpp
 ui_*.h
 qrc_*.cpp
 CMakeFiles
+CMakeLists.txt.user
 *.cmake
 *.moc_parameters
 mocs_*
