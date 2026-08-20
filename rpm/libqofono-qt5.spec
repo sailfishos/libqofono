@@ -1,7 +1,7 @@
 Name:       libqofono-qt5
 
 Summary:    A library of Qt 5 bindings for ofono
-Version:    0.131
+Version:    0.130
 Release:    1
 License:    LGPLv2
 URL:        https://github.com/sailfishos/libqofono
@@ -15,6 +15,9 @@ BuildRequires:  pkgconfig(Qt5Test)
 
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
+
+%{!?cmake_build:%define cmake_build cmake --build .}
+%{!?cmake_install:%define cmake_install DESTDIR="%{buildroot}" cmake --install .}
 
 %description
 This package contains Qt bindings for ofono cellular service
