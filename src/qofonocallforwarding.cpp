@@ -1,5 +1,6 @@
 /****************************************************************************
 **
+** Copyright (C) 2026 Jolla Mobile Ltd
 ** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
@@ -29,7 +30,9 @@ QOfonoCallForwarding::~QOfonoCallForwarding()
 
 QDBusAbstractInterface *QOfonoCallForwarding::createDbusInterface(const QString &path)
 {
-    return new OfonoCallForwarding(OFONO_SERVICE, path, OFONO_BUS, this);
+    QDBusAbstractInterface *iface = new OfonoCallForwarding(OFONO_SERVICE, path, OFONO_BUS, this);
+    iface->setTimeout(SS_TIMEOUT);
+    return iface;
 }
 
 void QOfonoCallForwarding::connectOfono()

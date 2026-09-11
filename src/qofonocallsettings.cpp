@@ -1,5 +1,6 @@
 /****************************************************************************
 **
+** Copyright (C) 2026 Jolla Mobile Ltd
 ** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
@@ -34,7 +35,9 @@ void QOfonoCallSettings::connectOfono()
 
 QDBusAbstractInterface *QOfonoCallSettings::createDbusInterface(const QString &path)
 {
-    return new OfonoCallSettings(OFONO_SERVICE, path, OFONO_BUS, this);
+    QDBusAbstractInterface *iface = new OfonoCallSettings(OFONO_SERVICE, path, OFONO_BUS, this);
+    iface->setTimeout(SS_TIMEOUT);
+    return iface;
 }
 
 void QOfonoCallSettings::propertyChanged(const QString &property, const QVariant &value)

@@ -1,5 +1,6 @@
 /****************************************************************************
 **
+** Copyright (C) 2026 Jolla Mobile Ltd
 ** Copyright (C) 2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
@@ -23,5 +24,9 @@ namespace QOfonoDbus {
 
 #define OFONO_SERVICE (QOfonoDbus::Service)
 #define OFONO_BUS (QDBusConnection::systemBus())
+
+// Longer timeout for Supplementary Service requests.
+// They may take a very long time
+#define SS_TIMEOUT (5 * 60 * 1000) // 5 min
 
 #endif // DBUSTYPES_PRIVATE_H

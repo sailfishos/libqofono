@@ -1,5 +1,6 @@
 /****************************************************************************
 **
+** Copyright (C) 2026 Jolla Mobile Ltd
 ** Copyright (C) 2013-2020 Jolla Ltd.
 **
 ** GNU Lesser General Public License Usage
@@ -32,6 +33,7 @@ QDBusAbstractInterface *QOfonoSupplementaryServices::createDbusInterface(const Q
     QDBusAbstractInterface *iface = new OfonoSupplementaryServices(OFONO_SERVICE, path, OFONO_BUS, this);
     connect(iface, SIGNAL(NotificationReceived(QString)), this, SIGNAL(notificationReceived(QString)));
     connect(iface, SIGNAL(RequestReceived(QString)), this, SIGNAL(requestReceived(QString)));
+    iface->setTimeout(SS_TIMEOUT);
     return iface;
 }
 
