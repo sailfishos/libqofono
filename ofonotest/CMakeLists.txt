@@ -9,10 +9,15 @@ target_link_libraries(ofonotest PRIVATE
     ${QTQML_LIB}
 )
 
-set(OFONO_EXAMPLES_PREFIX "/opt/examples/libqofono-qt${QT_MAJOR_VERSION}")
+set(OFONO_EXAMPLES_PREFIX "/opt/examples/libqofono-qt${QT_MAJOR_VERSION}"
+    CACHE PATH "Path to installed examples")
 
 install(TARGETS ofonotest
     RUNTIME DESTINATION ${OFONO_EXAMPLES_PREFIX}
+)
+
+install(FILES ofonotest.desktop
+    DESTINATION /usr/share/applications
 )
 
 install(FILES qml/ofonotest/main.qml
