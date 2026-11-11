@@ -1,0 +1,61 @@
+#!/bin/sh -x
+
+if [ "$HIDE_DEBUGGING" != "" ]; then
+    set +x
+    DAEMON_ARGS="-n"
+else
+    DAEMON_ARGS="-nd"
+fi
+
+# override what's in /etc/ofono/phonesim.conf
+if [ "$OFONO_PHONESIM_CONFIG" = "" ]; then
+    export OFONO_PHONESIM_CONFIG=${CMAKE_CURRENT_SOURCE_DIR}/phonesim.conf
+fi
+
+# start ofono
+${OFONO_DAEMON} $DAEMON_ARGS &
+OFONO_PID=$!
+
+sleep 1
+
+# start phonesim
+if [ "$RUN_WITH_GUI" = "" ]; then
+    export QT_QPA_PLATFORM=minimal
+fi
+${PHONESIM} -gui -p 55321 /usr/share/ofono-phonesim/default.xml &
+PHONESIM_PID=$!
+
+sleep 1
+
+for s in "$@"; do
+    if [ "$s" = "enable" ]; then
+        dbus-send --system --print-reply --dest=org.ofono /phonesim org.ofono.Modem.SetProperty string:'Powered' variant:boolean:true
+        sleep 5
+    elif [ "$s" = "online" ]; then
+        dbus-send --system --print-reply --dest=org.ofono /phonesim org.ofono.Modem.SetProperty string:'Online' variant:boolean:true
+        sleep 2
+    else
+        echo "running $s"
+        $s
+    fi
+done
+RESULT=$?
+
+kill -9 $PHONESIM_PID
+kill -9 $OFONO_PID
+
+# dbus-test-runner starts dbus-daemon, which will spawn things like
+# history-daemon or lomiri-telephony-service-approver that isn't a child
+# of this script, and is wholly dependent upon the evironment this test is
+# run in; so we have to manually loop through session PIDs to kill them.
+done=0
+while [ $done -eq 0 ]; do
+    X="`pgrep -ns 0`"  # newest PID of the session
+    if [ "$X" -gt $PHONESIM_PID ]; then
+        kill -9 $X || done=1; # don't loop forever if something went wrong
+    else
+        done=1
+    fi
+done
+
+return $RESULT
